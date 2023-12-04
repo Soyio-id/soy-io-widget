@@ -1,0 +1,93 @@
+version: 2.1
+
+env-vars: &env-vars
+  BUNDLE_JOBS: 4
+
+orbs:
+
+executors:
+  test-executor:
+    docker:
+        environment: *env-vars
+
+  lint-executor:
+    docker:
+        environment: *env-vars
+
+commands:
+  setup:
+    description: checkout code, restore cache, install dependencies, save cache
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 20.10.18
+
+      - restore_cache:
+          keys:
+          - yarn-dependencies-{{ .Environment.YARN_CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          - yarn-dependencies-
+
+      - run:
+          name: Install reviewdog
+          command: |
+            curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b ./bin
+
+      - run:
+          name: Install yarn dependencies
+          command: |
+            curl -sL https://deb.nodesource.com/setup_$(cat .node-version).x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            curl -o- -sL https://yarnpkg.com/install.sh | bash
+            sudo ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn
+            yarn install --frozen-lockfile
+
+      - save_cache:
+          key: yarn-dependencies-{{ .Environment.YARN_CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+jobs:
+  test:
+    executor: test-executor
+    steps:
+      - setup
+      - browser-tools/install-chrome
+
+      - run:
+          name: Run vitest
+          command: |
+            yarn run test
+
+      - store_test_results:
+          path: test_results
+
+  lint:
+    executor: lint-executor
+    steps:
+      - setup
+
+      - run:
+          name: Get files to lint
+          command: git diff origin/master --name-only --diff-filter=d > tmp/files_to_lint
+
+      - run:
+          name: Run eslint
+          shell: /bin/bash
+          command: |
+            cat tmp/files_to_lint | grep -E '.+\.(ts|js)$' | xargs yarn run eslint \
+            | ./bin/reviewdog -reporter=github-pr-review -f=eslint
+
+      - run:
+          name: Run tsc
+          shell: /bin/bash
+          command: |
+            yarn run tsc --noEmit | ./bin/reviewdog -reporter=github-pr-review -f=tsc
+
+workflows:
+  test_and_lint:
+    jobs:
+      - test:
+          context: org-global
+      - lint:
+          context: org-global
