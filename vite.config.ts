@@ -6,11 +6,15 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/lib/index.ts'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'soyio-widget',
       fileName: 'index',
     },
     outDir: 'dist/soyio-widget',
+  },
+  test: {
+    globals: true,
+    environment: "happy-dom"
   },
   plugins: [dts()],
 });
