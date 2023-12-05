@@ -8,7 +8,11 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": ["import"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "import",
+    "@typescript-eslint"
+  ],
   "settings": {
     "import/resolver": {
       "node": {
@@ -16,9 +20,6 @@
       }
     }
   },
-  "extends": [
-    "plugin:platanus/recommended"
-  ],
   "rules": {
     "accessor-pairs": 0,
     "array-callback-return": 2,
@@ -336,11 +337,7 @@
       "vars": "local",
       "args": "after-used"
     }],
-    "no-use-before-define": 2,
-    "vue/max-len": ["error", {
-      "code": 120,
-      "ignoreHTMLAttributeValues": true
-    }]
+    "no-use-before-define": 2
   },
   "overrides": [
     {
