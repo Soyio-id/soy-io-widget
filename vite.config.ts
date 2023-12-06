@@ -10,7 +10,7 @@ export default defineConfig({
       name: 'soyio-widget',
       fileName: 'index',
     },
-    outDir: 'dist/soyio-widget',
+    outDir: 'dist',
   },
   test: {
     globals: true,
