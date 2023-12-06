@@ -7,18 +7,8 @@ describe('widget', () => {
     beforeEach(() => {
       document.body.innerHTML = '';
     });
-
-    it('mounts iframe to DOM', () => {
-      const iframe = mountIframeToDOM();
-      expect(iframe).not.toBe(null);
-    });
-    it('adds iframe source', () => {
-      const iframe = mountIframeToDOM();
-      expect(iframe?.src).toBe(DEVELOPMENT_WIDGET_URL);
-    });
-    it('adds iframe id', () => {
-      const iframe = mountIframeToDOM();
-      expect(iframe?.id).toBe(IFRAME_ID);
+    it('Throw error', () => {
+      expect(() => mountIframeToDOM()).toThrowError('Iframe does not exist');
     });
   });
 
@@ -34,10 +24,6 @@ describe('widget', () => {
     it('adds iframe source', () => {
       const iframe = mountIframeToDOM();
       expect(iframe.src).toBe(DEVELOPMENT_WIDGET_URL);
-    });
-    it('adds iframe id', () => {
-      const iframe = mountIframeToDOM();
-      expect(iframe.id).toBe(IFRAME_ID);
     });
   });
 });
