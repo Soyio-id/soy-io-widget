@@ -1,18 +1,9 @@
 version: 2.1
 
-env-vars: &env-vars
-  BUNDLE_JOBS: 4
-
-orbs:
-
 executors:
-  test-executor:
+  project-executor:
     docker:
-        environment: *env-vars
-
-  lint-executor:
-    docker:
-        environment: *env-vars
+      - image: cimg/base:2023.12
 
 commands:
   setup:
@@ -49,10 +40,9 @@ commands:
 
 jobs:
   test:
-    executor: test-executor
+    executor: project-executor
     steps:
       - setup
-      - browser-tools/install-chrome
 
       - run:
           name: Run vitest
@@ -63,13 +53,13 @@ jobs:
           path: test_results
 
   lint:
-    executor: lint-executor
+    executor: project-executor
     steps:
       - setup
 
       - run:
           name: Get files to lint
-          command: git diff origin/master --name-only --diff-filter=d > tmp/files_to_lint
+          command: git diff origin/main --name-only --diff-filter=d > tmp/files_to_lint
 
       - run:
           name: Run eslint
