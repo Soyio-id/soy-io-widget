@@ -35,5 +35,7 @@
     "vite-plugin-dts": "^3.6.4",
     "vitest": "^0.34.6"
   },
-  "dependencies": {}
+  "dependencies": {
+    "post-robot": "^10.0.46"
+  }
 }
