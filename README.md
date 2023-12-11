@@ -7,22 +7,20 @@ This library contemplate that an iframe with the ID: soyio-widget-iframe should 
 
 For frontend frameworks, this should be imported as follows.
 
-``` VUE
+``` html
 <script>
-import Widget from '@soyio/soyio-widget'
-
-// Vue syntax
-onMounted(() => {
-  const widget = new Widget()
-})
+// insert setup of your framework here!! 
+document.addEventListener('DOMContentLoaded', function() {
+  new Widget({ userEmail: 'example@email.com'})
+});
 </script>
-<template>
+<body>
   <iframe id="soyio-widget-iframe"></iframe>
-</template>
+</body>
 
 ```
 
-The widget class receive the following object:
+The widget class receive the following object when is initialized:
 
 ```JS
 {
