@@ -1,22 +1,22 @@
 import { it, expect, describe, beforeEach } from 'vitest';
 import { mountIframeToDOM } from '../src/widget';
-import { DEVELOPMENT_WIDGET_URL, IFRAME_ID } from '../src/constants';
+import { DEVELOPMENT_WIDGET_URL, CONTAINER_ID } from '../src/constants';
 
 describe('widget', () => {
-  describe('when iframe does not exists', () => {
+  describe('when div does not exists', () => {
     beforeEach(() => {
       document.body.innerHTML = '';
     });
     it('Throw error', () => {
-      expect(() => mountIframeToDOM()).toThrowError('Iframe does not exist');
+      expect(() => mountIframeToDOM()).toThrowError('Iframe container does not exist');
     });
   });
 
-  describe('when iframe exists', () => {
+  describe('when div exists', () => {
     beforeEach(() => {
-      document.body.innerHTML = `<iframe id="${IFRAME_ID}"></iframe>`;
+      document.body.innerHTML = `<div id="${CONTAINER_ID}"></div>`;
     });
-    it('does not mount iframe', () => {
+    it('does mount iframe', () => {
       mountIframeToDOM();
       const createdIframes = document.querySelectorAll('iframe');
       expect(createdIframes.length).toBe(1);
