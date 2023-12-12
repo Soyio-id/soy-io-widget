@@ -1,7 +1,7 @@
 # soy-io-widget
 This is the library for include a soyio widget.
 
-This library contemplate that an iframe with the ID: soyio-widget-iframe should be created before instantiate the widget.
+This library contemplate that a div element with ID: `soyio-widget-iframe-container` should be created before instantiate the widget.
 
 ## How to work
 
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <body>
-  <iframe id="soyio-widget-iframe"></iframe>
+  <div id="soyio-widget-iframe-container"></div>
 </body>
 
 ```

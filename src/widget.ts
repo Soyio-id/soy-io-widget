@@ -1,17 +1,20 @@
-import { IFRAME_ID, DEVELOPMENT_WIDGET_URL } from './constants';
+import { CONTAINER_ID, DEVELOPMENT_WIDGET_URL } from './constants';
 
 const WIDGET_URL = DEVELOPMENT_WIDGET_URL;
 
-function getIframe(): HTMLIFrameElement | undefined {
-  return document.getElementById(IFRAME_ID) as HTMLIFrameElement | undefined;
+function getIframeContainer(): HTMLDivElement | undefined {
+  return document.getElementById(CONTAINER_ID) as HTMLDivElement | undefined;
 }
 
 export function mountIframeToDOM(): HTMLIFrameElement {
-  const iframe = getIframe();
-  if (!iframe) {
-    throw new Error('Iframe does not exist');
+  const iframeContainer = getIframeContainer();
+  if (!iframeContainer) {
+    throw new Error('Iframe container does not exist');
   }
+
+  const iframe = document.createElement('iframe');
   iframe.src = WIDGET_URL;
+  iframeContainer.appendChild(iframe);
 
   return iframe;
 }
