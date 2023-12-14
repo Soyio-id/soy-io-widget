@@ -11,7 +11,7 @@ For frontend frameworks, this should be imported as follows.
 <script>
 // insert setup of your framework here!! 
 document.addEventListener('DOMContentLoaded', function() {
-  new Widget({ userEmail: 'example@email.com'})
+  new Widget({ userEmail: 'example@email.com', companyName: 'Company name'})
 });
 </script>
 <body>
@@ -25,6 +25,7 @@ The widget class receive the following object when is initialized:
 ```JS
 {
   userEmail?: string
+  companyName?: string
 }
 ```
 

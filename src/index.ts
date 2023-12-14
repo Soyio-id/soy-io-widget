@@ -1,23 +1,26 @@
 import { mountIframeToDOM } from './widget';
 import { onMounted } from './listeners';
-import { setReady, configUser } from './events';
+import { setReady, setConfig } from './events';
 
-interface WidgetProps {
+export interface WidgetProps {
   userEmail?: string
+  companyName?: string
 }
 class Widget {
   private iframe: HTMLIFrameElement;
   userEmail?: string;
+  companyName?: string;
 
-  constructor({ userEmail }: WidgetProps) {
+  constructor({ userEmail = undefined, companyName = undefined }: WidgetProps) {
     this.iframe = mountIframeToDOM();
     this.userEmail = userEmail;
+    this.companyName = companyName;
 
     onMounted(this.initialize.bind(this));
   }
 
   initialize() {
-    if (this.userEmail) configUser(this.iframe, this.userEmail);
+    setConfig(this.iframe, { userEmail: this.userEmail, companyName: this.companyName });
     setReady(this.iframe);
   }
 }
