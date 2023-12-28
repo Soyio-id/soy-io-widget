@@ -14,6 +14,8 @@ export function mountIframeToDOM(): HTMLIFrameElement {
 
   const iframe = document.createElement('iframe');
   iframe.src = WIDGET_URL;
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
   iframeContainer.appendChild(iframe);
 
   return iframe;
