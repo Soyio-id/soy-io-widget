@@ -5,14 +5,15 @@ import { setReady, setConfig } from './events';
 export interface WidgetProps {
   userEmail?: string
   companyName?: string
+  widgetUrl?: WidgetUrl
 }
 class Widget {
   private iframe: HTMLIFrameElement;
   userEmail?: string;
   companyName?: string;
 
-  constructor({ userEmail = undefined, companyName = undefined }: WidgetProps) {
-    this.iframe = mountIframeToDOM();
+  constructor({ userEmail = undefined, companyName = undefined, widgetUrl = 'staging' }: WidgetProps) {
+    this.iframe = mountIframeToDOM(widgetUrl);
     this.userEmail = userEmail;
     this.companyName = companyName;
 
