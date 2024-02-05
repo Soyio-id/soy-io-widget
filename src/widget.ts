@@ -1,6 +1,9 @@
-import { CONTAINER_ID, IFRAME_ID, DEVELOPMENT_WIDGET_URL } from './constants';
-
-const WIDGET_URL = DEVELOPMENT_WIDGET_URL;
+import {
+  CONTAINER_ID,
+  IFRAME_ID,
+  STAGING_WIDGET_URL,
+  LOCALHOST_WIDGET_URL,
+} from './constants';
 
 function iframeExists(): boolean {
   return !!document.getElementById(IFRAME_ID);
@@ -11,14 +14,14 @@ function getIframeContainer(): HTMLDivElement | undefined {
 }
 
 // eslint-disable-next-line max-statements
-function mountIframe(): HTMLIFrameElement {
+function mountIframe(widgetUrl: WidgetUrl): HTMLIFrameElement {
   const iframeContainer = getIframeContainer();
   if (!iframeContainer) {
     throw new Error('Iframe container does not exist');
   }
 
   const iframe = document.createElement('iframe');
-  iframe.src = WIDGET_URL;
+  iframe.src = widgetUrl === 'staging' ? STAGING_WIDGET_URL : LOCALHOST_WIDGET_URL;
   iframe.id = IFRAME_ID;
   iframe.style.zIndex = String(Number.MAX_SAFE_INTEGER);
   iframe.style.width = '100%';
@@ -28,9 +31,9 @@ function mountIframe(): HTMLIFrameElement {
   return iframe;
 }
 
-export function mountIframeToDOM(): HTMLIFrameElement {
+export function mountIframeToDOM(widgetUrl: WidgetUrl): HTMLIFrameElement {
   if (!iframeExists()) {
-    return mountIframe();
+    return mountIframe(widgetUrl);
   }
 
   return document.getElementById(IFRAME_ID) as HTMLIFrameElement;
