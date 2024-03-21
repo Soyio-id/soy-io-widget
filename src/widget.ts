@@ -16,24 +16,31 @@ function mountIframe(
   isSandbox: boolean,
   developmentUrl: string | undefined,
 ): HTMLIFrameElement {
-  const iframeContainer = getIframeContainer();
-  if (!iframeContainer) {
-    throw new Error('Iframe container does not exist');
+  const url = getFullUrl(flow, configProps, isSandbox, developmentUrl);
+
+  const w = 510;
+  const h = 520;
+
+  // eslint-disable-next-line max-len, no-nested-ternary
+  const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : window.screen.width;
+  // eslint-disable-next-line max-len, no-nested-ternary
+  const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : window.screen.height;
+
+  // eslint-disable-next-line no-magic-numbers
+  const left = ((width / 2) - (w / 2));
+  // eslint-disable-next-line no-magic-numbers
+  const top = ((height / 2) - (h / 2));
+
+  // eslint-disable-next-line max-len
+  const newWindow = window.open(url, 'Soyio', `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`);
+
+  if (newWindow) {
+    newWindow.focus();
+  } else {
+    throw new Error('Failed to open new window');
   }
 
-  const iframe = document.createElement('iframe');
-  iframe.src = getFullUrl(flow, configProps, isSandbox, developmentUrl);
-  iframe.id = IFRAME_ID;
-  iframe.style.zIndex = String(Number.MAX_SAFE_INTEGER);
-  iframe.style.width = '100%';
-  iframe.style.height = '100%';
-  iframe.allow = 'autoplay';
-  iframe.allow = 'camera';
-  iframe.allow = 'publickey-credentials-get *';
-  // iframe.allow = 'publickey-credentials-create *';
-  iframeContainer.appendChild(iframe);
-
-  return iframe;
+  return getIframeContainer() as HTMLIFrameElement;
 }
 
 export function mountIframeToDOM(
