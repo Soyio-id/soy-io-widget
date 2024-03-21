@@ -7,23 +7,23 @@ class Widget {
   private flow: Flow;
   private configProps: Partial<ConfigProps>;
   private onEvent: (data: EventData) => void;
+  private isSandbox: boolean;
 
   // eslint-disable-next-line max-params
-  constructor(
-    flow: Flow,
-    configProps: ConfigProps,
-    onEvent: (data: any) => void,
-    developmentUrl?: string,
-  ) {
-    this.flow = flow;
-    this.configProps = configProps;
-    this.onEvent = onEvent;
+  constructor(options: WidgetConfig) {
+    this.flow = options.flow;
+    this.configProps = options.configProps;
+    this.onEvent = options.onEvent;
+    this.isSandbox = options.isSandbox ?? false;
 
-    if (!this.propsAreValid()) {
-      throw new Error('Invalid props');
-    }
+    this.validateProps();
 
-    this.iframe = mountIframeToDOM(flow, configProps, developmentUrl);
+    this.iframe = mountIframeToDOM(
+      this.flow,
+      this.configProps,
+      this.isSandbox,
+      options.developmentUrl,
+    );
 
     listeners.setListeners({
       configure: this.#initialize.bind(this),
@@ -36,14 +36,17 @@ class Widget {
     setConfig(this.iframe, this.configProps);
   }
 
-  propsAreValid() {
+  // eslint-disable-next-line complexity
+  validateProps() {
     if (this.flow === 'authenticate') {
-      return this.configProps.companyId && this.configProps.identityId;
+      if (!this.configProps.identityId) throw new Error('identityId is required');
+      if (!this.configProps.companyId) throw new Error('companyId is required');
     } else if (this.flow === 'register') {
-      return this.configProps.companyId && this.configProps.flowTemplateId;
+      if (!this.configProps.flowTemplateId) throw new Error('flowTemplateId is required');
+      if (!this.configProps.companyId) throw new Error('companyId is required');
     }
 
-    return false;
+    return;
   }
 
   #triggerEvent(data: EventData) {

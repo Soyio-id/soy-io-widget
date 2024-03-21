@@ -17,7 +17,7 @@ function buildEventListener(hooks: Hooks) {
 
   postRobot.on(messageTypes.WIDGET_EVENT, (event: any) => {
     onEvent(event.data);
-    if (FINISHING_EVENTS.includes(event.data.eventType)) {
+    if (FINISHING_EVENTS.includes(event.data.eventName)) {
       removeWidget();
     }
   });
