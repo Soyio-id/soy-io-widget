@@ -1,11 +1,10 @@
 import postRobot from 'post-robot';
-import { WidgetProps } from './index';
 
 function setReady(iframe: HTMLIFrameElement) {
   postRobot.send(iframe.contentWindow, 'ready');
 }
 
-function setConfig(iframe: HTMLIFrameElement, config: WidgetProps) {
+function setConfig(iframe: HTMLIFrameElement, config: Partial<ConfigProps>) {
   postRobot.send(iframe.contentWindow, 'config', config);
 }
 

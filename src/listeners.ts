@@ -1,11 +1,28 @@
 import postRobot from 'post-robot';
+import { FINISHING_EVENTS } from './constants';
+import { removeWidget } from './widget';
+import * as messageTypes from '../sharedTypes/messages';
 
-type ListenerCallback = () => void;
+type Hooks = {
+  configure: () => void,
+  onEvent: (event: any) => void,
+};
 
-function onMounted(configure: ListenerCallback) {
-  postRobot.on('mounted', () => {
+function buildEventListener(hooks: Hooks) {
+  const { configure, onEvent } = hooks;
+
+  postRobot.on(messageTypes.WIDGET_MOUNTED, () => {
     configure();
+  });
+
+  postRobot.on(messageTypes.WIDGET_EVENT, (event: any) => {
+    onEvent(event.data);
+    if (FINISHING_EVENTS.includes(event.data.eventType)) {
+      removeWidget();
+    }
   });
 }
 
-export { onMounted };
+export function setListeners(hooks: Hooks) {
+  buildEventListener(hooks);
+}

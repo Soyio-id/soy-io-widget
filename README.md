@@ -1,4 +1,5 @@
 # soy-io-widget
+
 This is the library for include a soyio widget.
 
 This library contemplate that a div element with ID: `soyio-widget-iframe-container` should be created before instantiate the widget.
@@ -7,26 +8,29 @@ This library contemplate that a div element with ID: `soyio-widget-iframe-contai
 
 For frontend frameworks, this should be imported as follows.
 
-``` html
+```html
 <script>
-// insert setup of your framework here!! 
-document.addEventListener('DOMContentLoaded', function() {
-  new Widget({ userEmail: 'example@email.com', companyName: 'Company name'})
-});
+  const flow = '<flow>' // Can only take the values of 'register' or 'authenticate'
+
+  const configProps = {
+    companyId: '<company id>',           // Starts with 'com_'
+    userReference?: '<user identifier of company>' // Optional
+    flowTemplateId: '<flow template id', // Starts with 'vft_' only needed in 'register' flow
+    identityId: '<identity id>'          // Starts with 'id_' only needed in 'authenticate' flow
+  }
+
+  const onEvent = (data) => {
+    console.log('APPLICATION: EVENT!');
+    console.log(data);
+  }
+
+  // Create widget when needed. In this example, widget is created when page is loaded.
+  document.addEventListener('DOMContentLoaded', function() {
+    new Widget(flow, configProps, onEvent)
+  });
 </script>
+
 <body>
   <div id="soyio-widget-iframe-container"></div>
 </body>
-
 ```
-
-The widget class receive the following object when is initialized:
-
-```JS
-{
-  userEmail?: string
-  companyName?: string
-}
-```
-
-And if there is an email this is sended to the iframe.

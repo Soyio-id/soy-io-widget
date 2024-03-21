@@ -1,29 +1,59 @@
-import { mountIframeToDOM } from './widget';
-import { onMounted } from './listeners';
+import { mountIframeToDOM, removeWidget } from './widget';
+import * as listeners from './listeners';
 import { setReady, setConfig } from './events';
 
-export interface WidgetProps {
-  userEmail?: string
-  companyName?: string
-  widgetUrl?: WidgetUrl
-}
 class Widget {
   private iframe: HTMLIFrameElement;
-  userEmail?: string;
-  companyName?: string;
+  private flow: Flow;
+  private configProps: Partial<ConfigProps>;
+  private onEvent: (data: EventData) => void;
 
-  constructor({ userEmail = undefined, companyName = undefined, widgetUrl = 'staging' }: WidgetProps) {
-    this.iframe = mountIframeToDOM(widgetUrl);
-    this.userEmail = userEmail;
-    this.companyName = companyName;
+  // eslint-disable-next-line max-params
+  constructor(
+    flow: Flow,
+    configProps: ConfigProps,
+    onEvent: (data: any) => void,
+    developmentUrl?: string,
+  ) {
+    this.flow = flow;
+    this.configProps = configProps;
+    this.onEvent = onEvent;
 
-    onMounted(this.initialize.bind(this));
+    if (!this.propsAreValid()) {
+      throw new Error('Invalid props');
+    }
+
+    this.iframe = mountIframeToDOM(flow, configProps, developmentUrl);
+
+    listeners.setListeners({
+      configure: this.#initialize.bind(this),
+      onEvent: this.#triggerEvent.bind(this),
+    });
   }
 
-  initialize() {
-    setConfig(this.iframe, { userEmail: this.userEmail, companyName: this.companyName });
+  #initialize() {
     setReady(this.iframe);
+    setConfig(this.iframe, this.configProps);
+  }
+
+  propsAreValid() {
+    if (this.flow === 'authenticate') {
+      return this.configProps.companyId && this.configProps.identityId;
+    } else if (this.flow === 'register') {
+      return this.configProps.companyId && this.configProps.flowTemplateId;
+    }
+
+    return false;
+  }
+
+  #triggerEvent(data: EventData) {
+    this.onEvent(data);
+  }
+
+  close() {
+    removeWidget();
   }
 }
 
+// eslint-disable-next-line import/no-default-export
 export default Widget;

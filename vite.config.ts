@@ -14,7 +14,9 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: "happy-dom"
+    environment: 'happy-dom',
   },
-  plugins: [dts()],
+  plugins: [dts({
+    insertTypesEntry: true,
+  })],
 });
