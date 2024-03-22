@@ -1,9 +1,7 @@
-import { mountIframeToDOM, removeWidget } from './widget';
+import { showPopUp } from './widget';
 import * as listeners from './listeners';
-import { setReady, setConfig } from './events';
 
 class Widget {
-  private iframe: HTMLIFrameElement;
   private flow: Flow;
   private configProps: Partial<ConfigProps>;
   private onEvent: (data: EventData) => void;
@@ -18,7 +16,7 @@ class Widget {
 
     this.validateProps();
 
-    this.iframe = mountIframeToDOM(
+    showPopUp(
       this.flow,
       this.configProps,
       this.isSandbox,
@@ -26,14 +24,8 @@ class Widget {
     );
 
     listeners.setListeners({
-      configure: this.#initialize.bind(this),
       onEvent: this.#triggerEvent.bind(this),
     });
-  }
-
-  #initialize() {
-    setReady(this.iframe);
-    setConfig(this.iframe, this.configProps);
   }
 
   // eslint-disable-next-line complexity
@@ -51,10 +43,6 @@ class Widget {
 
   #triggerEvent(data: EventData) {
     this.onEvent(data);
-  }
-
-  close() {
-    removeWidget();
   }
 }
 
