@@ -11,7 +11,7 @@ function buildEventListener(hooks: Hooks) {
   const { onEvent } = hooks;
 
   postRobot.on(messageTypes.WIDGET_EVENT, (event: any) => {
-    onEvent(event.data);
+    onEvent({ eventName: 'IT WORKS!' });
     if (FINISHING_EVENTS.includes(event.data.eventName)) {
       removePopUp();
     }

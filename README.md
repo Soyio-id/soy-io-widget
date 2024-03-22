@@ -76,3 +76,9 @@ The `onEvent` callback is designed to handle various events that occur during wi
   - `eventName`: The name of the event, here `'IDENTITY_AUTHENTICATED'`.
   - `identityId`: The unique identifier for the authenticated identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
+
+- **`WIDGET_CLOSED`**: This events occurs when user closes the `Soyio` pop up. The event object is as follow:
+  - `{ eventName: 'WIDGET_CLOSED' }`.
+
+- **`WIDGET_OPENED`**: This events occurs when user closes the `Soyio` pop up. The event object is as follow:
+  - `{ eventName: 'WIDGET_CLOSED' }`.
