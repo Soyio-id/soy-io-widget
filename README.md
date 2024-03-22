@@ -40,7 +40,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
       flowTemplateId: "<flow template id>",
       identityId: "<identity id>",
     },
-    onEvent: (data) => console.log("Data: ", data),
+    onEvent: (data) => console.log(data),
     isSandbox: true,
   };
 
@@ -49,10 +49,6 @@ Integrate the widget into your frontend framework using the script below. Ensure
     new Widget(widgetConfig);
   });
 </script>
-
-<body>
-  <div id="soyio-widget-iframe-container"></div>
-</body>
 ```
 
 #### Attribute Descriptions
@@ -64,7 +60,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
 - **`flowTemplateId`**: : Required only in the `'register'` flow, this identifier specifies the order and quantity of documents requested from the user. It must start with `'vft_'`.
 - **`identityId`**: Necessary only in the `'authenticate'` flow, this identifier must start with `'id_'` and signifies the user's identity.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
-- **`isSandbox`**: (Optional) Indicates if the widget should operate in sandbox mode, defaulting to false.
+- **`isSandbox`**: (Optional) Indicates if the widget should operate in sandbox mode, defaulting to `false`.
 
 #### Events
 
