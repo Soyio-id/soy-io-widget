@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { getFullUrl } from './utils';
 
 let popupWindow: Window | null = null;
@@ -11,7 +10,6 @@ function focusPopup() {
   }
 }
 
-// eslint-disable-next-line max-statements, complexity
 export function showPopUp(
   flow: Flow,
   configProps: Partial<ConfigProps>,
@@ -37,7 +35,6 @@ export function showPopUp(
     event.preventDefault();
   });
 
-  // eslint-disable-next-line max-len
   popupWindow = window.open(url, 'Soyio', `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`);
 
   focusPopup();

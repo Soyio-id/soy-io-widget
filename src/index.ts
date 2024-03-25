@@ -1,5 +1,5 @@
-import { showPopUp } from './widget';
 import * as listeners from './listeners';
+import { showPopUp } from './widget';
 
 class Widget {
   private flow: Flow;
@@ -7,7 +7,6 @@ class Widget {
   private onEvent: (data: EventData) => void;
   private isSandbox: boolean;
 
-  // eslint-disable-next-line max-params
   constructor(options: WidgetConfig) {
     this.flow = options.flow;
     this.configProps = options.configProps;
@@ -28,7 +27,6 @@ class Widget {
     });
   }
 
-  // eslint-disable-next-line complexity
   validateProps() {
     if (this.flow === 'authenticate') {
       if (!this.configProps.identityId) throw new Error('identityId is required');
@@ -37,8 +35,6 @@ class Widget {
       if (!this.configProps.flowTemplateId) throw new Error('flowTemplateId is required');
       if (!this.configProps.companyId) throw new Error('companyId is required');
     }
-
-    return;
   }
 
   #triggerEvent(data: EventData) {
@@ -46,5 +42,4 @@ class Widget {
   }
 }
 
-// eslint-disable-next-line import/no-default-export
 export default Widget;

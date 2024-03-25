@@ -1,7 +1,9 @@
 import postRobot from 'post-robot';
-import { FINISHING_EVENTS, CLOSED_EVENT } from './constants';
-import { removePopUp, clearOverlayEffects } from './widget';
+
 import * as messageTypes from '../sharedTypes/messages';
+
+import { CLOSED_EVENT, FINISHING_EVENTS } from './constants';
+import { clearOverlayEffects, removePopUp } from './widget';
 
 type Hooks = {
   onEvent: (event: any) => void,

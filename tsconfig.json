@@ -18,6 +18,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src/*.ts", "src/**/*.d.ts"],
+  "include": ["src/*.ts", "src/**/*.d.ts", "./vite.config.ts"],
+  "exclude": ["node_modules/**"]
 }
