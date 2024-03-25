@@ -8,8 +8,9 @@ export function getFullUrl(
 ): string {
   const baseUrl = developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
   const urlParams = Object.entries(configProps)
+    .filter(([, value]) => value)
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
 
-  return `${baseUrl}/${flow}?${urlParams}`;
+  return `${baseUrl}/${flow}?platform=web&${urlParams}`;
 }
