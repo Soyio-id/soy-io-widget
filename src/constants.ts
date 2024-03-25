@@ -1,4 +1,6 @@
 export const CONTAINER_ID = 'soyio-widget-iframe-container';
 export const IFRAME_ID = 'soyio-widget-iframe';
-export const STAGING_WIDGET_URL = 'https://staging.soyio.id/widget';
-export const LOCALHOST_WIDGET_URL = 'http://localhost:3000/widget';
+export const PRODUCTION_URL = 'https://app.soyio.id/widget';
+export const SANDBOX_URL = 'https://sandbox.soyio.id/widget';
+export const FINISHING_EVENTS = ['IDENTITY_AUTHENTICATED', 'IDENTITY_REGISTERED'];
+export const CLOSED_EVENT = 'WIDGET_CLOSED';

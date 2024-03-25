@@ -1,6 +1,6 @@
 {
   "name": "@soyio/soyio-widget",
-  "version": "0.0.9",
+  "version": "0.0.46",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
@@ -16,26 +16,30 @@
     "README.md"
   ],
   "scripts": {
+    "bump!": "sh scripts/bump.sh",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts",
-    "test": "vitest"
+    "test": "vitest",
+    "version:get": "node -p \"require('./package.json').version\""
   },
   "devDependencies": {
     "@types/node": "^20.10.1",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
-    "eslint": "^8.54.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-platanus": "^0.1.0",
-    "happy-dom": "^12.10.3",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-tsdoc": "^0.2.17",
+    "typedoc": "^0.25.12",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0",
-    "vite-plugin-dts": "^3.6.4",
     "vitest": "^0.34.6"
   },
   "dependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.6.4",
     "post-robot": "^10.0.46"
   }
 }

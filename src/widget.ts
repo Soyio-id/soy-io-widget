@@ -1,40 +1,54 @@
-import {
-  CONTAINER_ID,
-  IFRAME_ID,
-  STAGING_WIDGET_URL,
-  LOCALHOST_WIDGET_URL,
-} from './constants';
+import { getFullUrl } from './utils';
 
-function iframeExists(): boolean {
-  return !!document.getElementById(IFRAME_ID);
-}
+let popupWindow: Window | null = null;
 
-function getIframeContainer(): HTMLDivElement | undefined {
-  return document.getElementById(CONTAINER_ID) as HTMLDivElement | undefined;
-}
-
-// eslint-disable-next-line max-statements
-function mountIframe(widgetUrl: WidgetUrl): HTMLIFrameElement {
-  const iframeContainer = getIframeContainer();
-  if (!iframeContainer) {
-    throw new Error('Iframe container does not exist');
+function focusPopup() {
+  if (popupWindow && !popupWindow.closed) {
+    popupWindow.focus();
+  } else {
+    throw new Error('Popup window does not exist or is closed.');
   }
-
-  const iframe = document.createElement('iframe');
-  iframe.src = widgetUrl === 'staging' ? STAGING_WIDGET_URL : LOCALHOST_WIDGET_URL;
-  iframe.id = IFRAME_ID;
-  iframe.style.zIndex = String(Number.MAX_SAFE_INTEGER);
-  iframe.style.width = '100%';
-  iframe.style.height = '100%';
-  iframeContainer.appendChild(iframe);
-
-  return iframe;
 }
 
-export function mountIframeToDOM(widgetUrl: WidgetUrl): HTMLIFrameElement {
-  if (!iframeExists()) {
-    return mountIframe(widgetUrl);
-  }
+export function showPopUp(
+  flow: Flow,
+  configProps: Partial<ConfigProps>,
+  isSandbox: boolean,
+  developmentUrl: string | undefined,
+) {
+  const url = getFullUrl(flow, configProps, isSandbox, developmentUrl);
 
-  return document.getElementById(IFRAME_ID) as HTMLIFrameElement;
+  const w = 510;
+  const h = 720;
+
+  // eslint-disable-next-line max-len, no-nested-ternary
+  const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : window.screen.width;
+  // eslint-disable-next-line max-len, no-nested-ternary
+  const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : window.screen.height;
+
+  const left = ((width / 2) - (w / 2));
+  const top = ((height / 2) - (h / 2));
+
+  document.body.style.filter = 'blur(5px)';
+  document.body.addEventListener('click', (event) => {
+    focusPopup();
+    event.preventDefault();
+  });
+
+  popupWindow = window.open(url, 'Soyio', `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`);
+
+  focusPopup();
+}
+
+export function clearOverlayEffects() {
+  document.body.style.filter = '';
+  document.body.removeEventListener('click', focusPopup);
+}
+
+export function removePopUp() {
+  if (popupWindow) {
+    popupWindow.close();
+    popupWindow = null;
+  }
+  clearOverlayEffects();
 }

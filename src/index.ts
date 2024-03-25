@@ -1,28 +1,44 @@
-import { mountIframeToDOM } from './widget';
-import { onMounted } from './listeners';
-import { setReady, setConfig } from './events';
+import * as listeners from './listeners';
+import { showPopUp } from './widget';
 
-export interface WidgetProps {
-  userEmail?: string
-  companyName?: string
-  widgetUrl?: WidgetUrl
-}
 class Widget {
-  private iframe: HTMLIFrameElement;
-  userEmail?: string;
-  companyName?: string;
+  private flow: Flow;
+  private configProps: Partial<ConfigProps>;
+  private onEvent: (data: EventData) => void;
+  private isSandbox: boolean;
 
-  constructor({ userEmail = undefined, companyName = undefined, widgetUrl = 'staging' }: WidgetProps) {
-    this.iframe = mountIframeToDOM(widgetUrl);
-    this.userEmail = userEmail;
-    this.companyName = companyName;
+  constructor(options: WidgetConfig) {
+    this.flow = options.flow;
+    this.configProps = options.configProps;
+    this.onEvent = options.onEvent;
+    this.isSandbox = options.isSandbox ?? false;
 
-    onMounted(this.initialize.bind(this));
+    this.validateProps();
+
+    showPopUp(
+      this.flow,
+      this.configProps,
+      this.isSandbox,
+      options.developmentUrl,
+    );
+
+    listeners.setListeners({
+      onEvent: this.#triggerEvent.bind(this),
+    });
   }
 
-  initialize() {
-    setConfig(this.iframe, { userEmail: this.userEmail, companyName: this.companyName });
-    setReady(this.iframe);
+  validateProps() {
+    if (this.flow === 'authenticate') {
+      if (!this.configProps.identityId) throw new Error('identityId is required');
+      if (!this.configProps.companyId) throw new Error('companyId is required');
+    } else if (this.flow === 'register') {
+      if (!this.configProps.flowTemplateId) throw new Error('flowTemplateId is required');
+      if (!this.configProps.companyId) throw new Error('companyId is required');
+    }
+  }
+
+  #triggerEvent(data: EventData) {
+    this.onEvent(data);
   }
 }
 
