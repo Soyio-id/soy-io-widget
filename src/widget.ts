@@ -1,6 +1,15 @@
+/* eslint-disable no-magic-numbers */
 import { getFullUrl } from './utils';
 
 let popupWindow: Window | null = null;
+
+function focusPopup() {
+  if (popupWindow && !popupWindow.closed) {
+    popupWindow.focus();
+  } else {
+    throw new Error('Popup window does not exist or is closed.');
+  }
+}
 
 // eslint-disable-next-line max-statements, complexity
 export function showPopUp(
@@ -11,7 +20,7 @@ export function showPopUp(
 ) {
   const url = getFullUrl(flow, configProps, isSandbox, developmentUrl);
 
-  const w = 710;
+  const w = 510;
   const h = 720;
 
   // eslint-disable-next-line max-len, no-nested-ternary
@@ -19,19 +28,24 @@ export function showPopUp(
   // eslint-disable-next-line max-len, no-nested-ternary
   const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : window.screen.height;
 
-  // eslint-disable-next-line no-magic-numbers
   const left = ((width / 2) - (w / 2));
-  // eslint-disable-next-line no-magic-numbers
   const top = ((height / 2) - (h / 2));
+
+  document.body.style.filter = 'blur(5px)';
+  document.body.addEventListener('click', (event) => {
+    focusPopup();
+    event.preventDefault();
+  });
 
   // eslint-disable-next-line max-len
   popupWindow = window.open(url, 'Soyio', `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`);
 
-  if (popupWindow) {
-    popupWindow.focus();
-  } else {
-    throw new Error('Failed to open new window');
-  }
+  focusPopup();
+}
+
+export function clearOverlayEffects() {
+  document.body.style.filter = '';
+  document.body.removeEventListener('click', focusPopup);
 }
 
 export function removePopUp() {
@@ -39,4 +53,5 @@ export function removePopUp() {
     popupWindow.close();
     popupWindow = null;
   }
+  clearOverlayEffects();
 }

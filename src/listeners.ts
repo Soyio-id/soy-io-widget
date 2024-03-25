@@ -1,6 +1,6 @@
 import postRobot from 'post-robot';
-import { FINISHING_EVENTS } from './constants';
-import { removePopUp } from './widget';
+import { FINISHING_EVENTS, CLOSED_EVENT } from './constants';
+import { removePopUp, clearOverlayEffects } from './widget';
 import * as messageTypes from '../sharedTypes/messages';
 
 type Hooks = {
@@ -14,6 +14,8 @@ function buildEventListener(hooks: Hooks) {
     onEvent(event.data);
     if (FINISHING_EVENTS.includes(event.data.eventName)) {
       removePopUp();
+    } else if (event.data.eventName === CLOSED_EVENT) {
+      clearOverlayEffects();
     }
   });
 }
