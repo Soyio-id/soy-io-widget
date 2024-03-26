@@ -45,7 +45,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo ::set-output name=version::$(npm run --silent version:get)
+        run: echo "version=$(npm run --silent version:get)" >> $GITHUB_ENV
 
       - name: Get Pull Request data
         uses: jwalton/gh-find-current-pr@v1
@@ -54,11 +54,11 @@ jobs:
           state: all
 
       - name: Tag and Release
-        uses: actions/create-release@latest
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ env.version }}
           release_name: ${{ steps.version.outputs.version }}
           body: |
             ${{ steps.find-pr.outputs.body }}
