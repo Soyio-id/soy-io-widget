@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "declaration": true,
 
     /* Linting */
     "strict": true,
@@ -19,8 +20,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "typeRoots": ["node_modules/@types", "src/types"]
+    "typeRoots": ["src/types"]
   },
-  "include": ["src/*.ts", "src/**/*.d.ts", "./vite.config.ts"],
+  "include": ["src/*.ts", "src/**/*.d.ts", "./vite.config.ts", "src/types"],
   "exclude": ["node_modules/**"]
 }
