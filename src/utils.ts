@@ -1,4 +1,5 @@
 import { PRODUCTION_URL, SANDBOX_URL } from './constants';
+import type { ConfigProps, Flow } from './types';
 
 export function getFullUrl(
   flow: Flow,
