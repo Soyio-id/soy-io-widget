@@ -1,6 +1,6 @@
-declare type Flow = 'authenticate' | 'register'
+export type Flow = 'authenticate' | 'register'
 
-declare interface ConfigProps {
+export type ConfigProps = {
   companyId: string
   userReference?: string
   flowTemplateId?: string
@@ -8,13 +8,13 @@ declare interface ConfigProps {
   identityId?: string
 }
 
-declare interface EventData {
+export type EventData = {
   eventName: 'IDENTITY_REGISTERED' | 'IDENTITY_AUTHENTICATED',
   identityId: string,
   userReference?: string
 }
 
-declare interface WidgetConfig {
+export type WidgetConfig = {
   flow: Flow,
   configProps: Partial<ConfigProps>,
   onEvent: (data: EventData) => void,
