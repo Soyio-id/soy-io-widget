@@ -5,7 +5,7 @@ on:
     paths:
       - ".github/workflows/linters.yml"
       - "src/**"
-      - ".eslintrc.js"
+      - ".eslintrc.cjs"
       - "tsconfig.json"
       - "package.json"
       - "yarn.lock"
