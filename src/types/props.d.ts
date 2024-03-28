@@ -6,6 +6,7 @@ declare interface ConfigProps {
   flowTemplateId?: string
   userEmail?: string
   identityId?: string
+  forceError?: 'no_error' | 'validation_error'
 }
 
 declare interface EventData {
