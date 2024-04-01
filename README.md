@@ -39,6 +39,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
       userEmail: "<user email>",
       flowTemplateId: "<flow template id>",
       identityId: "<identity id>",
+      forceError: 'no_error'
     },
     onEvent: (data) => console.log(data),
     isSandbox: true,
@@ -61,6 +62,8 @@ Integrate the widget into your frontend framework using the script below. Ensure
 - **`identityId`**: Necessary only in the `'authenticate'` flow, this identifier must start with `'id_'` and signifies the user's identity.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`isSandbox`**: (Optional) Indicates if the widget should operate in sandbox mode, defaulting to `false`.
+- **`forceError`**: (Optional) Enum with two values (`no_error` and `validation_error`). Only valid for sandbox environment. Indicates if the flow should simulate a failed validation response.
+ 
 
 #### Events
 
