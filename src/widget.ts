@@ -1,3 +1,4 @@
+import type { ConfigProps, Flow } from './types';
 import { getFullUrl } from './utils';
 
 let popupWindow: Window | null = null;

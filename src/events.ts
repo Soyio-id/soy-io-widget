@@ -1,5 +1,7 @@
 import postRobot from 'post-robot';
 
+import type { ConfigProps } from './types';
+
 function setReady(iframe: HTMLIFrameElement) {
   postRobot.send(iframe.contentWindow, 'ready');
 }
