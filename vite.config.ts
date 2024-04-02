@@ -12,7 +12,5 @@ export default defineConfig({
     },
     outDir: 'dist',
   },
-  plugins: [dts({
-    insertTypesEntry: true,
-  })],
+  plugins: [dts({ rollupTypes: true })],
 });

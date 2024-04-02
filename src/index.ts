@@ -1,4 +1,10 @@
 import * as listeners from './listeners';
+import type {
+  ConfigProps,
+  EventData,
+  Flow,
+  WidgetConfig,
+} from './types';
 import { showPopUp } from './widget';
 
 class Widget {
