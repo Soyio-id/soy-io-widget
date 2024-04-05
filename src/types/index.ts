@@ -1,3 +1,4 @@
+export type SoyioErrors = 'user_exists' | 'facial_validation_error' | 'document_validation_error' | 'unknown_error';
 export type Flow = 'authenticate' | 'register'
 
 export type ConfigProps = {
@@ -6,7 +7,7 @@ export type ConfigProps = {
   flowTemplateId?: string
   userEmail?: string
   identityId?: string
-  forceError?: 'no_error' | 'validation_error'
+  forceError?: SoyioErrors
 }
 
 export type EventData = {
