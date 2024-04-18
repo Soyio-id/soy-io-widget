@@ -39,7 +39,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
       userEmail: "<user email>",
       flowTemplateId: "<flow template id>",
       identityId: "<identity id>",
-      forceError: 'no_error'
+      forceError: "<error type>",
     },
     onEvent: (data) => console.log(data),
     isSandbox: true,
@@ -58,12 +58,11 @@ Integrate the widget into your frontend framework using the script below. Ensure
 - **`companyId`**: The unique identifier for the company, must start with `'com_'`.
 - **`userReference`**: (Optional) A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
 - **`userEmail`**: The user's email address. This field is optional when the flow is `'register'`, where if not provided, Soyio will prompt the user to enter their email. However, for the `'authenticate'` flow, this field should not be provided.
+- **`forceError`**: (Optional) Triggers specific errors for testing or debugging. Used to simulate failure scenarios.
 - **`flowTemplateId`**: : Required only in the `'register'` flow, this identifier specifies the order and quantity of documents requested from the user. It must start with `'vft_'`.
 - **`identityId`**: Necessary only in the `'authenticate'` flow, this identifier must start with `'id_'` and signifies the user's identity.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`isSandbox`**: (Optional) Indicates if the widget should operate in sandbox mode, defaulting to `false`.
-- **`forceError`**: (Optional) Enum with two values (`no_error` and `validation_error`). Only valid for sandbox environment. Indicates if the flow should simulate a failed validation response.
- 
 
 #### Events
 
@@ -87,3 +86,12 @@ The `onEvent` callback is designed to handle various events that occur during wi
 
 - **`WIDGET_OPENED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
   - `{ eventName: 'WIDGET_CLOSED' }`.
+
+#### Error types
+
+The `forceError` parameter can simulate the following error conditions:
+
+- `'user_exists'`: Triggers an error indicating that a user with the given credentials already exists in the system.
+- `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
+- `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
+- `'unknown_error'`: Generates a generic error, representing an unspecified problem.
