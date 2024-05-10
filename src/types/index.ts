@@ -8,6 +8,7 @@ export type ConfigProps = {
   userEmail?: string
   identityId?: string
   forceError?: SoyioErrors
+  customColor?: string
 }
 
 export type EventData = {
