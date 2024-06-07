@@ -59,7 +59,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
 - **`companyId`**: The unique identifier for the company, must start with `'com_'`.
 - **`userReference`**: (Optional) A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
 - **`userEmail`**: The user's email address. This field is optional when the flow is `'register'`, where if not provided, Soyio will prompt the user to enter their email. However, for the `'authenticate'` flow, this field should not be provided.
-- **`flowTemplateId`**: Required only in the `'register'` flow, this identifier specifies the order and quantity of documents requested from the user. It must start with `'vft_'`.
+- **`flowTemplateId`**: Required only in the `'register'` flow, this identifier specifies the order and quantity of documents requested from the user. It must start with `'vt_'`.
 - **`identityId`**: Necessary only in the `'authenticate'` flow, this identifier must start with `'id_'` and signifies the user's identity.
 - **`forceError`**: (Optional) Triggers specific errors for testing or debugging. Used to simulate failure scenarios.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
@@ -78,7 +78,7 @@ The `onEvent` callback is designed to handle various events that occur during wi
 
 - **`IDENTITY_AUTHENTICATED`**: This event occurs when a user successfully completes the authentication flow. The event object includes:
 
-  - `eventName`: The name of the event, here `'IDENTITY_AUTHENTICATED'`.
+  - `eventName`: The name of the event, in this case, `'IDENTITY_AUTHENTICATED'`.
   - `identityId`: The unique identifier for the authenticated identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
