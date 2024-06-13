@@ -30,6 +30,8 @@ Integrate the widget into your frontend framework using the script below. Ensure
 
 ```html
 <script>
+  import Widget from '@soyio/soyio-widget';
+
   // Widget configuration
   const widgetConfig = {
     flow: "<flow>",
