@@ -13,5 +13,5 @@ export function getFullUrl(
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
 
-  return `${baseUrl}/${flow}?platform=web&${urlParams}`;
+  return `${baseUrl}/${flow}?sdk=web&${urlParams}`;
 }

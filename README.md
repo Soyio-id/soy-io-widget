@@ -84,6 +84,8 @@ The `onEvent` callback is designed to handle various events that occur during wi
   - `identityId`: The unique identifier for the authenticated identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
+- **`DENIED_CAMERA_PERMISSION`**: Event triggered when user denies camera permissions. It closes the widget.
+
 - **`WIDGET_CLOSED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
 
   - `{ eventName: 'WIDGET_CLOSED' }`.
