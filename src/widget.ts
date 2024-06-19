@@ -13,7 +13,7 @@ function focusPopup() {
 
 export function showPopUp(
   flow: Flow,
-  configProps: Partial<ConfigProps>,
+  configProps: ConfigProps,
   isSandbox: boolean,
   developmentUrl: string | undefined,
 ) {
