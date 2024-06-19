@@ -30,7 +30,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
 
 ```html
 <script>
-  import Widget from '@soyio/soyio-widget';
+  import SoyioWidget from '@soyio/soyio-widget';
 
   // Widget configuration
   const widgetConfig = {
@@ -50,7 +50,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
 
   // Create widget when needed. In this example, widget is created when page is loaded.
   document.addEventListener("DOMContentLoaded", function () {
-    new Widget(widgetConfig);
+    new SoyioWidget(widgetConfig);
   });
 </script>
 ```
@@ -97,7 +97,9 @@ The `onEvent` callback is designed to handle various events that occur during wi
 
 The `forceError` parameter can simulate the following error conditions:
 
-- `'user_exists'`: Triggers an error indicating that a user with the given credentials already exists in the system.
+
 - `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
 - `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
 - `'unknown_error'`: Generates a generic error, representing an unspecified problem.
+- `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
+- `'camera_permission_error'`: Happens when the user does not grant the necessary permissions to access the camera, preventing the completion of the validation flow.
