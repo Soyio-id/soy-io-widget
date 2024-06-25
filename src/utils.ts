@@ -3,7 +3,7 @@ import type { ConfigProps, Flow } from './types';
 
 export function getFullUrl(
   flow: Flow,
-  configProps: Partial<ConfigProps>,
+  configProps: ConfigProps,
   isSandbox: boolean,
   developmentUrl: string | undefined,
 ): string {
