@@ -28,7 +28,7 @@ export type SignatureAttemptProps = {
 }
 
 export type EventData = {
-  eventName: 'IDENTITY_REGISTERED' | 'IDENTITY_AUTHENTICATED' | 'DENIED_CAMERA_PERMISSION',
+  eventName: 'IDENTITY_REGISTERED' | 'IDENTITY_AUTHENTICATED' | 'DENIED_CAMERA_PERMISSION' | 'REJECTED_SIGNATURE',
   identityId: string,
   userReference?: string
 }
