@@ -144,15 +144,21 @@ Optional props:
 
 The `onEvent` callback is designed to handle various events that occur during widget interaction. Specifically, it receives detailed information upon the successful completion of user flows. Here are the events it handles:
 
-- **`IDENTITY_REGISTERED`**: This event is dispatched when a user successfully completes the registration flow. The event object contains:
+- **`IDENTITY_REGISTERED`**: This event is dispatched when a user successfully completes the validation attempt. The event object contains:
 
   - `eventName`: The name of the event, in this case, `'IDENTITY_REGISTERED'`.
   - `identityId`: The unique identifier for the newly registered identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
-- **`IDENTITY_AUTHENTICATED`**: This event occurs when a user successfully completes the authentication flow. The event object includes:
+- **`IDENTITY_AUTHENTICATED`**: This event occurs when a user successfully completes an authentication attempt. The event object includes:
 
   - `eventName`: The name of the event, in this case, `'IDENTITY_AUTHENTICATED'`.
+  - `identityId`: The unique identifier for the authenticated identity.
+  - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
+
+- **`IDENTITY_SIGNATURE`**: This event occurs when a user successfully completes a signature attempt. The event object includes:
+
+  - `eventName`: The name of the event, in this case, `'IDENTITY_SIGNATURE'`.
   - `identityId`: The unique identifier for the authenticated identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
