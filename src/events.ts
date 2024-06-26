@@ -1,12 +1,12 @@
 import postRobot from 'post-robot';
 
-import type { ConfigProps } from './types';
+import type { AttemptConfig } from './types';
 
 function setReady(iframe: HTMLIFrameElement) {
   postRobot.send(iframe.contentWindow, 'ready');
 }
 
-function setConfig(iframe: HTMLIFrameElement, config: Partial<ConfigProps>) {
+function setConfig(iframe: HTMLIFrameElement, config: Partial<AttemptConfig>) {
   postRobot.send(iframe.contentWindow, 'config', config);
 }
 
