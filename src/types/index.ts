@@ -1,5 +1,5 @@
 export type ForceErrors = 'facial_validation_error' | 'document_validation_error' | 'unknown_error' | 'expiration_error' | 'camera_permission_error';
-export type Flow = 'authenticate' | 'register'
+export type Flow = 'authenticate' | 'register' | 'signature'
 
 export type AuthAttemptProps = {
   companyId: string
@@ -18,18 +18,43 @@ export type ValidationAttemptProps = {
   customColor?: string
 }
 
-export type ConfigProps = AuthAttemptProps | ValidationAttemptProps
+export type SignatureAttemptProps = {
+  companyId: string
+  identityId: string
+  signatureTemplateId: string
+  userReference?: string
+  forceError?: ForceErrors
+  customColor?: string
+}
 
 export type EventData = {
-  eventName: 'IDENTITY_REGISTERED' | 'IDENTITY_AUTHENTICATED' | 'DENIED_CAMERA_PERMISSION',
+  eventName: 'IDENTITY_REGISTERED' | 'IDENTITY_AUTHENTICATED' | 'IDENTITY_SIGNATURE' | 'DENIED_CAMERA_PERMISSION' | 'REJECTED_SIGNATURE',
   identityId: string,
   userReference?: string
 }
 
-export type WidgetConfig = {
-  flow: Flow,
-  configProps: ConfigProps,
+export type ValidationAttemptConfig = {
+  flow: 'register',
+  configProps: ValidationAttemptProps,
   onEvent: (data: EventData) => void,
   isSandbox?: boolean,
   developmentUrl?: string,
 }
+
+export type AuthAttemptConfig = {
+  flow: 'authenticate',
+  configProps: AuthAttemptProps,
+  onEvent: (data: EventData) => void,
+  isSandbox?: boolean,
+  developmentUrl?: string,
+}
+
+export type SignatureAttemptConfig = {
+  flow: 'signature',
+  configProps: SignatureAttemptProps,
+  onEvent: (data: EventData) => void,
+  isSandbox?: boolean,
+  developmentUrl?: string,
+}
+
+export type AttemptConfig = ValidationAttemptConfig | AuthAttemptConfig | SignatureAttemptConfig;

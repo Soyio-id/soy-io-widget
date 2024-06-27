@@ -1,4 +1,4 @@
-import type { ConfigProps, Flow } from './types';
+import type { AttemptConfig } from './types';
 import { getFullUrl } from './utils';
 
 let popupWindow: Window | null = null;
@@ -6,18 +6,11 @@ let popupWindow: Window | null = null;
 function focusPopup() {
   if (popupWindow && !popupWindow.closed) {
     popupWindow.focus();
-  } else {
-    throw new Error('Popup window does not exist or is closed.');
   }
 }
 
-export function showPopUp(
-  flow: Flow,
-  configProps: ConfigProps,
-  isSandbox: boolean,
-  developmentUrl: string | undefined,
-) {
-  const url = getFullUrl(flow, configProps, isSandbox, developmentUrl);
+export function showPopUp(options: AttemptConfig) {
+  const url = getFullUrl(options);
 
   const w = 510;
   const h = 720;
