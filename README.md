@@ -32,7 +32,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
 
 ```html
 <script>
-  import { SoyioWidget } from '@soyio/soyio-widget';
+  import { SoyioWidget } from "@soyio/soyio-widget";
 
   // Widget configuration
   const widgetConfig = {
@@ -57,16 +57,17 @@ Integrate the widget into your frontend framework using the script below. Ensure
 ```
 
 Optional props:
-* `userReference`
-* `userEmail`
-* `forceError`
-* `customColor`.
+
+- `userReference`
+- `userEmail`
+- `forceError`
+- `customColor`.
 
 ### 2. Auth attempt
 
 ```html
 <script>
-  import { SoyioWidget } from '@soyio/soyio-widget';
+  import { SoyioWidget } from "@soyio/soyio-widget";
 
   // Widget configuration
   const widgetConfig = {
@@ -76,7 +77,7 @@ Optional props:
       userReference: "<user identifier of company>",
       identityId: "<identity id>",
       forceError: "<error type>",
-      customColor: "<custom color>"
+      customColor: "<custom color>",
     },
     onEvent: (data) => console.log(data),
     isSandbox: true,
@@ -90,24 +91,22 @@ Optional props:
 ```
 
 Optional props:
-* `userReference`
-* `forceError`
-* `customColor`.
 
-### 3. Signature attempt (*coming soon...*)
+- `userReference`
+- `forceError`
+- `customColor`.
+
+### 3. Signature attempt (_coming soon..._)
 
 ```html
 <script>
-  import { SoyioWidget } from '@soyio/soyio-widget';
+  import { SoyioWidget } from "@soyio/soyio-widget";
 
   // Widget configuration
   const widgetConfig = {
     flow: "signature",
     configProps: {
-      companyId: "<company id>",
-      userReference: "<user identifier of company>",
-      signatureTemplateId: "<signature template id>",
-      identityId: "<identity id>",
+      signatureAttemptId: "<signature attempt id>",
       forceError: "<error type>",
       customColor: "<custom color>"
     },
@@ -123,9 +122,9 @@ Optional props:
 ```
 
 Optional props:
-* `userReference`
-* `forceError`
-* `customColor`.
+
+- `forceError`
+- `customColor`.
 
 ### Attribute Descriptions
 
@@ -133,7 +132,7 @@ Optional props:
 - **`userReference`**: A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
 - **`userEmail`**: The user's email address. If not provided, Soyio will prompt the user to enter their email.
 - **`flowTemplateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user. It must start with `'vt_'`.
-- **`signatureTemplateId`**: Identifier of template. Specifies the order and quantity of documents to sign. It must start with `'st_'`.
+- **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
 - **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
 - **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
@@ -175,7 +174,6 @@ The `onEvent` callback is designed to handle various events that occur during wi
 
 The `forceError` parameter can simulate the following error conditions:
 
-
 - `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
 - `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
 - `'unknown_error'`: Generates a generic error, representing an unspecified problem.
@@ -189,5 +187,5 @@ The `SoyioTypes` module from the `@soyio/soyio-widget` package provides TypeScri
 To use the `SoyioTypes` in your project, import it directly from the `@soyio/soyio-widget` package:
 
 ```javascript
-import { SoyioTypes } from '@soyio/soyio-widget'
+import type { SoyioTypes } from "@soyio/soyio-widget";
 ```

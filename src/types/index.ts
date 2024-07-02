@@ -19,10 +19,7 @@ export type ValidationAttemptProps = {
 }
 
 export type SignatureAttemptProps = {
-  companyId: string
-  identityId: string
-  signatureTemplateId: string
-  userReference?: string
+  signatureAttemptId: string
   forceError?: ForceErrors
   customColor?: string
 }
