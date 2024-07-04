@@ -43,7 +43,7 @@ Integrate the widget into your frontend framework using the script below. Ensure
       userEmail: "<user email>",
       flowTemplateId: "<flow template id>",
       forceError: "<error type>",
-      customColor: "<custom color>"
+      customColor: "<custom color>",
     },
     onEvent: (data) => console.log(data),
     isSandbox: true,
@@ -96,7 +96,7 @@ Optional props:
 - `forceError`
 - `customColor`.
 
-### 3. Signature attempt (_coming soon..._)
+### 3. Signature attempt
 
 ```html
 <script>
@@ -108,7 +108,7 @@ Optional props:
     configProps: {
       signatureAttemptId: "<signature attempt id>",
       forceError: "<error type>",
-      customColor: "<custom color>"
+      customColor: "<custom color>",
     },
     onEvent: (data) => console.log(data),
     isSandbox: true,
@@ -162,6 +162,11 @@ The `onEvent` callback is designed to handle various events that occur during wi
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
 - **`DENIED_CAMERA_PERMISSION`**: Event triggered when user denies camera permissions. It closes the widget.
+
+- **`REJECTED_SIGNATURE`**: Event triggered when user clicks the "reject" button in the signature attempt. The event object includes:
+
+  - `identityId`: The unique identifier for the identity.
+  - `userReference`: The userReference used in the validation attempt for the identity.
 
 - **`WIDGET_CLOSED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
 
