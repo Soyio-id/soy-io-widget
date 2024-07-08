@@ -1,12 +1,30 @@
 import type { AttemptConfig } from './types';
 import { getFullUrl } from './utils';
 
+const POPUP_CHECK_INTERVAL_MS = 500;
+
 let popupWindow: Window | null = null;
+let popupCheckInterval: NodeJS.Timeout | null = null;
 
 function focusPopup() {
   if (popupWindow && !popupWindow.closed) {
     popupWindow.focus();
   }
+}
+
+export function clearOverlayEffects() {
+  document.body.style.filter = '';
+  document.body.removeEventListener('click', focusPopup);
+}
+
+function setPopupCheckInterval() {
+  popupCheckInterval = setInterval(() => {
+    if (!popupWindow || popupWindow.closed) {
+      if (popupCheckInterval) clearInterval(popupCheckInterval);
+
+      clearOverlayEffects();
+    }
+  }, POPUP_CHECK_INTERVAL_MS);
 }
 
 export function showPopUp(options: AttemptConfig) {
@@ -32,11 +50,7 @@ export function showPopUp(options: AttemptConfig) {
   popupWindow = window.open(url, 'Soyio', `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`);
 
   focusPopup();
-}
-
-export function clearOverlayEffects() {
-  document.body.style.filter = '';
-  document.body.removeEventListener('click', focusPopup);
+  setPopupCheckInterval();
 }
 
 export function removePopUp() {
