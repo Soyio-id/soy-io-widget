@@ -11,3 +11,5 @@ export function getFullUrl(options: AttemptConfig): string {
 
   return `${baseUrl}/${options.flow}?sdk=web&${urlParams}`;
 }
+
+export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
