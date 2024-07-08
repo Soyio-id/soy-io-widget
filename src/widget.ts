@@ -12,11 +12,17 @@ function focusPopup() {
   }
 }
 
+export function clearOverlayEffects() {
+  document.body.style.filter = '';
+  document.body.removeEventListener('click', focusPopup);
+}
+
 function setPopupCheckInterval() {
   popupCheckInterval = setInterval(() => {
     if (!popupWindow || popupWindow.closed) {
       if (popupCheckInterval) clearInterval(popupCheckInterval);
-      document.body.style.filter = 'none';
+
+      clearOverlayEffects();
     }
   }, POPUP_CHECK_INTERVAL_MS);
 }
@@ -45,11 +51,6 @@ export function showPopUp(options: AttemptConfig) {
 
   focusPopup();
   setPopupCheckInterval();
-}
-
-export function clearOverlayEffects() {
-  document.body.style.filter = '';
-  document.body.removeEventListener('click', focusPopup);
 }
 
 export function removePopUp() {
