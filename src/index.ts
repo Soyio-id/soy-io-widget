@@ -1,5 +1,6 @@
-import * as listeners from './listeners';
+import * as Listeners from './listeners';
 import * as SoyioTypes from './types';
+import { isBrowser } from './utils';
 import { showPopUp } from './widget';
 
 class SoyioWidget {
@@ -8,11 +9,13 @@ class SoyioWidget {
   constructor(options: SoyioTypes.AttemptConfig) {
     this.onEvent = options.onEvent;
 
-    showPopUp(options);
+    if (isBrowser) {
+      showPopUp(options);
 
-    listeners.setListeners({
-      onEvent: this.#triggerEvent.bind(this),
-    });
+      Listeners.setListeners({
+        onEvent: this.#triggerEvent.bind(this),
+      });
+    }
   }
 
   #triggerEvent(data: SoyioTypes.EventData) {
