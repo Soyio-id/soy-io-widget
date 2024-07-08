@@ -1,5 +1,3 @@
-import postRobot from 'post-robot';
-
 import * as messageTypes from '../sharedTypes/messages';
 
 import { CLOSED_EVENT, FINISHING_EVENTS } from './constants';
@@ -11,8 +9,10 @@ type Hooks = {
 
 let isListenerSet = false;
 
-function buildEventListener(hooks: Hooks) {
+async function buildEventListener(hooks: Hooks) {
   const { onEvent } = hooks;
+
+  const postRobot = await import('post-robot');
 
   if (!isListenerSet) {
     postRobot.on(messageTypes.WIDGET_EVENT, (event: any) => {
