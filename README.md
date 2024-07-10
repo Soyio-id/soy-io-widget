@@ -31,6 +31,10 @@ Integrate the widget into your frontend framework using the script below. Ensure
 ### 1. Validation attempt
 
 ```html
+<button id="start-validation-attempt">
+  Start validation attempt
+</button>
+
 <script>
   import { SoyioWidget } from "@soyio/soyio-widget";
 
@@ -49,10 +53,14 @@ Integrate the widget into your frontend framework using the script below. Ensure
     isSandbox: true,
   };
 
-  // Create widget when needed. In this example, widget is created when page is loaded.
-  document.addEventListener("DOMContentLoaded", function () {
+  // Function to create the widget
+  function initWidget() {
     new SoyioWidget(widgetConfig);
-  });
+  }
+
+  // Add event listener to the button to create the widget on click
+  document.getElementById('start-validation-attempt')
+          .addEventListener('click', initWidget);
 </script>
 ```
 
@@ -66,6 +74,10 @@ Optional props:
 ### 2. Auth attempt
 
 ```html
+<button id="start-auth-attempt">
+  Start auth attempt
+</button>
+
 <script>
   import { SoyioWidget } from "@soyio/soyio-widget";
 
@@ -83,10 +95,14 @@ Optional props:
     isSandbox: true,
   };
 
-  // Create widget when needed. In this example, widget is created when page is loaded.
-  document.addEventListener("DOMContentLoaded", function () {
+  // Function to create the widget
+  function initWidget() {
     new SoyioWidget(widgetConfig);
-  });
+  }
+
+  // Add event listener to the button to create the widget on click
+  document.getElementById('start-auth-attempt')
+          .addEventListener('click', initWidget);
 </script>
 ```
 
@@ -99,6 +115,10 @@ Optional props:
 ### 3. Signature attempt
 
 ```html
+<button id="start-auth-attempt">
+  Start signature attempt
+</button>
+
 <script>
   import { SoyioWidget } from "@soyio/soyio-widget";
 
@@ -114,10 +134,14 @@ Optional props:
     isSandbox: true,
   };
 
-  // Create widget when needed. In this example, widget is created when page is loaded.
-  document.addEventListener("DOMContentLoaded", function () {
+  // Function to create the widget
+  function initWidget() {
     new SoyioWidget(widgetConfig);
-  });
+  }
+
+  // Add event listener to the button to create the widget on click
+  document.getElementById('start-auth-attempt')
+          .addEventListener('click', initWidget);
 </script>
 ```
 
