@@ -28,19 +28,26 @@ yarn add @soyio/soyio-widget
 
 Integrate the widget into your frontend framework using the script below. Ensure to replace placeholders (e.g., \<flow>, \<company id>) with actual values relevant to your implementation.
 
-### 1. Validation attempt
+### 1. Disclosure Request
+
+A **`disclosure_request`** is a process that a user goes through where they are verified, and then they share the necessary data as required by each company.
+This verification can happen in one of the following two ways:
+
+1. **Validation**: Through document validation and facial video. This occurs when a user has never been verified before with Soyio.
+
+2. **Authentication**: Through an access key (passkey) or facial video. This can occur when a user has already been validated previously with Soyio.
+
+To instantiate this process in the code, it should be done in the following manner:
 
 ```html
-<button id="start-validation-attempt">
-  Start validation attempt
-</button>
+<button id="start-disclosure-request">Start disclosure request</button>
 
 <script>
   import { SoyioWidget } from "@soyio/soyio-widget";
 
   // Widget configuration
   const widgetConfig = {
-    flow: "register",
+    request: "disclosure",
     configProps: {
       companyId: "<company id>",
       userReference: "<user identifier of company>",
@@ -59,8 +66,9 @@ Integrate the widget into your frontend framework using the script below. Ensure
   }
 
   // Add event listener to the button to create the widget on click
-  document.getElementById('start-validation-attempt')
-          .addEventListener('click', initWidget);
+  document
+    .getElementById("start-disclosure-request")
+    .addEventListener("click", initWidget);
 </script>
 ```
 
@@ -71,53 +79,12 @@ Optional props:
 - `forceError`
 - `customColor`.
 
-### 2. Auth attempt
+### 2. Signature attempt
+
+The **`signature_attempt`** is a process where, using a previously created `signature_attempt_id`, a flow is initiated in which a user can digitally sign a document. To sign the document, the user must be authenticated. This authentication can occur either through an access key or facial video. It's important to note that for this flow, the user must have been previously verified with Soyio.
 
 ```html
-<button id="start-auth-attempt">
-  Start auth attempt
-</button>
-
-<script>
-  import { SoyioWidget } from "@soyio/soyio-widget";
-
-  // Widget configuration
-  const widgetConfig = {
-    flow: "authenticate",
-    configProps: {
-      companyId: "<company id>",
-      userReference: "<user identifier of company>",
-      identityId: "<identity id>",
-      forceError: "<error type>",
-      customColor: "<custom color>",
-    },
-    onEvent: (data) => console.log(data),
-    isSandbox: true,
-  };
-
-  // Function to create the widget
-  function initWidget() {
-    new SoyioWidget(widgetConfig);
-  }
-
-  // Add event listener to the button to create the widget on click
-  document.getElementById('start-auth-attempt')
-          .addEventListener('click', initWidget);
-</script>
-```
-
-Optional props:
-
-- `userReference`
-- `forceError`
-- `customColor`.
-
-### 3. Signature attempt
-
-```html
-<button id="start-auth-attempt">
-  Start signature attempt
-</button>
+<button id="start-signature-attempt">Start signature attempt</button>
 
 <script>
   import { SoyioWidget } from "@soyio/soyio-widget";
@@ -140,8 +107,9 @@ Optional props:
   }
 
   // Add event listener to the button to create the widget on click
-  document.getElementById('start-auth-attempt')
-          .addEventListener('click', initWidget);
+  document
+    .getElementById("start-signature-attempt")
+    .addEventListener("click", initWidget);
 </script>
 ```
 
@@ -155,37 +123,32 @@ Optional props:
 - **`companyId`**: The unique identifier for the company, must start with `'com_'`.
 - **`userReference`**: A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
 - **`userEmail`**: The user's email address. If not provided, Soyio will prompt the user to enter their email.
-- **`flowTemplateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user. It must start with `'vt_'`.
+- **`templateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user, as well as the mandatory data that the user is asked to share with the company. It must start with `'dtpl_'`.
 - **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
 - **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
 - **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
-- **`customColor`**: A hex code string that specifies the base color of the interface during either the authentication or registration flow.
+- **`customColor`**: A hex code string that specifies the base color of the interface.
 
 ### Events
 
 The `onEvent` callback is designed to handle various events that occur during widget interaction. Specifically, it receives detailed information upon the successful completion of user flows. Here are the events it handles:
 
-- **`IDENTITY_REGISTERED`**: This event is dispatched when a user successfully completes the validation attempt. The event object contains:
+- **`DISCLOSURE_REQUEST_SUCCESSFUL`**: This event occurs when a user successfully completes a `disclosure_request`. The identity verification could have been a `validation` or `authentication`.
 
-  - `eventName`: The name of the event, in this case, `'IDENTITY_REGISTERED'`.
-  - `identityId`: The unique identifier for the newly registered identity.
-  - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
-
-- **`IDENTITY_AUTHENTICATED`**: This event occurs when a user successfully completes an authentication attempt. The event object includes:
-
-  - `eventName`: The name of the event, in this case, `'IDENTITY_AUTHENTICATED'`.
-  - `identityId`: The unique identifier for the authenticated identity.
+  - `eventName`: The name of the event, in this case, `'DISCLOSURE_REQUEST_SUCCESSFUL'`.
+  - `verificationMethod`: Takes the values of `authentication` or `validation`.
+  - `identityId`: The unique identifier for the verified identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
 - **`IDENTITY_SIGNATURE`**: This event occurs when a user successfully completes a signature attempt. The event object includes:
 
   - `eventName`: The name of the event, in this case, `'IDENTITY_SIGNATURE'`.
-  - `identityId`: The unique identifier for the authenticated identity.
   - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
 
 - **`DENIED_CAMERA_PERMISSION`**: Event triggered when user denies camera permissions. It closes the widget.
+- **`UNEXPECTED_ERROR`**: Event triggered when user exits because of an unexpected error.
 
 - **`REJECTED_SIGNATURE`**: Event triggered when user clicks the "reject" button in the signature attempt. The event object includes:
 
