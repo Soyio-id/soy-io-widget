@@ -26,7 +26,7 @@ yarn add @soyio/soyio-widget
 
 ## Usage
 
-Integrate the widget into your frontend framework using the script below. Ensure to replace placeholders (e.g., \<flow>, \<company id>) with actual values relevant to your implementation.
+Integrate the widget into your frontend framework using the script below. Ensure to replace placeholders (e.g., \<request>, \<company id>) with actual values relevant to your implementation.
 
 ### 1. Disclosure Request
 
@@ -52,7 +52,7 @@ To instantiate this process in the code, it should be done in the following mann
       companyId: "<company id>",
       userReference: "<user identifier of company>",
       userEmail: "<user email>",
-      flowTemplateId: "<flow template id>",
+      templateId: "<template id>",
       forceError: "<error type>",
       customColor: "<custom color>",
     },
@@ -81,7 +81,7 @@ Optional props:
 
 ### 2. Signature attempt
 
-The **`signature_attempt`** is a process where, using a previously created `signature_attempt_id`, a flow is initiated in which a user can digitally sign a document. To sign the document, the user must be authenticated. This authentication can occur either through an access key or facial video. It's important to note that for this flow, the user must have been previously verified with Soyio.
+The **`signature_attempt`** is a process where, using a previously created `signature_attempt_id`, a request is initiated in which a user can digitally sign a document. To sign the document, the user must be authenticated. This authentication can occur either through an access key or facial video. It's important to note that for this request, the user must have been previously verified with Soyio.
 
 ```html
 <button id="start-signature-attempt">Start signature attempt</button>
@@ -91,7 +91,7 @@ The **`signature_attempt`** is a process where, using a previously created `sign
 
   // Widget configuration
   const widgetConfig = {
-    flow: "signature",
+    request: "signature",
     configProps: {
       signatureAttemptId: "<signature attempt id>",
       forceError: "<error type>",
@@ -133,7 +133,7 @@ Optional props:
 
 ### Events
 
-The `onEvent` callback is designed to handle various events that occur during widget interaction. Specifically, it receives detailed information upon the successful completion of user flows. Here are the events it handles:
+The `onEvent` callback is designed to handle various events that occur during widget interaction. Specifically, it receives detailed information upon the successful completion of user request. Here are the events it handles:
 
 - **`DISCLOSURE_REQUEST_SUCCESSFUL`**: This event occurs when a user successfully completes a `disclosure_request`. The identity verification could have been a `validation` or `authentication`.
 
@@ -170,7 +170,7 @@ The `forceError` parameter can simulate the following error conditions:
 - `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
 - `'unknown_error'`: Generates a generic error, representing an unspecified problem.
 - `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
-- `'camera_permission_error'`: Happens when the user does not grant the necessary permissions to access the camera, preventing the completion of the validation flow.
+- `'camera_permission_error'`: Happens when the user does not grant the necessary permissions to access the camera, preventing the completion of the disclosure or signature request.
 
 #### Typescript
 

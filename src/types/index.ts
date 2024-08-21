@@ -3,7 +3,7 @@ export type Request = 'disclosure' | 'signature'
 
 export type DisclosureRequestProps = {
   companyId: string
-  flowTemplateId: string
+  templateId: string
   userReference?: string
   userEmail?: string
   forceError?: ForceErrors
@@ -31,7 +31,7 @@ export type DisclosureRequestConfig = {
 }
 
 export type SignatureAttemptConfig = {
-  flow: 'signature',
+  request: 'signature',
   configProps: SignatureAttemptProps,
   onEvent: (data: EventData) => void,
   isSandbox?: boolean,
