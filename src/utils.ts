@@ -9,7 +9,7 @@ export function getFullUrl(options: AttemptConfig): string {
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
 
-  return `${baseUrl}/${options.flow}?sdk=web&${urlParams}`;
+  return `${baseUrl}/${options.request}?sdk=web&${urlParams}`;
 }
 
 export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
