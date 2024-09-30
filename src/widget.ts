@@ -6,10 +6,11 @@ const POPUP_CHECK_INTERVAL_MS = 500;
 let popupWindow: Window | null = null;
 let popupCheckInterval: NodeJS.Timeout | null = null;
 
-function focusPopup() {
+function focusPopup(event: MouseEvent | null = null) {
   if (popupWindow && !popupWindow.closed) {
     popupWindow.focus();
   }
+  event?.preventDefault();
 }
 
 export function clearOverlayEffects() {
@@ -42,10 +43,7 @@ export function showPopUp(options: AttemptConfig) {
   const top = ((height / 2) - (h / 2));
 
   document.body.style.filter = 'blur(5px)';
-  document.body.addEventListener('click', (event) => {
-    focusPopup();
-    event.preventDefault();
-  });
+  document.body.addEventListener('click', focusPopup);
 
   popupWindow = window.open(url, 'Soyio', `scrollbars=yes, width=${w}, height=${h}, top=${top}, left=${left}`);
 
