@@ -1,6 +1,6 @@
 {
   "name": "@soyio/soyio-widget",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.1",
+    "@types/post-robot": "^10.0.6",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.57.0",
@@ -38,8 +39,8 @@
     "vitest": "^0.34.6"
   },
   "dependencies": {
+    "post-robot": "^10.0.46",
     "vite": "^5.0.0",
-    "vite-plugin-dts": "^3.6.4",
-    "post-robot": "^10.0.46"
+    "vite-plugin-dts": "^3.6.4"
   }
 }

@@ -392,6 +392,11 @@
   dependencies:
     undici-types "~5.26.4"
 
+"@types/post-robot@^10.0.6":
+  version "10.0.6"
+  resolved "https://registry.yarnpkg.com/@types/post-robot/-/post-robot-10.0.6.tgz#9c8b1db55dd109cc36aa5a0d8edbd46827fd572c"
+  integrity sha512-x+LaZPQ4TYW8aBbKpFZsJn7TGipka7tC2ZokE8gpCAlh4E4XFgxxcvt19LD41BeExmlzAtjHh700r3r8SdfX9A==
+
 "@types/semver@^7.5.0":
   version "7.5.6"
   resolved "https://registry.npmjs.org/@types/semver/-/semver-7.5.6.tgz"
