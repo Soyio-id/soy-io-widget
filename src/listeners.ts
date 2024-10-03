@@ -15,7 +15,7 @@ async function buildEventListener(hooks: Hooks) {
   const postRobot = await import('post-robot');
 
   if (!isListenerSet) {
-    postRobot.on(messageTypes.WIDGET_EVENT, (event: any) => {
+    postRobot.on(messageTypes.WIDGET_EVENT, async (event: any) => {
       onEvent(event.data);
       if (FINISHING_EVENTS.includes(event.data.eventName)) {
         removePopUp();
