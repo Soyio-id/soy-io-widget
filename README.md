@@ -41,7 +41,11 @@ This verification can happen in one of the following two ways:
 
 2. **Authentication**: Through an access key (passkey) or facial video. This can occur when a user has already been validated previously with Soyio.
 
-To instantiate this process in the code, it should be done in the following manner:
+To instantiate this process in the code, you have two options
+
+#### 1.a Disclosure requests on-the-fly
+
+This doesn't require any previous setup. Given your company and disclosure template IDs, you can create disclosure requests freely when the user starts the widget.
 
 ```html
 <button id="start-disclosure-request">Start disclosure request</button>
@@ -78,10 +82,54 @@ To instantiate this process in the code, it should be done in the following mann
 
 Optional props:
 
-- `userReference`
 - `userEmail`
 - `forceError`
 - `customColor`.
+
+#### 1.b Created disclosure request
+
+You can alternatively create a disclosure request beforehand with some **matchers** to make sure the person completing the request matches the one that your application thinks it is.
+
+For more details about the use case, please refer to [the documentation](https://docs.soyio.id/).
+
+To use this option, simply specify the disclosure request ID along with any optional parameters:
+
+```html
+<button id="start-disclosure-request">Start disclosure request</button>
+
+<script>
+  import { SoyioWidget } from "@soyio/soyio-widget";
+
+  // Widget configuration
+  const widgetConfig = {
+    request: "disclosure",
+    configProps: {
+      disclosureRequestId: "<disclosure request id>",
+      forceError: "<error type>",
+      customColor: "<custom color>",
+    },
+    onEvent: (data) => console.log(data),
+    isSandbox: true,
+  };
+
+  // Function to create the widget
+  function initWidget() {
+    new SoyioWidget(widgetConfig);
+  }
+
+  // Add event listener to the button to create the widget on click
+  document
+    .getElementById("start-disclosure-request")
+    .addEventListener("click", initWidget);
+</script>
+```
+
+Optional properties:
+
+- `forceError`
+- `customColor`
+
+Note: User and template properties are not specified here because they must be specified when creating the disclosure request beforehand.
 
 ### 2. Signature attempt
 
@@ -128,6 +176,7 @@ Optional props:
 - **`userReference`**: A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
 - **`userEmail`**: The user's email address. If not provided, Soyio will prompt the user to enter their email.
 - **`templateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user, as well as the mandatory data that the user is asked to share with the company. It must start with `'dtpl_'`.
+- **`disclosureRequestId`**: If created beforehand, you can target a specific disclosure request that the user must complete. It is useful if you need to match some data between the disclosure process and your database records. It must start with `'dreq_'`
 - **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
 - **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
