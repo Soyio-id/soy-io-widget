@@ -28,6 +28,10 @@ yarn add @soyio/soyio-widget
 
 Integrate the widget into your frontend framework using the script below. Ensure to replace placeholders (e.g., \<request>, \<company id>) with actual values relevant to your implementation.
 
+## Browser compatibility notes
+
+**Important Safari Limitation**: In Safari browsers, the widget can only be opened as a result of a direct user interaction (like a click event). This is due to Safari's security policies regarding popup windows. Always ensure the widget initialization is triggered by a user action when supporting Safari browsers.
+
 ### 1. Disclosure Request
 
 A **`disclosure_request`** is a process that a user goes through where they are verified, and then they share the necessary data as required by each company.
