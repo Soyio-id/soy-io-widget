@@ -1,14 +1,27 @@
 export type ForceErrors = 'facial_validation_error' | 'document_validation_error' | 'unknown_error' | 'expiration_error' | 'camera_permission_error';
 export type Request = 'disclosure' | 'signature'
 
-export type DisclosureRequestProps = {
-  companyId: string
-  templateId: string
-  userReference?: string
-  userEmail?: string
-  forceError?: ForceErrors
-  customColor?: string
+export type NewDisclosureRequestProps = {
+  companyId: string;
+  templateId: string;
+  disclosureRequestId?: never;
+  userReference: string;
+  userEmail?: string;
+  forceError?: ForceErrors;
+  customColor?: string;
 }
+
+export type ExistingDisclosureRequestProps = {
+  companyId?: never;
+  templateId?: never;
+  disclosureRequestId: string;
+  userReference?: never;
+  userEmail?: never;
+  forceError?: ForceErrors;
+  customColor?: string;
+}
+
+export type DisclosureRequestProps = NewDisclosureRequestProps | ExistingDisclosureRequestProps;
 
 export type SignatureAttemptProps = {
   signatureAttemptId: string
