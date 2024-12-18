@@ -2,8 +2,8 @@ export type ForceErrors = 'facial_validation_error' | 'document_validation_error
 export type Request = 'disclosure' | 'signature'
 
 export type NewDisclosureRequestProps = {
-  companyId: string;
-  templateId: string;
+  companyId: `com_${string}`;
+  templateId: `dtpl_${string}`;
   disclosureRequestId?: never;
   userReference: string;
   userEmail?: string;
@@ -14,7 +14,7 @@ export type NewDisclosureRequestProps = {
 export type ExistingDisclosureRequestProps = {
   companyId?: never;
   templateId?: never;
-  disclosureRequestId: string;
+  disclosureRequestId: `dreq_${string}`;
   userReference?: never;
   userEmail?: never;
   forceError?: ForceErrors;
@@ -24,14 +24,27 @@ export type ExistingDisclosureRequestProps = {
 export type DisclosureRequestProps = NewDisclosureRequestProps | ExistingDisclosureRequestProps;
 
 export type SignatureAttemptProps = {
-  signatureAttemptId: string
+  signatureAttemptId: `sa_${string}`
   forceError?: ForceErrors
   customColor?: string
 }
 
+export type AuthRequestProps = {
+  authRequestId: `authreq_${string}`
+  customColor?: string
+}
+
 export type EventData = {
-  eventName: 'IDENTITY_VALIDATED' | 'IDENTITY_AUTHENTICATED' | 'IDENTITY_SIGNATURE' | 'DENIED_CAMERA_PERMISSION' | 'REJECTED_SIGNATURE' | 'DISCLOSURE_REQUEST_SUCCESSFUL' | 'UNEXPECTED_ERROR',
-  identityId: string,
+  eventName: |
+    'IDENTITY_VALIDATED' |
+    'IDENTITY_AUTHENTICATED' |
+    'IDENTITY_SIGNATURE' |
+    'DENIED_CAMERA_PERMISSION' |
+    'REJECTED_SIGNATURE' |
+    'DISCLOSURE_REQUEST_SUCCESSFUL' |
+    'UNEXPECTED_ERROR' |
+    'AUTH_REQUEST_SUCCESSFUL'
+  identityId: `id_${string}`,
   userReference?: string
 }
 
@@ -51,4 +64,12 @@ export type SignatureAttemptConfig = {
   developmentUrl?: string,
 }
 
-export type AttemptConfig = DisclosureRequestConfig | SignatureAttemptConfig;
+export type AuthRequestConfig = {
+  request: 'authentication',
+  configProps: AuthRequestProps,
+  onEvent: (data: EventData) => void,
+  isSandbox?: boolean,
+  developmentUrl?: string,
+}
+
+export type AttemptConfig = DisclosureRequestConfig | SignatureAttemptConfig | AuthRequestConfig;

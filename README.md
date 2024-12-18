@@ -170,6 +170,43 @@ Optional props:
 - `forceError`
 - `customColor`.
 
+### 3. Auth Request
+
+The **`auth_request`** is a process where, using a previously created `auth_request_id`, a request is initiated in which a user can authenticate. This authentication can occur either through an access key or facial video. It's important to note that for this request, the user must have been previously verified with Soyio.
+
+```html
+<button id="start-auth-request">Start auth request</button>
+
+<script>
+  import { SoyioWidget } from "@soyio/soyio-widget";
+
+  // Widget configuration
+  const widgetConfig = {
+    request: "authentication",
+    configProps: {
+      authRequestId: "<auth request id>",
+      customColor: "<custom color>",
+    },
+    onEvent: (data) => console.log(data),
+    isSandbox: true,
+  };
+
+  // Function to create the widget
+  function initWidget() {
+    new SoyioWidget(widgetConfig);
+  }
+
+  // Add event listener to the button to create the widget on click
+  document
+    .getElementById("start-auth-request")
+    .addEventListener("click", initWidget);
+</script>
+```
+
+Optional props:
+
+- `customColor`.
+
 ### Attribute Descriptions
 
 - **`companyId`**: The unique identifier for the company, must start with `'com_'`.
@@ -178,6 +215,7 @@ Optional props:
 - **`templateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user, as well as the mandatory data that the user is asked to share with the company. It must start with `'dtpl_'`.
 - **`disclosureRequestId`**: If created beforehand, you can target a specific disclosure request that the user must complete. It is useful if you need to match some data between the disclosure process and your database records. It must start with `'dreq_'`
 - **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
+- **`authRequestId`**: Identifier of auth request obtained when creating the `AuthRequest`. It must start with `'authreq_'`.
 - **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
 - **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
