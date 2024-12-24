@@ -28,11 +28,11 @@ yarn add @soyio/soyio-widget
 
 Integrate the widget into your frontend framework using the script below. Ensure to replace placeholders (e.g., \<request>, \<company id>) with actual values relevant to your implementation.
 
-## Browser compatibility notes
+## Browser Compatibility Notes
 
 **Important Safari Limitation**: In Safari browsers, the widget can only be opened as a result of a direct user interaction (like a click event). This is due to Safari's security policies regarding popup windows. Always ensure the widget initialization is triggered by a user action when supporting Safari browsers.
 
-### 1. Disclosure Request
+## Disclosure Request
 
 A **`disclosure_request`** is a process that a user goes through where they are verified, and then they share the necessary data as required by each company.
 This verification can happen in one of the following two ways:
@@ -41,9 +41,9 @@ This verification can happen in one of the following two ways:
 
 2. **Authentication**: Through an access key (passkey) or facial video. This can occur when a user has already been validated previously with Soyio.
 
-To instantiate this process in the code, you have two options
+To instantiate this process in the code, you have two options:
 
-#### 1.a Disclosure requests on-the-fly
+### 1. Disclosure Requests On-the-fly
 
 This doesn't require any previous setup. Given your company and disclosure template IDs, you can create disclosure requests freely when the user starts the widget.
 
@@ -86,7 +86,7 @@ Optional props:
 - `forceError`
 - `customColor`.
 
-#### 1.b Created disclosure request
+### 2. Created Disclosure Request
 
 You can alternatively create a disclosure request beforehand with some **matchers** to make sure the person completing the request matches the one that your application thinks it is.
 
@@ -131,7 +131,50 @@ Optional properties:
 
 Note: User and template properties are not specified here because they must be specified when creating the disclosure request beforehand.
 
-### 2. Signature attempt
+### Disclosure Request Events
+
+The `onEvent` callback is designed to handle various events that occur during widget interaction. Specifically, it receives detailed information upon the successful completion of user request. Here are the events it handles:
+
+- **`DISCLOSURE_REQUEST_SUCCESSFUL`**: This event occurs when a user successfully completes a `disclosure_request`. The identity verification could have been a `validation` or `authentication`.
+
+  - `eventName`: The name of the event, in this case, `'DISCLOSURE_REQUEST_SUCCESSFUL'`.
+  - `verificationMethod`: Takes the values of `authentication` or `validation`.
+  - `identityId`: The unique identifier for the verified identity.
+  - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
+
+- **`DENIED_CAMERA_PERMISSION`**: Event triggered when user denies camera permissions. It closes the widget.
+- **`UNEXPECTED_ERROR`**: Event triggered when user exits because of an unexpected error.
+
+- **`WIDGET_CLOSED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
+
+  - `{ eventName: 'WIDGET_CLOSED' }`.
+
+- **`WIDGET_OPENED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
+  - `{ eventName: 'WIDGET_CLOSED' }`.
+
+### Disclosure Request Attribute Descriptions
+
+- **`companyId`**: The unique identifier for the company, must start with `'com_'`.
+- **`userReference`**: A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
+- **`userEmail`**: The user's email address. If not provided, Soyio will prompt the user to enter their email.
+- **`templateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user, as well as the mandatory data that the user is asked to share with the company. It must start with `'dtpl_'`.
+- **`disclosureRequestId`**: If created beforehand, you can target a specific disclosure request that the user must complete. It is useful if you need to match some data between the disclosure process and your database records. It must start with `'dreq_'`
+- **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
+- **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
+- **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
+- **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
+- **`customColor`**: A hex code string that specifies the base color of the interface.
+
+### Force Error Types
+
+The `forceError` parameter can simulate the following error conditions:
+
+- `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
+- `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
+- `'unknown_error'`: Generates a generic error, representing an unspecified problem.
+- `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
+
+## Signature Attempt
 
 The **`signature_attempt`** is a process where, using a previously created `signature_attempt_id`, a request is initiated in which a user can digitally sign a document. To sign the document, the user must be authenticated. This authentication can occur either through an access key or facial video. It's important to note that for this request, the user must have been previously verified with Soyio.
 
@@ -170,7 +213,35 @@ Optional props:
 - `forceError`
 - `customColor`.
 
-### 3. Auth Request
+### Signature Attempt Events
+
+- **`IDENTITY_SIGNATURE`**: This event occurs when a user successfully completes a signature attempt. The event object includes:
+
+  - `eventName`: The name of the event, in this case, `'IDENTITY_SIGNATURE'`.
+  - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
+
+- **`REJECTED_SIGNATURE`**: Event triggered when user clicks the "reject" button in the signature attempt. The event object includes:
+
+  - `identityId`: The unique identifier for the identity.
+  - `userReference`: The userReference used in the validation attempt for the identity.
+
+### Signature Attempt Attribute Descriptions
+
+- **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
+- **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
+- **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
+- **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
+- **`customColor`**: A hex code string that specifies the base color of the interface.
+
+### Force Error Types
+
+The `forceError` parameter can simulate the following error conditions:
+
+- `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
+- `'unknown_error'`: Generates a generic error, representing an unspecified problem.
+- `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
+
+## Auth Request
 
 The **`auth_request`** is a process where, using a previously created `auth_request_id`, a request is initiated in which a user can authenticate. This authentication can occur either through an access key or facial video. It's important to note that for this request, the user must have been previously verified with Soyio.
 
@@ -207,63 +278,58 @@ Optional props:
 
 - `customColor`.
 
-### Attribute Descriptions
+### Auth Request Attribute Descriptions
 
-- **`companyId`**: The unique identifier for the company, must start with `'com_'`.
-- **`userReference`**: A reference identifier provided by the company for the user engaging with the widget. This identifier is used in events (`onEvent` and `webhooks`) to inform the company which user the events are associated with.
-- **`userEmail`**: The user's email address. If not provided, Soyio will prompt the user to enter their email.
-- **`templateId`**: Identifier of template. Specifies the order and quantity of documents requested from the user, as well as the mandatory data that the user is asked to share with the company. It must start with `'dtpl_'`.
-- **`disclosureRequestId`**: If created beforehand, you can target a specific disclosure request that the user must complete. It is useful if you need to match some data between the disclosure process and your database records. It must start with `'dreq_'`
-- **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
 - **`authRequestId`**: Identifier of auth request obtained when creating the `AuthRequest`. It must start with `'authreq_'`.
-- **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
-- **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`customColor`**: A hex code string that specifies the base color of the interface.
 
-### Events
+## Consent Request Box
 
-The `onEvent` callback is designed to handle various events that occur during widget interaction. Specifically, it receives detailed information upon the successful completion of user request. Here are the events it handles:
+The **`ConsentRequestBox`** is a component that allows you to embed a consent request directly within your webpage, rather than opening it in a popup window. This is particularly useful when you want to integrate the consent flow seamlessly into your application's interface.
 
-- **`DISCLOSURE_REQUEST_SUCCESSFUL`**: This event occurs when a user successfully completes a `disclosure_request`. The identity verification could have been a `validation` or `authentication`.
+```html
+<!-- Add a container div where the consent request will be mounted -->
+<div id="consent-request-box"></div>
 
-  - `eventName`: The name of the event, in this case, `'DISCLOSURE_REQUEST_SUCCESSFUL'`.
-  - `verificationMethod`: Takes the values of `authentication` or `validation`.
-  - `identityId`: The unique identifier for the verified identity.
-  - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
+<script>
+  import { ConsentRequestBox } from "@soyio/soyio-widget";
 
-- **`IDENTITY_SIGNATURE`**: This event occurs when a user successfully completes a signature attempt. The event object includes:
+  // Configuration for the consent request
+  const consentRequestOptions = {
+    consentRequestId: "<consent request id>",
+    onEvent: (data) => console.log(data),
+    isSandbox: true, // Optional, defaults to false
+  };
 
-  - `eventName`: The name of the event, in this case, `'IDENTITY_SIGNATURE'`.
-  - `userReference`: The reference identifier for the user, facilitating the association of the event with the user within the company's context.
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    // Create and mount the consent request box
+    new ConsentRequestBox(consentRequestOptions).mount("#consent-request-box");
+  });
+</script>
+```
 
-- **`DENIED_CAMERA_PERMISSION`**: Event triggered when user denies camera permissions. It closes the widget.
-- **`UNEXPECTED_ERROR`**: Event triggered when user exits because of an unexpected error.
+### Consent Request Box Events
 
-- **`REJECTED_SIGNATURE`**: Event triggered when user clicks the "reject" button in the signature attempt. The event object includes:
+The `onEvent` follows the following format:
 
-  - `identityId`: The unique identifier for the identity.
-  - `userReference`: The userReference used in the validation attempt for the identity.
+```typescript
+{
+  eventName: 'CONSENT_CHECKBOX_CHANGE',
+  entityId: `ent_${string}`,
+  isSelected: boolean
+}
+```
 
-- **`WIDGET_CLOSED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
+### Attribute Descriptions
 
-  - `{ eventName: 'WIDGET_CLOSED' }`.
+- **`consentRequestId`**: Identifier of consent request obtained when creating the `ConsentRequest`. It must start with `'consentreq_'`.
+- **`entityId`**: Identifier of entity obtained when creating the `ConsentRequest`. It must start with `'ent_'`.
+- **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
 
-- **`WIDGET_OPENED`**: This event occurs when the user closes the `Soyio` pop up. The event object is as follows:
-  - `{ eventName: 'WIDGET_CLOSED' }`.
-
-#### Force error types
-
-The `forceError` parameter can simulate the following error conditions:
-
-- `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
-- `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
-- `'unknown_error'`: Generates a generic error, representing an unspecified problem.
-- `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
-- `'camera_permission_error'`: Happens when the user does not grant the necessary permissions to access the camera, preventing the completion of the disclosure or signature request.
-
-#### Typescript
+## TypeScript
 
 The `SoyioTypes` module from the `@soyio/soyio-widget` package provides TypeScript type definitions that you can use to integrate the SoyioWidget more seamlessly into your TypeScript projects.
 
