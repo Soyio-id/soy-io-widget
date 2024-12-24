@@ -4,6 +4,7 @@ import {
   getFullUrl,
   getIframeDivContainer,
 } from './iframe';
+import { removeListener, setListener } from './listeners';
 import type { ConsentRequestConfig } from './types';
 
 class ConsentRequestBox {
@@ -12,6 +13,8 @@ class ConsentRequestBox {
 
   constructor(options: ConsentRequestConfig) {
     this.options = options;
+
+    setListener({ onEvent: this.options.onEvent.bind(this) });
   }
 
   mount(selector: string): ConsentRequestBox {
@@ -27,6 +30,8 @@ class ConsentRequestBox {
   }
 
   unmount(): void {
+    removeListener();
+
     if (this.iframe) {
       this.iframe.remove();
       this.iframe = null;
