@@ -1,7 +1,6 @@
-export const CONTAINER_ID = 'soyio-widget-iframe-container';
-export const IFRAME_ID = 'soyio-widget-iframe';
-export const PRODUCTION_URL = 'https://app.soyio.id/widget';
-export const SANDBOX_URL = 'https://sandbox.soyio.id/widget';
+export const CONSENT_REQUEST_IFRAME_ID = 'soyio-consent-request-iframe';
+export const PRODUCTION_URL = 'https://app.soyio.id';
+export const SANDBOX_URL = 'https://sandbox.soyio.id';
 export const FINISHING_EVENTS = [
   'DISCLOSURE_REQUEST_SUCCESSFUL',
   'IDENTITY_REGISTERED',
@@ -11,3 +10,7 @@ export const FINISHING_EVENTS = [
   'REJECTED_SIGNATURE',
 ];
 export const CLOSED_EVENT = 'WIDGET_CLOSED';
+
+export const POPUP_WIDTH = 420;
+export const POPUP_HEIGHT = 720;
+export const POPUP_CHECK_INTERVAL_MS = 500;

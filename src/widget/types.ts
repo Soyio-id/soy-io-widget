@@ -1,5 +1,8 @@
+export const WIDGET_MOUNTED = 'WIDGET_MOUNTED';
+export const WIDGET_EVENT = 'WIDGET_EVENT';
+
 export type ForceErrors = 'facial_validation_error' | 'document_validation_error' | 'unknown_error' | 'expiration_error' | 'camera_permission_error';
-export type Request = 'disclosure' | 'signature'
+export type Request = 'disclosure' | 'signature' | 'authentication';
 
 export type NewDisclosureRequestProps = {
   companyId: `com_${string}`;
@@ -56,7 +59,7 @@ export type DisclosureRequestConfig = {
   developmentUrl?: string,
 }
 
-export type SignatureAttemptConfig = {
+export type SignatureRequestConfig = {
   request: 'signature',
   configProps: SignatureAttemptProps,
   onEvent: (data: EventData) => void,
@@ -72,4 +75,4 @@ export type AuthRequestConfig = {
   developmentUrl?: string,
 }
 
-export type AttemptConfig = DisclosureRequestConfig | SignatureAttemptConfig | AuthRequestConfig;
+export type RequestConfig = DisclosureRequestConfig | SignatureRequestConfig | AuthRequestConfig;

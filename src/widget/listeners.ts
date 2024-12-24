@@ -1,7 +1,7 @@
-import * as messageTypes from '../sharedTypes/messages';
+import { CLOSED_EVENT, FINISHING_EVENTS } from '../constants';
 
-import { CLOSED_EVENT, FINISHING_EVENTS } from './constants';
-import { clearOverlayEffects, removePopUp } from './widget';
+import { clearOverlayEffects, removePopUp } from './popup';
+import { WIDGET_EVENT } from './types';
 
 type Hooks = {
   onEvent: (event: any) => void;
@@ -25,7 +25,7 @@ async function buildEventListener(hooks: Hooks) {
 
   if (activeListener) removeListener();
 
-  activeListener = postRobot.on(messageTypes.WIDGET_EVENT, async (event) => {
+  activeListener = postRobot.on(WIDGET_EVENT, async (event) => {
     onEvent(event.data);
     if (FINISHING_EVENTS.includes(event.data.eventName)) {
       removePopUp();
