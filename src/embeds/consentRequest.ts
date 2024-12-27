@@ -4,7 +4,7 @@ import {
   getFullUrl,
   getIframeDivContainer,
 } from './iframe';
-import { removeListener, setListener } from './listeners';
+import { removeListeners, setListener } from './listeners';
 import type { ConsentRequestConfig } from './types';
 
 class ConsentRequestBox {
@@ -14,7 +14,16 @@ class ConsentRequestBox {
   constructor(options: ConsentRequestConfig) {
     this.options = options;
 
-    setListener({ onEvent: this.options.onEvent.bind(this) });
+    setListener({
+      onEvent: this.options.onEvent.bind(this),
+      onHeightChange: this.handleHeightChange.bind(this),
+    });
+  }
+
+  private handleHeightChange(height: number): void {
+    if (this.iframe) {
+      this.iframe.style.height = `${height}px`;
+    }
   }
 
   mount(selector: string): ConsentRequestBox {
@@ -30,7 +39,7 @@ class ConsentRequestBox {
   }
 
   unmount(): void {
-    removeListener();
+    removeListeners();
 
     if (this.iframe) {
       this.iframe.remove();
