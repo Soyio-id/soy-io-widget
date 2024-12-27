@@ -1,27 +1,6 @@
-import * as Listeners from './listeners';
+import { ConsentRequestBox } from './embeds';
 import * as SoyioTypes from './types';
-import { isBrowser } from './utils';
-import { showPopUp } from './widget';
-
-class SoyioWidget {
-  private onEvent: (data: SoyioTypes.EventData) => void;
-
-  constructor(options: SoyioTypes.AttemptConfig) {
-    this.onEvent = options.onEvent;
-
-    if (isBrowser) {
-      showPopUp(options);
-
-      Listeners.setListeners({
-        onEvent: this.#triggerEvent.bind(this),
-      });
-    }
-  }
-
-  #triggerEvent(data: SoyioTypes.EventData) {
-    this.onEvent(data);
-  }
-}
+import { SoyioWidget } from './widget';
 
 export default SoyioWidget;
-export { SoyioWidget, SoyioTypes };
+export { ConsentRequestBox, SoyioWidget, SoyioTypes };
