@@ -5,13 +5,13 @@ import {
   getIframeDivContainer,
 } from './iframe';
 import { removeListeners, setListener } from './listeners';
-import type { ConsentRequestConfig } from './types';
+import type { ConsentConfig } from './types';
 
-class ConsentRequestBox {
-  private options: ConsentRequestConfig;
+class ConsentBox {
+  private options: ConsentConfig;
   private iframe: HTMLIFrameElement | null = null;
 
-  constructor(options: ConsentRequestConfig) {
+  constructor(options: ConsentConfig) {
     this.options = options;
 
     setListener({
@@ -26,7 +26,7 @@ class ConsentRequestBox {
     }
   }
 
-  mount(selector: string): ConsentRequestBox {
+  mount(selector: string): ConsentBox {
     cleanupExistingIframe();
 
     const iframeDivContainer = getIframeDivContainer(selector);
@@ -48,4 +48,4 @@ class ConsentRequestBox {
   }
 }
 
-export { ConsentRequestBox };
+export { ConsentBox };

@@ -287,18 +287,18 @@ Optional props:
 
 ## Consent Request Box
 
-The **`ConsentRequestBox`** is a component that allows you to embed a consent request directly within your webpage, rather than opening it in a popup window. This is particularly useful when you want to integrate the consent flow seamlessly into your application's interface.
+The **`ConsentBox`** is a component that allows you to embed a consent request directly within your webpage, rather than opening it in a popup window. This is particularly useful when you want to integrate the consent flow seamlessly into your application's interface.
 
 ```html
 <!-- Add a container div where the consent request will be mounted -->
 <div id="consent-request-box"></div>
 
 <script>
-  import { ConsentRequestBox } from "@soyio/soyio-widget";
+  import { ConsentBox } from "@soyio/soyio-widget";
 
   // Configuration for the consent request
-  const consentRequestOptions = {
-    consentRequestId: "<consent request id>",
+  const consentOptions = {
+    consentTemplateId: "<consent template id>",
     onEvent: (data) => console.log(data),
     isSandbox: true, // Optional, defaults to false
   };
@@ -306,7 +306,7 @@ The **`ConsentRequestBox`** is a component that allows you to embed a consent re
   // Wait for DOM to be fully loaded
   document.addEventListener("DOMContentLoaded", () => {
     // Create and mount the consent request box
-    new ConsentRequestBox(consentRequestOptions).mount("#consent-request-box");
+    new ConsentBox(consentOptions).mount("#consent-request-box");
   });
 </script>
 ```
@@ -318,16 +318,16 @@ The `onEvent` follows the following format:
 ```typescript
 {
   eventName: 'CONSENT_CHECKBOX_CHANGE',
-  entityId: `ent_${string}`,
   isSelected: boolean
+  token: string,
 }
 ```
 
 ### Attribute Descriptions
 
-- **`consentRequestId`**: Identifier of consent request obtained when creating the `ConsentRequest`. It must start with `'consentreq_'`.
-- **`entityId`**: Identifier of entity obtained when creating the `ConsentRequest`. It must start with `'ent_'`.
+- **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
 - **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
+- **`token`**: Unique identifier for the consent. Contains necessary information for creation of the consent request. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
 
 ## TypeScript
 
