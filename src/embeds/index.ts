@@ -1,3 +1,3 @@
-import { ConsentRequestBox } from './consentRequest';
+import { ConsentBox } from './consent';
 
-export { ConsentRequestBox };
+export { ConsentBox };

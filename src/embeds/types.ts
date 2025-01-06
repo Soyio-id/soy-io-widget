@@ -12,11 +12,11 @@ export type IframeHeightChangeEvent = {
   height: number
 }
 
-export type ConsentRequestEvent = ConsentCheckboxChangeEvent | IframeHeightChangeEvent;
+export type ConsentEvent = ConsentCheckboxChangeEvent | IframeHeightChangeEvent;
 
-export type ConsentRequestConfig = {
-  consentRequestId: `consreq_${string}`,
-  onEvent: (data: ConsentRequestEvent) => void,
+export type ConsentConfig = {
+  consentTemplateId: `constpl_${string}`,
+  onEvent: (data: ConsentEvent) => void,
   isSandbox?: boolean,
   developmentUrl?: string,
 }

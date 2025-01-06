@@ -1,6 +1,6 @@
 export type {
-  ConsentRequestEvent,
-  ConsentRequestConfig,
+  ConsentEvent,
+  ConsentConfig,
 } from './embeds/types';
 
 export type {

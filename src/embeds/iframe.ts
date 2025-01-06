@@ -1,12 +1,12 @@
-import { CONSENT_REQUEST_IFRAME_ID, PRODUCTION_URL, SANDBOX_URL } from '../constants';
+import { CONSENT_IFRAME_ID, PRODUCTION_URL, SANDBOX_URL } from '../constants';
 
-import type { ConsentRequestConfig } from './types';
+import type { ConsentConfig } from './types';
 
 export function cleanupExistingIframe(): void {
-  const existingIframe = document.getElementById(CONSENT_REQUEST_IFRAME_ID);
+  const existingIframe = document.getElementById(CONSENT_IFRAME_ID);
   if (existingIframe) {
     // eslint-disable-next-line no-console
-    console.warn('ConsentRequestBox iframe already exists. Removing existing before mounting new one.');
+    console.warn('ConsentBox iframe already exists. Removing existing before mounting new one.');
     existingIframe.remove();
   }
 }
@@ -38,7 +38,7 @@ export function getIframeDivContainer(selector: string): HTMLDivElement {
 
 export function createIframe(url: string): HTMLIFrameElement {
   const iframe = document.createElement('iframe');
-  iframe.id = CONSENT_REQUEST_IFRAME_ID;
+  iframe.id = CONSENT_IFRAME_ID;
   iframe.src = url;
 
   iframe.style.cssText += `
@@ -54,9 +54,9 @@ export function createIframe(url: string): HTMLIFrameElement {
   return iframe;
 }
 
-export function getFullUrl(consentRequestConfig: ConsentRequestConfig): string {
-  const isSandbox = consentRequestConfig.isSandbox ?? false;
-  const baseUrl = consentRequestConfig.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
+export function getFullUrl(consentConfig: ConsentConfig): string {
+  const isSandbox = consentConfig.isSandbox ?? false;
+  const baseUrl = consentConfig.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
 
-  return `${baseUrl}/embed/consents/${consentRequestConfig.consentRequestId}`;
+  return `${baseUrl}/embed/consents/${consentConfig.consentTemplateId}`;
 }

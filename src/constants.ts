@@ -1,4 +1,4 @@
-export const CONSENT_REQUEST_IFRAME_ID = 'soyio-consent-request-iframe';
+export const CONSENT_IFRAME_ID = 'soyio-consent-iframe';
 export const PRODUCTION_URL = 'https://app.soyio.id';
 export const SANDBOX_URL = 'https://sandbox.soyio.id';
 export const FINISHING_EVENTS = [

@@ -1,12 +1,12 @@
 import {
-  ConsentRequestEvent,
+  ConsentEvent,
   IFRAME_EVENT,
   IFRAME_HEIGHT_CHANGE,
   IframeHeightChangeEvent,
 } from './types';
 
 type Events = {
-  onEvent: (event: ConsentRequestEvent) => void;
+  onEvent: (event: ConsentEvent) => void;
   onHeightChange: (height: number) => void;
 };
 
@@ -30,7 +30,7 @@ export async function setListener(events: Events) {
   removeListeners();
 
   activeListener = postRobot.on(IFRAME_EVENT, async (event) => {
-    const eventData = event.data as ConsentRequestEvent;
+    const eventData = event.data as ConsentEvent;
     onEvent(eventData);
   });
 
