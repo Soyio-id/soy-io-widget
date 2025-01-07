@@ -319,7 +319,7 @@ The `onEvent` follows the following format:
 {
   eventName: 'CONSENT_CHECKBOX_CHANGE',
   isSelected: boolean
-  token: string,
+  jwt: string,
 }
 ```
 
@@ -327,7 +327,7 @@ The `onEvent` follows the following format:
 
 - **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
 - **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
-- **`token`**: Unique identifier for the consent. Contains necessary information for creation of the consent request. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
+- **`jwt`**: JWT token containing necessary information for creation of the consent record. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
 
 ## TypeScript
 
