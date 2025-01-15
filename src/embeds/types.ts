@@ -4,7 +4,7 @@ export const IFRAME_HEIGHT_CHANGE = 'IFRAME_HEIGHT_CHANGE';
 export type ConsentCheckboxChangeEvent = {
   eventName: 'CONSENT_CHECKBOX_CHANGE'
   isSelected: boolean
-  jwt: string
+  actionToken?: string
 }
 
 export type IframeHeightChangeEvent = {

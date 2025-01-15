@@ -27,7 +27,9 @@ export function getIframeDivContainer(selector: string): HTMLDivElement {
   container.style.cssText += `
     padding: 0 !important;
     margin: 0 !important;
-    display: block !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     border: none !important;
     transition: height 0.35s !important;
     opacity: 1 !important;
@@ -43,8 +45,10 @@ export function createIframe(url: string): HTMLIFrameElement {
 
   iframe.style.cssText += `
     width: 100% !important;
+    min-width: 25rem !important;
+    max-width: 36rem !important;
     border: none !important;
-    height: 110px !important;
+    height: 120px !important;
     overflow: hidden !important;
     opacity: 1;
     transition: height 0.35s,
