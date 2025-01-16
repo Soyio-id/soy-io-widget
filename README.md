@@ -301,6 +301,7 @@ The **`ConsentBox`** is a component that allows you to embed a consent request d
     consentTemplateId: "<consent template id>",
     onEvent: (data) => console.log(data),
     isSandbox: true, // Optional, defaults to false
+    appearance: {}, // Optional
   };
 
   // Wait for DOM to be fully loaded
@@ -328,6 +329,7 @@ The `onEvent` follows the following format:
 - **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
 - **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
 - **`actionToken`**: token containing necessary information for creation of the consent commit. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
+- **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/api/intro).
 
 ## TypeScript
 
