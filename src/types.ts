@@ -3,6 +3,8 @@ export type {
   ConsentConfig,
 } from './embeds/types';
 
+export type { SoyioAppearance } from './embeds/appearance/types';
+
 export type {
   ForceErrors,
   Request,
