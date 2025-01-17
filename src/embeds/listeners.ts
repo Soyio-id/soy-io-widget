@@ -2,29 +2,35 @@ import {
   ConsentEvent,
   IFRAME_EVENT,
   IFRAME_HEIGHT_CHANGE,
+  IFRAME_READY,
   IframeHeightChangeEvent,
 } from './types';
 
 type Events = {
   onEvent: (event: ConsentEvent) => void;
   onHeightChange: (height: number) => void;
+  onIframeReady: () => void;
 };
 
 type PostRobotListener = ReturnType<typeof import('post-robot')['on']>;
 
 let activeListener: PostRobotListener | null = null;
 let heightChangeListener: PostRobotListener | null = null;
+let readyListener: PostRobotListener | null = null;
 
-function removeListeners() {
+export function removeListeners() {
   activeListener?.cancel();
   activeListener = null;
 
   heightChangeListener?.cancel();
   heightChangeListener = null;
+
+  readyListener?.cancel();
+  readyListener = null;
 }
 
 export async function setListener(events: Events) {
-  const { onEvent, onHeightChange } = events;
+  const { onEvent, onHeightChange, onIframeReady } = events;
   const postRobot = await import('post-robot');
 
   removeListeners();
@@ -38,6 +44,8 @@ export async function setListener(events: Events) {
     const eventData = event.data as IframeHeightChangeEvent;
     onHeightChange(eventData.height);
   });
-}
 
-export { removeListeners };
+  readyListener = postRobot.on(IFRAME_READY, async () => {
+    onIframeReady();
+  });
+}
