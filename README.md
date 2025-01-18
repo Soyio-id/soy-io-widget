@@ -324,12 +324,134 @@ The `onEvent` follows the following format:
 }
 ```
 
+### Methods
+
+- **`getState()`**: Returns the current state of the consent box. The returned object has the following structure:
+
+```typescript
+{
+  isSelected: boolean,
+  actionToken: string | null,
+}
+
+```
+
 ### Attribute Descriptions
 
 - **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
 - **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
 - **`actionToken`**: token containing necessary information for creation of the consent commit. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
-- **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/api/intro).
+- **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/integration-guide/modules/consent).
+
+# Appearance
+
+Customize the look and feel of Soyio UI components by passing an `appearance` object to the configuration. The appearance object supports themes, CSS variables, and CSS rules for granular control over the styling.
+
+## Structure
+
+The appearance object consists of three main sections:
+
+```javascript
+const appearance = {
+  theme: string,
+  variables: Variables,
+  rules: Rules,
+};
+```
+
+## Themes
+
+Currently supported themes:
+
+- `"soyio"` (default) - The standard Soyio theme
+
+## Variables
+
+Use variables to adjust common visual attributes across all components.
+
+```javascript
+interface Variables {
+  fontFamily?: string;
+  colorPrimary?: string;
+  colorBackground?: string;
+  colorText?: string;
+  borderRadius?: string;
+  borderWidth?: string;
+  borderStyle?: string;
+}
+```
+
+### Available Variables
+
+| Variable          | Description                            | Default                   |
+| ----------------- | -------------------------------------- | ------------------------- |
+| `fontFamily`      | The font stack to use for text         | `"system-ui, sans-serif"` |
+| `colorPrimary`    | Primary color for interactive elements | `"#0570DE"`               |
+| `colorBackground` | Background color                       | `"#FFFFFF"`               |
+| `colorText`       | Main text color                        | `"#1A1F36"`               |
+| `borderRadius`    | Border radius for elements             | `"4px"`                   |
+| `borderWidth`     | Border width for elements              | `"1px"`                   |
+| `borderStyle`     | Border style for elements              | `"solid"`                 |
+
+## Rules
+
+The `rules` object allows you to apply custom CSS to specific elements. Currently, Soyio supports styling for checkbox components.
+
+### Supported Selectors
+
+- `.CheckboxInput` - The checkbox input element
+- `.CheckboxInput--checked` - The checked state of the checkbox
+- `.CheckboxInput:hover` - Hover state of the checkbox
+- `.CheckboxInput:focus` - Focus state of the checkbox
+- `.CheckboxInput:focus-visible` - Focus-visible state of the checkbox
+
+![Checkbox Components](assets/checkbox-appearance.webp)
+
+### Example Configuration
+
+```javascript
+const appearance = {
+  theme: "soyio",
+  variables: {
+    fontFamily: "system-ui, sans-serif",
+    colorPrimary: "#f54c27",
+    colorBackground: "#ffffff",
+    colorText: "#1E1B4B",
+    borderRadius: "0.5rem",
+    borderWidth: "3px",
+    borderStyle: "dashed",
+  },
+  rules: {
+    ".CheckboxInput": {
+      appearance: "none",
+      backgroundColor: "transparent",
+      cursor: "pointer",
+      width: "1rem",
+      height: "1rem",
+      borderRadius: "9999px",
+      borderWidth: "2px",
+      borderStyle: "solid",
+      borderColor: "var(--colorPrimary)",
+    },
+    ".CheckboxInput--checked": {
+      borderColor: "var(--colorPrimary)",
+      backgroundColor: "var(--colorPrimary)",
+    },
+    ".CheckboxInput:hover": {
+      borderColor: "var(--colorPrimary)",
+      boxShadow: "0 0 0 2px var(--colorPrimary)",
+    },
+    ".CheckboxInput:focus": {
+      outline: "none",
+      boxShadow: "0 0 0 2px var(--colorPrimary)",
+    },
+    ".CheckboxInput:focus-visible": {
+      outline: "none",
+      boxShadow: "0 0 0 2px var(--colorPrimary)",
+    },
+  },
+};
+```
 
 ## TypeScript
 
