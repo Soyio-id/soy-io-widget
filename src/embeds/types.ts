@@ -1,9 +1,14 @@
 import type { SoyioAppearance } from './appearance/types';
 
 export const IFRAME_READY = 'IFRAME_READY';
-export const IFRAME_EVENT = 'IFRAME_EVENT';
+export const CONSENT_STATE_CHANGE = 'CONSENT_STATE_CHANGE';
 export const IFRAME_HEIGHT_CHANGE = 'IFRAME_HEIGHT_CHANGE';
 export const APPEARANCE_CONFIG = 'APPEARANCE_CONFIG';
+
+export type ConsentState = {
+  isSelected: boolean;
+  actionToken: string | null;
+}
 
 export type ConsentCheckboxChangeEvent = {
   eventName: 'CONSENT_CHECKBOX_CHANGE'
