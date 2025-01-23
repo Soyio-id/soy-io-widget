@@ -62,5 +62,11 @@ export function getFullUrl(consentConfig: ConsentConfig): string {
   const isSandbox = consentConfig.isSandbox ?? false;
   const baseUrl = consentConfig.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
 
-  return `${baseUrl}/embed/consents/${consentConfig.consentTemplateId}`;
+  const urlParams = new URLSearchParams();
+  if (consentConfig.actionToken) {
+    urlParams.set('actionToken', consentConfig.actionToken);
+  }
+
+  const queryString = urlParams.toString();
+  return `${baseUrl}/embed/consents/${consentConfig.consentTemplateId}${queryString ? `?${queryString}` : ''}`;
 }

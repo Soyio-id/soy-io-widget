@@ -300,14 +300,16 @@ The **`ConsentBox`** is a component that allows you to embed a consent request d
   const consentOptions = {
     consentTemplateId: "<consent template id>",
     onEvent: (data) => console.log(data),
-    isSandbox: true, // Optional, defaults to false
+    isSandbox: true, // Optional
     appearance: {}, // Optional
+    actionToken: "<action token>", // Optional
   };
 
   // Wait for DOM to be fully loaded
   document.addEventListener("DOMContentLoaded", () => {
     // Create and mount the consent request box
-    new ConsentBox(consentOptions).mount("#consent-request-box");
+    const consentBox = new ConsentBox(consentOptions);
+    consentBox.mount("#consent-request-box");
   });
 </script>
 ```
@@ -342,6 +344,7 @@ The `onEvent` follows the following format:
 - **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
 - **`actionToken`**: token containing necessary information for creation of the consent commit. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
 - **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/integration-guide/modules/consent).
+- **`actionToken`**: In case of losing the state of the consent (i.e. page reload), you can use a previously generated `actionToken` to restore the state of the consent.
 
 # Appearance
 
