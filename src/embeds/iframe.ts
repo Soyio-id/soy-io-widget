@@ -1,9 +1,9 @@
-import { CONSENT_IFRAME_ID, PRODUCTION_URL, SANDBOX_URL } from '../constants';
+import { PRODUCTION_URL, SANDBOX_URL } from '../constants';
 
 import type { ConsentConfig } from './types';
 
-export function cleanupExistingIframe(): void {
-  const existingIframe = document.getElementById(CONSENT_IFRAME_ID);
+export function cleanupExistingIframe(identifier: string): void {
+  const existingIframe = document.getElementById(identifier);
   if (existingIframe) {
     // eslint-disable-next-line no-console
     console.warn('ConsentBox iframe already exists. Removing existing before mounting new one.');
@@ -38,9 +38,9 @@ export function getIframeDivContainer(selector: string): HTMLDivElement {
   return container;
 }
 
-export function createIframe(url: string): HTMLIFrameElement {
+export function createIframe(url: string, identifier: string): HTMLIFrameElement {
   const iframe = document.createElement('iframe');
-  iframe.id = CONSENT_IFRAME_ID;
+  iframe.id = identifier;
   iframe.src = url;
 
   iframe.style.cssText += `

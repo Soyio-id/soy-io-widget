@@ -53,12 +53,12 @@ class ConsentBox {
   }
 
   mount(selector: string): ConsentBox {
-    cleanupExistingIframe();
+    cleanupExistingIframe(this.iframeIdentifier);
 
     const iframeDivContainer = getIframeDivContainer(selector);
     const url = getFullUrl(this.options);
 
-    this.iframe = createIframe(url);
+    this.iframe = createIframe(url, this.iframeIdentifier);
     iframeDivContainer.appendChild(this.iframe);
 
     return this;
@@ -75,6 +75,10 @@ class ConsentBox {
 
   getState(): ConsentState {
     return { ...this.state };
+  }
+
+  get iframeIdentifier(): string {
+    return `consent-box-${this.uniqueIdentifier}`;
   }
 }
 
