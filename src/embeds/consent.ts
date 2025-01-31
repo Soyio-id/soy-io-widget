@@ -6,7 +6,7 @@ import {
   getFullUrl,
   getIframeDivContainer,
 } from './iframe';
-import { removeListeners, setListener } from './listeners';
+import { mountInstanceListeners, removeInstanceListeners, setupPostrobotListeners } from './listeners';
 import type { ConsentCheckboxChangeEvent, ConsentConfig, ConsentState } from './types';
 
 class ConsentBox {
@@ -22,11 +22,7 @@ class ConsentBox {
     this.options = options;
     this.appearance = options.appearance || null;
 
-    setListener({
-      onHeightChange: this.handleHeightChange.bind(this),
-      onIframeReady: this.handleIframeReady.bind(this),
-      onStateChange: this.handleStateChange.bind(this),
-    });
+    this.setup();
   }
 
   private handleHeightChange(height: number): void {
@@ -38,7 +34,7 @@ class ConsentBox {
   private async handleIframeReady(): Promise<void> {
     if (!this.iframe || !this.appearance) return;
 
-    await sendAppearanceConfig(this.iframe, this.appearance);
+    await sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
   }
 
   private handleStateChange(newState: ConsentState): void {
@@ -50,6 +46,15 @@ class ConsentBox {
       isSelected,
       actionToken,
     } as ConsentCheckboxChangeEvent);
+  }
+
+  private async setup(): Promise<void> {
+    await setupPostrobotListeners();
+    mountInstanceListeners(this.uniqueIdentifier, {
+      onHeightChange: this.handleHeightChange.bind(this),
+      onIframeReady: this.handleIframeReady.bind(this),
+      onStateChange: this.handleStateChange.bind(this),
+    });
   }
 
   mount(selector: string): ConsentBox {
@@ -65,7 +70,7 @@ class ConsentBox {
   }
 
   unmount(): void {
-    removeListeners();
+    removeInstanceListeners(this.uniqueIdentifier);
 
     if (this.iframe) {
       this.iframe.remove();
@@ -79,6 +84,10 @@ class ConsentBox {
 
   get iframeIdentifier(): string {
     return `consent-box-${this.uniqueIdentifier}`;
+  }
+
+  get uniqueIdentifier(): string {
+    return this.options.consentTemplateId;
   }
 }
 
