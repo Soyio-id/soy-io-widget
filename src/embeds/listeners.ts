@@ -4,7 +4,10 @@ import {
   IFRAME_HEIGHT_CHANGE,
   IFRAME_READY,
   IframeHeightChangeEvent,
+  IframeReadyEvent,
 } from './types';
+
+type PostRobotListener = ReturnType<typeof import('post-robot')['on']>;
 
 type Events = {
   onHeightChange: (height: number) => void;
@@ -12,40 +15,61 @@ type Events = {
   onStateChange: (state: ConsentState) => void;
 };
 
-type PostRobotListener = ReturnType<typeof import('post-robot')['on']>;
+type InstanceListeners = {
+  onHeightChange: Record<string, Events['onHeightChange']>;
+  onIframeReady: Record<string, Events['onIframeReady']>;
+  onStateChange: Record<string, Events['onStateChange']>;
+};
 
-let heightChangeListener: PostRobotListener | null = null;
-let readyListener: PostRobotListener | null = null;
-let stateChangeListener: PostRobotListener | null = null;
+const instanceListeners: InstanceListeners = {
+  onHeightChange: {},
+  onIframeReady: {},
+  onStateChange: {},
+};
 
-export function removeListeners() {
-  heightChangeListener?.cancel();
-  heightChangeListener = null;
+let globalHeightChangeListener: PostRobotListener | undefined;
+let globalReadyListener: PostRobotListener | undefined;
+let globalStateChangeListener: PostRobotListener | undefined;
 
-  readyListener?.cancel();
-  readyListener = null;
-
-  stateChangeListener?.cancel();
-  stateChangeListener = null;
-}
-
-export async function setListener(events: Events) {
-  const { onHeightChange, onIframeReady, onStateChange } = events;
+export async function setupPostrobotListeners() {
   const postRobot = await import('post-robot');
+  if (globalHeightChangeListener || globalReadyListener || globalStateChangeListener) return;
 
-  removeListeners();
-
-  heightChangeListener = postRobot.on(IFRAME_HEIGHT_CHANGE, async (event) => {
+  globalHeightChangeListener = postRobot.on(IFRAME_HEIGHT_CHANGE, async (event) => {
     const eventData = event.data as IframeHeightChangeEvent;
+    const onHeightChange = instanceListeners.onHeightChange[eventData.identifier];
+    if (!onHeightChange) throw new Error(`No height change listener found for identifier: ${eventData.identifier}`);
+
     onHeightChange(eventData.height);
   });
 
-  readyListener = postRobot.on(IFRAME_READY, async () => {
+  globalReadyListener = postRobot.on(IFRAME_READY, async (event) => {
+    const eventData = event.data as IframeReadyEvent;
+    const onIframeReady = instanceListeners.onIframeReady[eventData.identifier];
+    if (!onIframeReady) throw new Error(`No iframe ready listener found for identifier: ${eventData.identifier}`);
+
     onIframeReady();
   });
 
-  stateChangeListener = postRobot.on(CONSENT_STATE_CHANGE, async (event) => {
-    const eventData = event.data as ConsentState;
+  globalStateChangeListener = postRobot.on(CONSENT_STATE_CHANGE, async (event) => {
+    const eventData = event.data as ConsentState & { identifier: string };
+    const onStateChange = instanceListeners.onStateChange[eventData.identifier];
+    if (!onStateChange) throw new Error(`No state change listener found for identifier: ${eventData.identifier}`);
+
     onStateChange(eventData);
   });
+}
+
+export function mountInstanceListeners(identifier: string, events: Events) {
+  const { onHeightChange, onIframeReady, onStateChange } = events;
+
+  instanceListeners.onHeightChange[identifier] = onHeightChange;
+  instanceListeners.onIframeReady[identifier] = onIframeReady;
+  instanceListeners.onStateChange[identifier] = onStateChange;
+}
+
+export function removeInstanceListeners(identifier: string) {
+  delete instanceListeners.onHeightChange[identifier];
+  delete instanceListeners.onIframeReady[identifier];
+  delete instanceListeners.onStateChange[identifier];
 }

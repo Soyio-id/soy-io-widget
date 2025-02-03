@@ -11,23 +11,27 @@ export type ConsentState = {
 }
 
 export type ConsentCheckboxChangeEvent = {
-  eventName: 'CONSENT_CHECKBOX_CHANGE'
-  isSelected: boolean
-  actionToken?: string
+  eventName: 'CONSENT_CHECKBOX_CHANGE';
+  isSelected: boolean;
+  actionToken?: string;
+  identifier: string;
 }
 
 export type IframeReadyEvent = {
   eventName: 'IFRAME_READY';
+  identifier: string;
 };
 
 export type IframeHeightChangeEvent = {
   eventName: 'IFRAME_HEIGHT_CHANGE'
   height: number
+  identifier: string;
 }
 
 export type AppearanceConfigEvent = {
   eventName: 'APPEARANCE_CONFIG';
   appearance: SoyioAppearance;
+  identifier: string;
 };
 
 export type ConsentEvent =
