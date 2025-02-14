@@ -4,6 +4,7 @@ export const IFRAME_READY = 'IFRAME_READY';
 export const CONSENT_STATE_CHANGE = 'CONSENT_STATE_CHANGE';
 export const IFRAME_HEIGHT_CHANGE = 'IFRAME_HEIGHT_CHANGE';
 export const APPEARANCE_CONFIG = 'APPEARANCE_CONFIG';
+export const TOOLTIP_STATE_CHANGE = 'TOOLTIP_STATE_CHANGE';
 
 export type ConsentState = {
   isSelected: boolean;
@@ -34,11 +35,23 @@ export type AppearanceConfigEvent = {
   identifier: string;
 };
 
+export type TooltipStateChangeEvent = {
+  eventName: 'TOOLTIP_STATE_CHANGE';
+  identifier: string;
+  text: string;
+  coordinates: {
+    x: number;
+    y: number;
+  };
+  isVisible: boolean;
+};
+
 export type ConsentEvent =
   | ConsentCheckboxChangeEvent
   | IframeHeightChangeEvent
   | IframeReadyEvent
-  | AppearanceConfigEvent;
+  | AppearanceConfigEvent
+  | TooltipStateChangeEvent;
 
 export type ConsentConfig = {
   consentTemplateId: `constpl_${string}`,

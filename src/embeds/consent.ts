@@ -7,11 +7,18 @@ import {
   getIframeDivContainer,
 } from './iframe';
 import { mountInstanceListeners, removeInstanceListeners, setupPostrobotListeners } from './listeners';
-import type { ConsentCheckboxChangeEvent, ConsentConfig, ConsentState } from './types';
+import { TooltipManager } from './tooltip-manager';
+import type {
+  ConsentCheckboxChangeEvent,
+  ConsentConfig,
+  ConsentState,
+  TooltipStateChangeEvent,
+} from './types';
 
 class ConsentBox {
   private readonly appearance: SoyioAppearance | null;
   private readonly options: ConsentConfig;
+  private readonly tooltipManager: TooltipManager;
   private iframe: HTMLIFrameElement | null = null;
   private state: ConsentState = {
     isSelected: false,
@@ -21,6 +28,7 @@ class ConsentBox {
   constructor(options: ConsentConfig) {
     this.options = options;
     this.appearance = options.appearance || null;
+    this.tooltipManager = new TooltipManager();
 
     this.setup();
   }
@@ -54,7 +62,24 @@ class ConsentBox {
       onHeightChange: this.handleHeightChange.bind(this),
       onIframeReady: this.handleIframeReady.bind(this),
       onStateChange: this.handleStateChange.bind(this),
+      onTooltipChange: this.handleTooltipChange.bind(this),
     });
+  }
+
+  private handleTooltipChange(tooltipState: TooltipStateChangeEvent): void {
+    if (!this.iframe) return;
+
+    const iframeRect = this.iframe.getBoundingClientRect();
+    const { text, coordinates, isVisible } = tooltipState;
+
+    const absoluteX = coordinates.x + iframeRect.left;
+    const absoluteY = coordinates.y + iframeRect.top;
+
+    if (isVisible) {
+      this.tooltipManager.show(text, absoluteX, absoluteY);
+    } else {
+      this.tooltipManager.hide();
+    }
   }
 
   mount(selector: string): ConsentBox {
