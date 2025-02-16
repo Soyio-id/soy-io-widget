@@ -45,7 +45,7 @@ export function createIframe(url: string, identifier: string): HTMLIFrameElement
 
   iframe.style.cssText += `
     width: 100% !important;
-    min-width: 25rem !important;
+    min-width: 375px !important;
     max-width: 36rem !important;
     border: none !important;
     height: 120px !important;
