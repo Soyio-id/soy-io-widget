@@ -66,6 +66,9 @@ export function getFullUrl(consentConfig: ConsentConfig): string {
   if (consentConfig.actionToken) {
     urlParams.set('actionToken', consentConfig.actionToken);
   }
+  if (consentConfig.entityId) {
+    urlParams.set('entityId', consentConfig.entityId);
+  }
 
   const queryString = urlParams.toString();
   return `${baseUrl}/embed/consents/${consentConfig.consentTemplateId}${queryString ? `?${queryString}` : ''}`;

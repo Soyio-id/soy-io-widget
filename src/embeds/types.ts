@@ -59,5 +59,6 @@ export type ConsentConfig = {
   isSandbox?: boolean,
   appearance?: SoyioAppearance,
   actionToken?: string,
+  entityId?: `ent_${string}`,
   developmentUrl?: string,
 }
