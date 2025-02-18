@@ -61,4 +61,5 @@ export type ConsentConfig = {
   actionToken?: string,
   entityId?: `ent_${string}`,
   developmentUrl?: string,
+  context?: string,
 }
