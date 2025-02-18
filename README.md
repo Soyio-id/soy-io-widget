@@ -388,29 +388,37 @@ interface Variables {
 
 ### Available Variables
 
-| Variable          | Description                            | Default                   |
-| ----------------- | -------------------------------------- | ------------------------- |
-| `fontFamily`      | The font stack to use for text         | `"system-ui, sans-serif"` |
-| `colorPrimary`    | Primary color for interactive elements | `"#0570DE"`               |
-| `colorBackground` | Background color                       | `"#FFFFFF"`               |
-| `colorText`       | Main text color                        | `"#1A1F36"`               |
-| `borderRadius`    | Border radius for elements             | `"4px"`                   |
-| `borderWidth`     | Border width for elements              | `"1px"`                   |
-| `borderStyle`     | Border style for elements              | `"solid"`                 |
+| Variable          | Description                              | Default                   |
+| ----------------- | ---------------------------------------- | ------------------------- |
+| `fontFamily`      | The font stack to use for text           | `"system-ui, sans-serif"` |
+| `colorPrimary`    | Primary color for interactive elements   | `"#0570DE"`               |
+| `colorSecondary`  | Secondary color for interactive elements | `"#0570DE"`               |
+| `colorBackground` | Background color                         | `"#FFFFFF"`               |
+| `colorText`       | Main text color                          | `"#1A1F36"`               |
+| `borderRadius`    | Border radius for elements               | `"4px"`                   |
+| `borderWidth`     | Border width for elements                | `"1px"`                   |
+| `borderStyle`     | Border style for elements                | `"solid"`                 |
 
 ## Rules
 
 The `rules` object allows you to apply custom CSS to specific elements. Currently, Soyio supports styling for checkbox components.
 
+### Supported rules
+
+- `.MainContainer` - The main container of the consent request box. Only border CSS properties are allowed to be overridden.
+- `.Button` - The button component.
+- `.Checkbox` - The checkbox component.
+- `.CheckboxInput` - The checkbox input element.
+- `.CheckboxLabel` - The checkbox label.
+
+![Checkbox Components](https://soyio-public-assets.s3.us-east-1.amazonaws.com/checkbox-appearance.webp)
+
 ### Supported Selectors
 
-- `.CheckboxInput` - The checkbox input element
 - `.CheckboxInput--checked` - The checked state of the checkbox
 - `.CheckboxInput:hover` - Hover state of the checkbox
 - `.CheckboxInput:focus` - Focus state of the checkbox
 - `.CheckboxInput:focus-visible` - Focus-visible state of the checkbox
-
-![Checkbox Components](https://soyio-public-assets.s3.us-east-1.amazonaws.com/checkbox-appearance.webp)
 
 ### Example Configuration
 
@@ -420,6 +428,7 @@ const appearance = {
   variables: {
     fontFamily: "system-ui, sans-serif",
     colorPrimary: "#f54c27",
+    colorSecondary: "#f54c27",
     colorBackground: "#ffffff",
     colorText: "#1E1B4B",
     borderRadius: "0.5rem",
@@ -427,6 +436,11 @@ const appearance = {
     borderStyle: "dashed",
   },
   rules: {
+    ".MainContainer": {
+      borderWidth: "1px",
+      borderColor: "#E5E7EB",
+      borderRadius: "0.25rem",
+    },
     ".CheckboxInput": {
       appearance: "none",
       backgroundColor: "transparent",
