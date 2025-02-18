@@ -2,6 +2,7 @@ export type SoyioTheme = 'soyio';
 
 export type CSSProperties = {
   appearance?: string;
+  accentColor?: string;
   backgroundColor?: string;
   border?: string;
   borderBottom?: string;
@@ -67,8 +68,17 @@ export type SoyioPseudoClass = ':hover' | ':focus' | ':active' | ':disabled' | '
 
 export type SoyioPseudoElement = '::placeholder' | '::selection';
 
-type SoyioRule = {
-  [key: `${string}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`]: CSSProperties;
+export type SoyioBaseRule =
+  | '.MainContainer'
+  | '.Button'
+  | '.Checkbox'
+  | '.CheckboxInput'
+  | '.CheckboxLabel';
+
+export type SoyioRuleKey = `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`;
+
+export type SoyioRule = {
+  [K in SoyioRuleKey]?: CSSProperties;
 };
 
 export interface SoyioAppearanceVariables {
@@ -78,6 +88,7 @@ export interface SoyioAppearanceVariables {
   borderWidth?: string;
   borderStyle?: string;
   colorPrimary?: string;
+  colorSecondary?: string;
   colorBackground?: string;
   colorText?: string;
   colorTextSecondary?: string;
