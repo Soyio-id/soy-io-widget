@@ -59,16 +59,14 @@ export function createIframe(url: string, identifier: string): HTMLIFrameElement
 }
 
 export function getFullUrl(consentConfig: ConsentConfig): string {
+  const URL_PARAMS = ['actionToken', 'entityId', 'context'] as const;
   const isSandbox = consentConfig.isSandbox ?? false;
   const baseUrl = consentConfig.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
 
   const urlParams = new URLSearchParams();
-  if (consentConfig.actionToken) {
-    urlParams.set('actionToken', consentConfig.actionToken);
-  }
-  if (consentConfig.entityId) {
-    urlParams.set('entityId', consentConfig.entityId);
-  }
+  URL_PARAMS.forEach((param) => {
+    if (consentConfig[param]) urlParams.set(param, consentConfig[param]);
+  });
 
   const queryString = urlParams.toString();
   return `${baseUrl}/embed/consents/${consentConfig.consentTemplateId}${queryString ? `?${queryString}` : ''}`;

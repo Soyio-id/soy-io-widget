@@ -304,6 +304,7 @@ The **`ConsentBox`** is a component that allows you to embed a consent request d
     appearance: {}, // Optional
     actionToken: "<action token>", // Optional
     entityId: "<entity id>", // Optional
+    context: "<context>", // Optional
   };
 
   // Wait for DOM to be fully loaded
@@ -347,6 +348,7 @@ The `onEvent` follows the following format:
 - **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/integration-guide/modules/consent).
 - **`actionToken`**: In case of losing the state of the consent (i.e. page reload), you can use a previously generated `actionToken` to restore the state of the consent.
 - **`entityId`**: Identifier of the `entity` associated with a `ConsentAction`. If provided and a consent was previously granted by this entity, the UI will display a message indicating that consent has already been given.
+- **`context`**: Additional information that will be saved with the consent. Useful when you want to track the consent from a specific context.
 
 # Appearance
 
