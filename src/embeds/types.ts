@@ -56,6 +56,7 @@ export type ConsentEvent =
 export type ConsentConfig = {
   consentTemplateId: `constpl_${string}`,
   onEvent: (data: ConsentEvent) => void,
+  onReady?: () => void,
   isSandbox?: boolean,
   appearance?: SoyioAppearance,
   actionToken?: string,
