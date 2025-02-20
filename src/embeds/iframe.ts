@@ -65,7 +65,7 @@ export function getFullUrl(consentConfig: ConsentConfig): string {
 
   const urlParams = new URLSearchParams();
   URL_PARAMS.forEach((param) => {
-    if (consentConfig[param]) urlParams.set(param, consentConfig[param]);
+    if (consentConfig[param]) urlParams.set(param, consentConfig[param]!);
   });
 
   const queryString = urlParams.toString();
