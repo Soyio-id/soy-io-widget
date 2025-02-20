@@ -24,6 +24,7 @@ export class TooltipManager {
       border-radius: 4px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       font-size: 14px;
+      font-family: Helvetica neue, Helvetica, Arial, sans-serif;
       max-width: 300px;
       word-wrap: break-word;
       pointer-events: none;
@@ -34,6 +35,7 @@ export class TooltipManager {
     `;
 
     this.tooltipContent = document.createElement('div');
+    this.tooltipContent.style.cssText = 'text-align: center;';
     this.tooltipElement.appendChild(this.tooltipContent);
 
     const arrow = document.createElement('div');
