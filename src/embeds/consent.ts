@@ -7,6 +7,7 @@ import {
   getIframeDivContainer,
 } from './iframe';
 import { mountInstanceListeners, removeInstanceListeners, setupPostrobotListeners } from './listeners';
+import { Skeleton } from './skeleton';
 import { TooltipManager } from './tooltip-manager';
 import type {
   ConsentCheckboxChangeEvent,
@@ -19,6 +20,7 @@ class ConsentBox {
   private readonly appearance: SoyioAppearance | null;
   private readonly options: ConsentConfig;
   private readonly tooltipManager: TooltipManager;
+  private readonly skeleton: Skeleton;
   private iframe: HTMLIFrameElement | null = null;
   private state: ConsentState = {
     isSelected: false,
@@ -29,6 +31,7 @@ class ConsentBox {
     this.options = options;
     this.appearance = options.appearance || null;
     this.tooltipManager = new TooltipManager();
+    this.skeleton = new Skeleton(this.uniqueIdentifier);
 
     this.setup();
   }
@@ -40,13 +43,16 @@ class ConsentBox {
   }
 
   private async handleIframeReady(): Promise<void> {
-    if (!this.iframe || !this.appearance) return;
+    if (!this.iframe) return;
+    this.skeleton.hide();
 
     if (this.options.onReady) {
       this.options.onReady();
     }
 
-    await sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
+    if (this.appearance) {
+      sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
+    }
   }
 
   private handleStateChange(newState: ConsentState): void {
@@ -93,6 +99,7 @@ class ConsentBox {
     const url = getFullUrl(this.options);
 
     this.iframe = createIframe(url, this.iframeIdentifier);
+    this.skeleton.mount(iframeDivContainer);
     iframeDivContainer.appendChild(this.iframe);
 
     return this;
@@ -100,6 +107,7 @@ class ConsentBox {
 
   unmount(): void {
     removeInstanceListeners(this.uniqueIdentifier);
+    this.skeleton.hide();
 
     if (this.iframe) {
       this.iframe.remove();
