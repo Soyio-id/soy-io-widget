@@ -42,6 +42,10 @@ class ConsentBox {
   private async handleIframeReady(): Promise<void> {
     if (!this.iframe || !this.appearance) return;
 
+    if (this.options.onReady) {
+      this.options.onReady();
+    }
+
     await sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
   }
 

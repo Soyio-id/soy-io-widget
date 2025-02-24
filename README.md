@@ -305,6 +305,7 @@ The **`ConsentBox`** is a component that allows you to embed a consent request d
     actionToken: "<action token>", // Optional
     entityId: "<entity id>", // Optional
     context: "<context>", // Optional
+    onReady: () => console.log("ConsentBox is ready"), // Optional
   };
 
   // Wait for DOM to be fully loaded
@@ -349,6 +350,7 @@ The `onEvent` follows the following format:
 - **`actionToken`**: In case of losing the state of the consent (i.e. page reload), you can use a previously generated `actionToken` to restore the state of the consent.
 - **`entityId`**: Identifier of the `entity` associated with a `ConsentAction`. If provided and a consent was previously granted by this entity, the UI will display a message indicating that consent has already been given.
 - **`context`**: Additional information that will be saved with the consent. Useful when you want to track the consent from a specific context.
+- **`onReady`**: Optional callback that executes when the consent box is ready to use. You can use this to handle logic when the iframe is not mounted yet.
 
 # Appearance
 
