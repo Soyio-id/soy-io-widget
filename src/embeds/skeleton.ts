@@ -1,4 +1,3 @@
-// skeleton.ts
 export class Skeleton {
   private element: HTMLDivElement;
   private readonly identifier: string;
@@ -67,14 +66,14 @@ export class Skeleton {
 
     const expandButtonCircleSkeleton = document.createElement('div');
     expandButtonCircleSkeleton.style.cssText = `
-      width: 2rem;
-      height: 2rem;
+      width: 1.5rem;
+      height: 1.5rem;
       background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 50%;
       margin-left: auto;
-      margin-right: 1rem;
+      margin-right: 3px;
     `;
 
     const bottomRow = document.createElement('div');
@@ -93,6 +92,7 @@ export class Skeleton {
       animation: shimmer 1.5s infinite;
       border-radius: 0.25rem;
       flex-shrink: 0;
+      margin-left: 10px;
     `;
 
     const textContentSkeleton = document.createElement('div');
