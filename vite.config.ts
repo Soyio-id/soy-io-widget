@@ -9,8 +9,17 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'soyio-widget',
       fileName: 'index',
+      formats: ['es', 'umd'],
     },
     outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        inlineDynamicImports: true,
+      },
+    },
+    cssCodeSplit: false,
+    target: 'es2015',
   },
   plugins: [dts({ rollupTypes: true })],
 });
