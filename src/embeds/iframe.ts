@@ -59,7 +59,7 @@ export function createIframe(url: string, identifier: string): HTMLIFrameElement
 }
 
 export function getFullUrl(consentConfig: ConsentConfig): string {
-  const URL_PARAMS = ['actionToken', 'entityId', 'context'] as const;
+  const URL_PARAMS = ['actionToken', 'entityId', 'context', 'optionalReconsentBehavior', 'mandatoryReconsentBehavior'] as const;
   const isSandbox = consentConfig.isSandbox ?? false;
   const baseUrl = consentConfig.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
 
