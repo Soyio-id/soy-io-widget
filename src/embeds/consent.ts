@@ -37,9 +37,14 @@ class ConsentBox {
   }
 
   private handleHeightChange(height: number): void {
-    if (this.iframe) {
-      this.iframe.style.height = `${height}px`;
-    }
+    if (!this.iframe) return;
+
+    this.iframe.style.height = `${height}px`;
+
+    if (height > 0) return;
+
+    const { parentElement } = this.iframe;
+    if (parentElement) parentElement.style.display = 'none';
   }
 
   private async handleIframeReady(): Promise<void> {

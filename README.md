@@ -306,6 +306,8 @@ The **`ConsentBox`** is a component that allows you to embed a consent request d
     entityId: "<entity id>", // Optional
     context: "<context>", // Optional
     onReady: () => console.log("ConsentBox is ready"), // Optional
+    optionalReconsentBehavior: "notice", // Optional
+    mandatoryReconsentBehavior: "notice", // Optional
   };
 
   // Wait for DOM to be fully loaded
@@ -351,6 +353,17 @@ The `onEvent` follows the following format:
 - **`entityId`**: Identifier of the `entity` associated with a `ConsentAction`. If provided and a consent was previously granted by this entity, the UI will display a message indicating that consent has already been given.
 - **`context`**: Additional information that will be saved with the consent. Useful when you want to track the consent from a specific context.
 - **`onReady`**: Optional callback that executes when the consent box is ready to use. You can use this to handle logic when the iframe is not mounted yet.
+- **`optionalReconsentBehavior`**: What should happen when the consent is initialized with an `entityId` that has already given consent on an optional category.
+  - `notice` will show a message letting the user know that they have already given consent,
+  - `askAgain` will show the consent as if it wasn't given in the first place,
+  - `hide` will not show the consent at all.
+
+  We strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
+- **`mandatoryReconsentBehavior`**: What should happen when the consent is initialized with an `entityId` that has already given consent on a mandatory category.
+  - `notice` will show a message letting the user know that they have already given consent,
+  - `askAgain` will show the consent as if it wasn't given in the first place,
+
+  We don't support hiding the mandatory consent, and we strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
 
 # Appearance
 

@@ -63,4 +63,6 @@ export type ConsentConfig = {
   entityId?: `ent_${string}`,
   developmentUrl?: string,
   context?: string,
+  optionalReconsentBehavior?: 'notice' | 'askAgain' | 'hide',
+  mandatoryReconsentBehavior?: 'notice' | 'askAgain',
 }
