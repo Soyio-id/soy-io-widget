@@ -1,7 +1,7 @@
 export type {
   ConsentEvent,
   ConsentConfig,
-} from './embeds/types';
+} from './embeds/consent/types';
 
 export type { SoyioAppearance } from './embeds/appearance/types';
 
