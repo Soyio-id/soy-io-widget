@@ -22,6 +22,7 @@ module.exports = {
   ],
   globals: { BigInt: true, console: true, WebAssembly: true },
   rules: {
+    'max-len': ['error', { code: 120, ignoreUrls: true }],
     'tsdoc/syntax': 'warn',
     'lines-between-class-members': 'off',
     'no-underscore-dangle': 'off',

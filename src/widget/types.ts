@@ -1,7 +1,12 @@
 export const WIDGET_MOUNTED = 'WIDGET_MOUNTED';
 export const WIDGET_EVENT = 'WIDGET_EVENT';
 
-export type ForceErrors = 'facial_validation_error' | 'document_validation_error' | 'unknown_error' | 'expiration_error' | 'camera_permission_error';
+export type ForceErrors =
+  | 'facial_validation_error'
+  | 'document_validation_error'
+  | 'unknown_error'
+  | 'expiration_error'
+  | 'camera_permission_error';
 export type Request = 'disclosure' | 'signature' | 'authentication';
 
 export type NewDisclosureRequestProps = {

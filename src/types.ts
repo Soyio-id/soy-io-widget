@@ -1,7 +1,9 @@
 export type {
   ConsentEvent,
   ConsentConfig,
-} from './embeds/types';
+} from './embeds/consent/types';
+
+export type { PrivacyCenterConfig } from './embeds/privacy-center/types';
 
 export type { SoyioAppearance } from './embeds/appearance/types';
 

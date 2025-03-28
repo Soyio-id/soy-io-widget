@@ -1,3 +1,4 @@
 import { ConsentBox } from './consent';
+import { PrivacyCenterBox } from './privacy-center';
 
-export { ConsentBox };
+export { ConsentBox, PrivacyCenterBox };
