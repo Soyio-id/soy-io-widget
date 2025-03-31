@@ -1,4 +1,6 @@
-export class Skeleton {
+import type { ISkeletonView } from '../base/types';
+
+export class ConsentSkeleton implements ISkeletonView {
   private element: HTMLDivElement;
   private readonly identifier: string;
 

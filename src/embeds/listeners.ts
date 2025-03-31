@@ -1,97 +1,100 @@
 import {
-  CONSENT_STATE_CHANGE,
-  ConsentState,
   IFRAME_HEIGHT_CHANGE,
   IFRAME_READY,
   IframeHeightChangeEvent,
   IframeReadyEvent,
+  ITooltipStateChangeEvent,
   TOOLTIP_STATE_CHANGE,
-  TooltipStateChangeEvent,
-} from './types';
+} from './base/types';
+import { CONSENT_STATE_CHANGE, ConsentState } from './consent/types';
 
 type PostRobotListener = ReturnType<typeof import('post-robot')['on']>;
 
-type Events = {
-  onHeightChange: (height: number) => void;
-  onIframeReady: () => void;
-  onStateChange: (state: ConsentState) => void;
-  onTooltipChange: (tooltipState: TooltipStateChangeEvent) => void;
+export type Events = {
+  // BASE
+  onHeightChange?: (height: number) => void;
+  onIframeReady?: () => void;
+  onTooltipChange?: (tooltipState: ITooltipStateChangeEvent) => void;
+
+  // CONSENT
+  onStateChange?: (state: ConsentState) => void;
 };
 
+type IframeIdentifier = string
+
 type InstanceListeners = {
-  onHeightChange: Record<string, Events['onHeightChange']>;
-  onIframeReady: Record<string, Events['onIframeReady']>;
-  onStateChange: Record<string, Events['onStateChange']>;
-  onTooltipChange: Record<string, Events['onTooltipChange']>;
+  // BASE
+  onHeightChange: Record<IframeIdentifier, Events['onHeightChange']>;
+  onIframeReady: Record<IframeIdentifier, Events['onIframeReady']>;
+  onTooltipChange: Record<IframeIdentifier, Events['onTooltipChange']>;
+
+  // CONSENT
+  onStateChange: Record<IframeIdentifier, Events['onStateChange']>;
 };
 
 const instanceListeners: InstanceListeners = {
+  // BASE
   onHeightChange: {},
   onIframeReady: {},
-  onStateChange: {},
   onTooltipChange: {},
+
+  // CONSENT
+  onStateChange: {},
 };
 
 let globalHeightChangeListener: PostRobotListener | undefined;
 let globalReadyListener: PostRobotListener | undefined;
-let globalStateChangeListener: PostRobotListener | undefined;
 let globalTooltipChangeListener: PostRobotListener | undefined;
+let globalStateChangeListener: PostRobotListener | undefined;
 
 export async function setupPostrobotListeners() {
   const postRobot = await import('post-robot');
+
   if (globalHeightChangeListener
     || globalReadyListener
-    || globalStateChangeListener
     || globalTooltipChangeListener
+    || globalStateChangeListener
   ) return;
 
   globalHeightChangeListener = postRobot.on(IFRAME_HEIGHT_CHANGE, async (event) => {
     const eventData = event.data as IframeHeightChangeEvent;
     const onHeightChange = instanceListeners.onHeightChange[eventData.identifier];
-    if (!onHeightChange) throw new Error(`No height change listener found for identifier: ${eventData.identifier}`);
-
-    onHeightChange(eventData.height);
+    if (onHeightChange) onHeightChange(eventData.height);
   });
 
   globalReadyListener = postRobot.on(IFRAME_READY, async (event) => {
     const eventData = event.data as IframeReadyEvent;
     const onIframeReady = instanceListeners.onIframeReady[eventData.identifier];
-    if (!onIframeReady) throw new Error(`No iframe ready listener found for identifier: ${eventData.identifier}`);
+    if (onIframeReady) onIframeReady();
+  });
 
-    onIframeReady();
+  globalTooltipChangeListener = postRobot.on(TOOLTIP_STATE_CHANGE, async (event) => {
+    const eventData = event.data as ITooltipStateChangeEvent;
+    const onTooltipChange = instanceListeners.onTooltipChange[eventData.identifier];
+    if (onTooltipChange) onTooltipChange(eventData);
   });
 
   globalStateChangeListener = postRobot.on(CONSENT_STATE_CHANGE, async (event) => {
     const eventData = event.data as ConsentState & { identifier: string };
     const onStateChange = instanceListeners.onStateChange[eventData.identifier];
-    if (!onStateChange) throw new Error(`No state change listener found for identifier: ${eventData.identifier}`);
-
-    onStateChange(eventData);
-  });
-
-  globalTooltipChangeListener = postRobot.on(TOOLTIP_STATE_CHANGE, async (event) => {
-    const eventData = event.data as TooltipStateChangeEvent;
-    const onTooltipChange = instanceListeners.onTooltipChange[eventData.identifier];
-    if (!onTooltipChange) throw new Error(`No tooltip change listener found for identifier: ${eventData.identifier}`);
-
-    onTooltipChange(eventData);
+    if (onStateChange) onStateChange(eventData);
   });
 }
 
-export function mountInstanceListeners(identifier: string, events: Events) {
+export function mountInstanceListeners(iframeIdentifier: string, events: Events) {
   const {
-    onHeightChange, onIframeReady, onStateChange, onTooltipChange,
+    onHeightChange, onIframeReady, onTooltipChange, onStateChange,
   } = events;
 
-  instanceListeners.onHeightChange[identifier] = onHeightChange;
-  instanceListeners.onIframeReady[identifier] = onIframeReady;
-  instanceListeners.onStateChange[identifier] = onStateChange;
-  instanceListeners.onTooltipChange[identifier] = onTooltipChange;
+  if (onHeightChange) instanceListeners.onHeightChange[iframeIdentifier] = onHeightChange;
+  if (onIframeReady) instanceListeners.onIframeReady[iframeIdentifier] = onIframeReady;
+  if (onTooltipChange) instanceListeners.onTooltipChange[iframeIdentifier] = onTooltipChange;
+  if (onStateChange) instanceListeners.onStateChange[iframeIdentifier] = onStateChange;
 }
 
-export function removeInstanceListeners(identifier: string) {
-  delete instanceListeners.onHeightChange[identifier];
-  delete instanceListeners.onIframeReady[identifier];
-  delete instanceListeners.onStateChange[identifier];
-  delete instanceListeners.onTooltipChange[identifier];
+export function removeInstanceListeners(iframeIdentifier: string) {
+  delete instanceListeners.onHeightChange[iframeIdentifier];
+  delete instanceListeners.onIframeReady[iframeIdentifier];
+  delete instanceListeners.onTooltipChange[iframeIdentifier];
+  delete instanceListeners.onStateChange[iframeIdentifier];
 }
