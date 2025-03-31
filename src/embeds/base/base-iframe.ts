@@ -8,7 +8,7 @@ import {
 
 import { TooltipManager } from './tooltip-manager';
 import type {
-  BaseConfig, ISkeletonView, SkeletonConstructor, TooltipStateChangeEvent,
+  BaseConfig, ISkeletonView, ITooltipStateChangeEvent, SkeletonConstructor,
 } from './types';
 import {
   cleanupExistingIframe,
@@ -67,15 +67,16 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
 
   protected handleIframeReady(): void {
     if (!this.iframe) return;
-    if (this.skeleton) this.skeleton.hide();
     if (this.options.onReady) this.options.onReady();
 
     if (this.appearance) {
       sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
     }
+
+    if (this.skeleton) this.skeleton.hide();
   }
 
-  protected handleTooltipChange(tooltipState: TooltipStateChangeEvent): void {
+  protected handleTooltipChange(tooltipState: ITooltipStateChangeEvent): void {
     if (!this.iframe) return;
 
     const iframeRect = this.iframe.getBoundingClientRect();

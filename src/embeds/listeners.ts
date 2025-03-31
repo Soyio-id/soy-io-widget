@@ -3,8 +3,8 @@ import {
   IFRAME_READY,
   IframeHeightChangeEvent,
   IframeReadyEvent,
+  ITooltipStateChangeEvent,
   TOOLTIP_STATE_CHANGE,
-  TooltipStateChangeEvent,
 } from './base/types';
 import { CONSENT_STATE_CHANGE, ConsentState } from './consent/types';
 
@@ -14,7 +14,7 @@ export type Events = {
   // BASE
   onHeightChange?: (height: number) => void;
   onIframeReady?: () => void;
-  onTooltipChange?: (tooltipState: TooltipStateChangeEvent) => void;
+  onTooltipChange?: (tooltipState: ITooltipStateChangeEvent) => void;
 
   // CONSENT
   onStateChange?: (state: ConsentState) => void;
@@ -69,7 +69,7 @@ export async function setupPostrobotListeners() {
   });
 
   globalTooltipChangeListener = postRobot.on(TOOLTIP_STATE_CHANGE, async (event) => {
-    const eventData = event.data as TooltipStateChangeEvent;
+    const eventData = event.data as ITooltipStateChangeEvent;
     const onTooltipChange = instanceListeners.onTooltipChange[eventData.identifier];
     if (onTooltipChange) onTooltipChange(eventData);
   });

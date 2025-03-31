@@ -11,25 +11,25 @@ export interface ISkeletonView {
   hide(): void;
 }
 
-export interface BaseEventData {
+export interface IBaseEventData {
   identifier: string;
 }
 
-export interface IframeReadyEvent extends BaseEventData {
+export interface IframeReadyEvent extends IBaseEventData {
   eventName: 'IFRAME_READY';
 }
 
-export interface IframeHeightChangeEvent extends BaseEventData {
+export interface IframeHeightChangeEvent extends IBaseEventData {
   eventName: 'IFRAME_HEIGHT_CHANGE';
   height: number;
 }
 
-export interface AppearanceConfigEvent extends BaseEventData {
+export interface IAppearanceConfigEvent extends IBaseEventData {
   eventName: 'APPEARANCE_CONFIG';
   appearance: SoyioAppearance;
 }
 
-export interface TooltipStateChangeEvent extends BaseEventData {
+export interface ITooltipStateChangeEvent extends IBaseEventData {
   eventName: 'TOOLTIP_STATE_CHANGE';
   text: string;
   coordinates: {
@@ -42,8 +42,8 @@ export interface TooltipStateChangeEvent extends BaseEventData {
 export type ConsentEvent =
   | IframeHeightChangeEvent
   | IframeReadyEvent
-  | AppearanceConfigEvent
-  | TooltipStateChangeEvent;
+  | IAppearanceConfigEvent
+  | ITooltipStateChangeEvent;
 
 export interface BaseIframeConfig {
   onReady?: () => void;

@@ -1,3 +1,3 @@
-import { ConsentBox } from './consent';
+import { ConsentBox } from './consent-iframe';
 
 export { ConsentBox };

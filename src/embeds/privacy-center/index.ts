@@ -1,3 +1,3 @@
-import { PrivacyCenterBox } from './privacy-center';
+import { PrivacyCenterBox } from './privacy-center-iframe';
 
 export { PrivacyCenterBox };
