@@ -1,3 +1,4 @@
+import { DEFAULT_IFRAME_CSS_CONFIG } from '../../constants';
 import { sendAppearanceConfig } from '../appearance/send';
 import { SoyioAppearance } from '../appearance/types';
 import {
@@ -15,19 +16,21 @@ import {
   createIframe,
   generateUniqueIframeId,
   getIframeDivContainer,
+  IframeCSSConfig,
 } from './utils';
 
 export abstract class BaseIframeBox<T extends BaseConfig> {
   protected iframe: HTMLIFrameElement | null = null;
   protected skeleton: ISkeletonView | null = null;
-  protected defaultIframePrefix: string = 'soyio-iframe';
 
   protected readonly options: T;
   protected readonly appearance: SoyioAppearance | null;
   protected readonly tooltipManager: TooltipManager;
-  protected SkeletonKlass: SkeletonConstructor | null = null;
+  readonly defaultIframeCSSConfig: IframeCSSConfig = DEFAULT_IFRAME_CSS_CONFIG;
+  protected Skeleton: SkeletonConstructor | null = null;
 
   private readonly defaultUniqueId: string;
+  abstract readonly defaultIframePrefix: string;
 
   constructor(options: T) {
     this.options = options;
@@ -44,14 +47,10 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     return this.defaultUniqueId;
   }
 
-  get iframePrefix(): string {
-    return this.defaultIframePrefix;
-  }
-
   abstract iframeUrl(): string;
 
   get iframeIdentifier(): string {
-    return `${this.iframePrefix}-${this.uniqueIdentifier}`;
+    return `${this.defaultIframePrefix}-${this.uniqueIdentifier}`;
   }
 
   protected handleHeightChange(height: number): void {
@@ -69,9 +68,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     if (!this.iframe) return;
     if (this.options.onReady) this.options.onReady();
 
-    if (this.appearance) {
-      sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
-    }
+    sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
 
     if (this.skeleton) this.skeleton.hide();
   }
@@ -112,10 +109,10 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     const iframeDivContainer = getIframeDivContainer(selector);
     const url = this.iframeUrl();
 
-    this.iframe = createIframe(url, this.iframeIdentifier);
+    this.iframe = createIframe(url, this.iframeIdentifier, this.defaultIframeCSSConfig);
 
-    if (this.SkeletonKlass) {
-      this.skeleton = new this.SkeletonKlass(this.uniqueIdentifier);
+    if (this.Skeleton) {
+      this.skeleton = new this.Skeleton(this.uniqueIdentifier);
       this.skeleton.mount(iframeDivContainer);
     }
 
