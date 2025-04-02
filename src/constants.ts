@@ -2,6 +2,10 @@ import { IframeCSSConfig } from './embeds/base/utils';
 
 export const PRODUCTION_URL = 'https://app.soyio.id';
 export const SANDBOX_URL = 'https://sandbox.soyio.id';
+
+export const PRIVACY_BASE_URL = 'https://privacy.soyio.id';
+export const PRIVACY_SANDBOX_URL = 'https://privacy-sandbox.soyio.id';
+
 export const FINISHING_EVENTS = [
   'DISCLOSURE_REQUEST_SUCCESSFUL',
   'IDENTITY_REGISTERED',
