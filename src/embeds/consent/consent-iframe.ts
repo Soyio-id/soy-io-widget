@@ -1,4 +1,6 @@
+import { CONSENT_DEFAULT_IFRAME_CSS_CONFIG } from '../../constants';
 import { BaseIframeBox } from '../base/base-iframe';
+import { IframeCSSConfig } from '../base/utils';
 import { mountInstanceListeners } from '../listeners';
 
 import { ConsentSkeleton } from './skeleton';
@@ -10,6 +12,9 @@ import type {
 import { getIframeUrl } from './utils';
 
 export class ConsentBox extends BaseIframeBox<ConsentConfig> {
+  readonly defaultIframePrefix = 'consent-box';
+  readonly defaultIframeCSSConfig: IframeCSSConfig = CONSENT_DEFAULT_IFRAME_CSS_CONFIG;
+
   private state: ConsentState = {
     isSelected: false,
     actionToken: null,
@@ -17,8 +22,7 @@ export class ConsentBox extends BaseIframeBox<ConsentConfig> {
 
   constructor(options: ConsentConfig) {
     super(options);
-    this.defaultIframePrefix = 'consent-box';
-    this.SkeletonKlass = ConsentSkeleton;
+    this.Skeleton = ConsentSkeleton;
   }
 
   override get uniqueIdentifier(): string {

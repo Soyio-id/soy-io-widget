@@ -34,17 +34,21 @@ export function getIframeDivContainer(selector: string): HTMLDivElement {
   return container;
 }
 
-export function createIframe(url: string, identifier: string): HTMLIFrameElement {
+export type IframeCSSConfig = {
+  minWidth?: string;
+  maxWidth?: string;
+}
+
+export function createIframe(url: string, identifier: string, cssConfig: IframeCSSConfig): HTMLIFrameElement {
   const iframe = document.createElement('iframe');
   iframe.id = identifier;
   iframe.src = url;
 
   iframe.style.cssText += `
     width: 100% !important;
-    min-width: 375px !important;
-    max-width: 36rem !important;
+    min-width: ${cssConfig.minWidth} !important;
+    max-width: ${cssConfig.maxWidth} !important;
     border: none !important;
-    height: 120px !important;
     overflow: hidden !important;
     opacity: 1;
     transition: height 0.35s,
