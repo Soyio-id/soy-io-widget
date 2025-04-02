@@ -2,7 +2,7 @@ import { SoyioAppearance } from './types';
 
 export async function sendAppearanceConfig(
   iframe: HTMLIFrameElement,
-  appearance: SoyioAppearance,
+  appearance: SoyioAppearance | null,
   identifier: string,
 ): Promise<void> {
   if (!iframe.contentWindow) {
