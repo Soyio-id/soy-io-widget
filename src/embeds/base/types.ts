@@ -5,6 +5,7 @@ export const CONSENT_STATE_CHANGE = 'CONSENT_STATE_CHANGE';
 export const IFRAME_HEIGHT_CHANGE = 'IFRAME_HEIGHT_CHANGE';
 export const APPEARANCE_CONFIG = 'APPEARANCE_CONFIG';
 export const TOOLTIP_STATE_CHANGE = 'TOOLTIP_STATE_CHANGE';
+export const INFO_EVENT = 'INFO_EVENT';
 
 export interface ISkeletonView {
   mount(container: HTMLElement): void;
@@ -45,11 +46,8 @@ export type ConsentEvent =
   | IAppearanceConfigEvent
   | ITooltipStateChangeEvent;
 
-export interface BaseIframeConfig {
-  onReady?: () => void;
-}
-
 export type BaseConfig = {
+  onEvent: (event: Record<string, unknown>) => void,
   onReady?: () => void,
   isSandbox?: boolean,
   appearance?: SoyioAppearance,

@@ -18,7 +18,6 @@ export type ConsentEvent = ConsentCheckboxChangeEvent;
 
 export type ConsentConfig = BaseConfig & {
   consentTemplateId: `constpl_${string}`,
-  onEvent: (data: ConsentEvent) => void,
   actionToken?: string,
   entityId?: `ent_${string}`,
   context?: string,

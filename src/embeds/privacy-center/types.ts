@@ -1,13 +1,6 @@
 import { BaseConfig } from '../base/types';
 
-type WithSubjectId = {
-  subjectId: `ent_${string}`;
-  companyId?: `com_${string}`;
-};
-
-type WithCompanyId = {
-  subjectId?: `ent_${string}`;
+export type PrivacyCenterConfig = BaseConfig & {
   companyId: `com_${string}`;
+  subjectId?: `ent_${string}`;
 };
-
-export type PrivacyCenterConfig = BaseConfig & (WithSubjectId | WithCompanyId);
