@@ -3,6 +3,7 @@ import {
   IFRAME_READY,
   IframeHeightChangeEvent,
   IframeReadyEvent,
+  INFO_EVENT,
   ITooltipStateChangeEvent,
   TOOLTIP_STATE_CHANGE,
 } from './base/types';
@@ -15,6 +16,7 @@ export type Events = {
   onHeightChange?: (height: number) => void;
   onIframeReady?: () => void;
   onTooltipChange?: (tooltipState: ITooltipStateChangeEvent) => void;
+  onInfo?: (info: Record<string, unknown>) => void;
 
   // CONSENT
   onStateChange?: (state: ConsentState) => void;
@@ -27,6 +29,7 @@ type InstanceListeners = {
   onHeightChange: Record<IframeIdentifier, Events['onHeightChange']>;
   onIframeReady: Record<IframeIdentifier, Events['onIframeReady']>;
   onTooltipChange: Record<IframeIdentifier, Events['onTooltipChange']>;
+  onInfo: Record<IframeIdentifier, Events['onInfo']>;
 
   // CONSENT
   onStateChange: Record<IframeIdentifier, Events['onStateChange']>;
@@ -37,6 +40,7 @@ const instanceListeners: InstanceListeners = {
   onHeightChange: {},
   onIframeReady: {},
   onTooltipChange: {},
+  onInfo: {},
 
   // CONSENT
   onStateChange: {},
@@ -46,6 +50,7 @@ let globalHeightChangeListener: PostRobotListener | undefined;
 let globalReadyListener: PostRobotListener | undefined;
 let globalTooltipChangeListener: PostRobotListener | undefined;
 let globalStateChangeListener: PostRobotListener | undefined;
+let globalInfoEventListener: PostRobotListener | undefined;
 
 export async function setupPostrobotListeners() {
   const postRobot = await import('post-robot');
@@ -54,6 +59,7 @@ export async function setupPostrobotListeners() {
     || globalReadyListener
     || globalTooltipChangeListener
     || globalStateChangeListener
+    || globalInfoEventListener
   ) return;
 
   globalHeightChangeListener = postRobot.on(IFRAME_HEIGHT_CHANGE, async (event) => {
@@ -79,17 +85,24 @@ export async function setupPostrobotListeners() {
     const onStateChange = instanceListeners.onStateChange[eventData.identifier];
     if (onStateChange) onStateChange(eventData);
   });
+
+  globalInfoEventListener = postRobot.on(INFO_EVENT, async ({ data }) => {
+    const { identifier, ...dataWithoutIdentifier } = data;
+    const onInfo = instanceListeners.onInfo[identifier];
+    if (onInfo) onInfo(dataWithoutIdentifier);
+  });
 }
 
 export function mountInstanceListeners(iframeIdentifier: string, events: Events) {
   const {
-    onHeightChange, onIframeReady, onTooltipChange, onStateChange,
+    onHeightChange, onIframeReady, onTooltipChange, onStateChange, onInfo,
   } = events;
 
   if (onHeightChange) instanceListeners.onHeightChange[iframeIdentifier] = onHeightChange;
   if (onIframeReady) instanceListeners.onIframeReady[iframeIdentifier] = onIframeReady;
   if (onTooltipChange) instanceListeners.onTooltipChange[iframeIdentifier] = onTooltipChange;
   if (onStateChange) instanceListeners.onStateChange[iframeIdentifier] = onStateChange;
+  if (onInfo) instanceListeners.onInfo[iframeIdentifier] = onInfo;
 }
 
 export function removeInstanceListeners(iframeIdentifier: string) {
@@ -97,4 +110,5 @@ export function removeInstanceListeners(iframeIdentifier: string) {
   delete instanceListeners.onIframeReady[iframeIdentifier];
   delete instanceListeners.onTooltipChange[iframeIdentifier];
   delete instanceListeners.onStateChange[iframeIdentifier];
+  delete instanceListeners.onInfo[iframeIdentifier];
 }

@@ -96,6 +96,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
       onHeightChange: this.handleHeightChange.bind(this),
       onIframeReady: this.handleIframeReady.bind(this),
       onTooltipChange: this.handleTooltipChange.bind(this),
+      onInfo: this.options.onEvent.bind(this),
     };
 
     mountInstanceListeners(this.uniqueIdentifier, listeners);
