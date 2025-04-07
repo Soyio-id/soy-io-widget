@@ -38,18 +38,19 @@ export class TooltipManager {
     this.tooltipContent.style.cssText = 'text-align: center;';
     this.tooltipElement.appendChild(this.tooltipContent);
 
-    const arrow = document.createElement('div');
-    arrow.style.cssText = `
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 8px;
-      height: 8px;
-      background: white;
-      box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
-    `;
-    this.tooltipElement.appendChild(arrow);
+    // TODO: Place arrow and tooltip content correctly
+    // const arrow = document.createElement('div');
+    // arrow.style.cssText = `
+    //   position: absolute;
+    //   bottom: -4px;
+    //   left: 50%;
+    //   transform: translateX(-50%) rotate(45deg);
+    //   width: 8px;
+    //   height: 8px;
+    //   background: white;
+    //   box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+    // `;
+    // this.tooltipElement.appendChild(arrow);
 
     document.body.appendChild(this.tooltipElement);
   }
