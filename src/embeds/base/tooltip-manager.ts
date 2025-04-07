@@ -11,9 +11,8 @@ export class TooltipManager {
 
   private createTooltipElement(): void {
     const existingTooltip = document.querySelector(`.${this.tooltipClass}`);
-    existingTooltip?.remove();
 
-    this.tooltipElement = document.createElement('div');
+    this.tooltipElement = existingTooltip as HTMLElement || document.createElement('div');
     this.tooltipElement.className = this.tooltipClass;
 
     this.tooltipElement.style.cssText = `
@@ -34,8 +33,9 @@ export class TooltipManager {
       margin-top: -8px;
     `;
 
-    this.tooltipContent = document.createElement('div');
-    this.tooltipContent.style.cssText = 'text-align: center;';
+    const existingContent = this.tooltipElement.children[0];
+    this.tooltipContent = existingContent as HTMLElement || document.createElement('div');
+    this.tooltipContent.style.cssText = 'text-align: left;';
     this.tooltipElement.appendChild(this.tooltipContent);
 
     // TODO: Place arrow and tooltip content correctly
