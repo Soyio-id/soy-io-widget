@@ -1,3 +1,5 @@
+import { isBrowser } from '@/utils';
+
 export class TooltipManager {
   private tooltipElement: HTMLElement | null = null;
   private tooltipContent: HTMLElement | null = null;
@@ -5,8 +7,10 @@ export class TooltipManager {
   private hideTimeout: NodeJS.Timeout | null = null;
 
   constructor() {
-    this.createTooltipElement();
-    this.setupGlobalListeners();
+    if (isBrowser) {
+      this.createTooltipElement();
+      this.setupGlobalListeners();
+    }
   }
 
   private createTooltipElement(): void {
@@ -56,6 +60,8 @@ export class TooltipManager {
   }
 
   private setupGlobalListeners(): void {
+    if (!isBrowser) return;
+
     window.addEventListener('scroll', () => this.hide(), true);
     window.addEventListener('resize', () => this.hide());
     window.addEventListener('orientationchange', () => this.hide());

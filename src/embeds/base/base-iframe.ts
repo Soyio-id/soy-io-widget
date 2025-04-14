@@ -1,4 +1,3 @@
-import { DEFAULT_IFRAME_CSS_CONFIG } from '../../constants';
 import { sendAppearanceConfig } from '../appearance/send';
 import { SoyioAppearance } from '../appearance/types';
 import {
@@ -19,13 +18,16 @@ import {
   IframeCSSConfig,
 } from './utils';
 
+import { DEFAULT_IFRAME_CSS_CONFIG } from '@/constants';
+import { isBrowser } from '@/utils';
+
 export abstract class BaseIframeBox<T extends BaseConfig> {
   protected iframe: HTMLIFrameElement | null = null;
   protected skeleton: ISkeletonView | null = null;
 
   protected readonly options: T;
   protected readonly appearance: SoyioAppearance | null;
-  protected readonly tooltipManager: TooltipManager;
+  protected readonly tooltipManager: TooltipManager | null = null;
   readonly defaultIframeCSSConfig: IframeCSSConfig = DEFAULT_IFRAME_CSS_CONFIG;
   protected Skeleton: SkeletonConstructor | null = null;
 
@@ -35,7 +37,9 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   constructor(options: T) {
     this.options = options;
     this.appearance = options.appearance || null;
-    this.tooltipManager = new TooltipManager();
+    if (isBrowser) {
+      this.tooltipManager = new TooltipManager();
+    }
     this.defaultUniqueId = BaseIframeBox.generateUniqueId();
   }
 
@@ -54,7 +58,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected handleHeightChange(height: number): void {
-    if (!this.iframe) return;
+    if (!this.iframe || !isBrowser) return;
 
     this.iframe.style.height = `${height}px`;
 
@@ -65,7 +69,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected handleIframeReady(): void {
-    if (!this.iframe) return;
+    if (!this.iframe || !isBrowser) return;
+
     if (this.options.onReady) this.options.onReady();
 
     sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
@@ -74,7 +79,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected handleTooltipChange(tooltipState: ITooltipStateChangeEvent): void {
-    if (!this.iframe) return;
+    if (!this.iframe || !isBrowser) return;
 
     const iframeRect = this.iframe.getBoundingClientRect();
     const { text, coordinates, isVisible } = tooltipState;
@@ -83,13 +88,15 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     const absoluteY = coordinates.y + iframeRect.top;
 
     if (isVisible) {
-      this.tooltipManager.show(text, absoluteX, absoluteY);
+      this.tooltipManager?.show(text, absoluteX, absoluteY);
     } else {
-      this.tooltipManager.hide();
+      this.tooltipManager?.hide();
     }
   }
 
   protected async setupListeners(): Promise<void> {
+    if (!isBrowser) return;
+
     await setupPostrobotListeners();
 
     const listeners = {
@@ -103,6 +110,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   async mount(selector: string): Promise<this> {
+    if (!isBrowser) return this;
+
     await this.setupListeners();
 
     cleanupExistingIframe(this.iframeIdentifier);
@@ -113,7 +122,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     this.iframe = createIframe(url, this.iframeIdentifier, this.defaultIframeCSSConfig);
 
     if (this.Skeleton) {
-      this.skeleton = new this.Skeleton(this.uniqueIdentifier);
+      this.skeleton = new this.Skeleton!(this.uniqueIdentifier);
       this.skeleton.mount(iframeDivContainer);
     }
 
@@ -123,6 +132,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   unmount(): void {
+    if (!isBrowser) return;
+
     removeInstanceListeners(this.uniqueIdentifier);
 
     if (this.skeleton) {
