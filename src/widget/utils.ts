@@ -23,5 +23,3 @@ export function getFullUrl(options: RequestConfig): string {
 
   return `${baseUrl}/${path}?sdk=web&${urlParams}`;
 }
-
-export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement);

@@ -1,7 +1,8 @@
 import * as Listeners from './listeners';
 import { showPopUp } from './popup';
 import * as SoyioTypes from './types';
-import { isBrowser } from './utils';
+
+import { isBrowser } from '@/utils';
 
 class SoyioWidget {
   private onEvent: (data: SoyioTypes.EventData) => void;
