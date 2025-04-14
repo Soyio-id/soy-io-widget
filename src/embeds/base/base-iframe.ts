@@ -73,6 +73,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
 
     if (this.options.onReady) this.options.onReady();
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
 
     if (this.skeleton) this.skeleton.hide();
@@ -122,7 +123,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     this.iframe = createIframe(url, this.iframeIdentifier, this.defaultIframeCSSConfig);
 
     if (this.Skeleton) {
-      this.skeleton = new this.Skeleton!(this.uniqueIdentifier);
+      this.skeleton = new this.Skeleton(this.uniqueIdentifier);
       this.skeleton.mount(iframeDivContainer);
     }
 
