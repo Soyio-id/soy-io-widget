@@ -1,24 +1,26 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  overrides: [
-    {
-      files: ['*.ts'],
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-      },
+  parserOptions: {
+    project: './tsconfig.json',
+    tsconfigRootDir: './',
+  },
+  settings: {
+    'import/resolver': {
+      typescript: { },
+      node: { },
     },
-  ],
+  },
   env: { es6: true },
   ignorePatterns: ['node_modules', 'dist', 'coverage'],
-  plugins: ['import', 'eslint-comments', 'eslint-plugin-tsdoc'],
+  plugins: ['import', 'eslint-comments', 'eslint-plugin-tsdoc', '@typescript-eslint'],
   extends: [
     'airbnb-base',
     'eslint:recommended',
     'plugin:eslint-comments/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   globals: { BigInt: true, console: true, WebAssembly: true },
   rules: {

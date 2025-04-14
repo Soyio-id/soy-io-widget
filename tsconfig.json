@@ -31,8 +31,8 @@
     "src/*.ts",
     "src/**/*.d.ts",
     "./vite.config.ts",
-    "src/types",
-    "src/widget/utils.ts"
+	"src/**/*.ts",
+	".eslintrc.cjs"
   ],
   "exclude": ["node_modules/**"]
 }
