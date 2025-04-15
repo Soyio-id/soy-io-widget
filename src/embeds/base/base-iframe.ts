@@ -58,7 +58,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected handleHeightChange(height: number): void {
-    if (!this.iframe || !isBrowser) return;
+    if (!this.iframe) return;
 
     this.iframe.style.height = `${height}px`;
 
@@ -69,7 +69,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected handleIframeReady(): void {
-    if (!this.iframe || !isBrowser) return;
+    if (!this.iframe) return;
 
     if (this.options.onReady) this.options.onReady();
 
@@ -80,7 +80,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected handleTooltipChange(tooltipState: ITooltipStateChangeEvent): void {
-    if (!this.iframe || !isBrowser) return;
+    if (!this.iframe) return;
 
     const iframeRect = this.iframe.getBoundingClientRect();
     const { text, coordinates, isVisible } = tooltipState;
@@ -96,8 +96,6 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   protected async setupListeners(): Promise<void> {
-    if (!isBrowser) return;
-
     await setupPostrobotListeners();
 
     const listeners = {

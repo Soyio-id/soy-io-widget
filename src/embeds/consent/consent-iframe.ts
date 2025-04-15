@@ -11,7 +11,6 @@ import type {
 import { getIframeUrl } from './utils';
 
 import { CONSENT_DEFAULT_IFRAME_CSS_CONFIG } from '@/constants';
-import { isBrowser } from '@/utils';
 
 export class ConsentBox extends BaseIframeBox<ConsentConfig> {
   readonly defaultIframePrefix = 'consent-box';
@@ -47,8 +46,6 @@ export class ConsentBox extends BaseIframeBox<ConsentConfig> {
   }
 
   protected async setupListeners(): Promise<void> {
-    if (!isBrowser) return;
-
     await super.setupListeners();
 
     mountInstanceListeners(this.uniqueIdentifier, {
