@@ -498,3 +498,117 @@ To use the `SoyioTypes` in your project, import it directly from the `@soyio/soy
 ```javascript
 import type { SoyioTypes } from "@soyio/soyio-widget";
 ```
+
+## Server Side Rendering (SSR)
+
+This package is not directly compatible with SSR because of `post-robot`, but there are workarounds that allow you to use it without disrupting the build process. Below are examples on popular SSR frameworks.
+
+### Next.js
+
+
+```tsx
+'use client'
+
+import { useMemo, useEffect, useState } from "react";
+
+export default function PrivacyCenterBox() {
+	const privacyCenterOptions = useMemo(() => ({
+		companyId: 'com_lalala',
+		// ... other options
+		onEvent: () => {}
+	}), []);
+
+	const [privacyCenter, setPrivacyCenter] = useState(null);
+
+	useEffect(() => {
+		async function mountPrivacyCenter() {
+			if (privacyCenter) return;
+
+			const { PrivacyCenterBox } = await import('@soyio/soyio-widget');
+			const privacyCenterBox = new PrivacyCenterBox(privacyCenterOptions);
+			privacyCenterBox.mount("#privacy-center-box");
+
+			setPrivacyCenter(privacyCenterBox);
+		}
+		mountPrivacyCenter();
+
+		return () => privacyCenter?.unmount();
+	}, [privacyCenterOptions, privacyCenter]);
+
+	return (
+		<div>
+			<h1>Hello World</h1>
+			<div id="privacy-center-box"></div>
+		</div>
+	);
+}
+
+```
+
+### Gatsby
+
+```tsx
+// PrivacyCenterBox.tsx
+
+import React, { useEffect, useState, useMemo } from "react";
+
+export default function PrivacyCenterBox({ onReady }) {
+	const [privacyCenter, setPrivacyCenter] = useState(null);
+
+	const privacyCenterOptions = useMemo(() => ({
+		// other options...
+		companyId: process.env.SOYIO_COMPANY_ID || 'com_lalala',
+		onEvent: () => {}
+	}), [onReady]);
+
+	useEffect(() => {
+		async function mountPrivacyCenter() {
+			if (privacyCenter) return;
+
+			const { PrivacyCenterBox } = await import('@soyio/soyio-widget');
+			const privacyCenterBox = new PrivacyCenterBox(privacyCenterOptions);
+			privacyCenterBox.mount("#privacy-center-box");
+
+			setPrivacyCenter(privacyCenterBox);
+		}
+		mountPrivacyCenter();
+
+		return () => privacyCenter?.unmount();
+	}, [privacyCenterOptions, privacyCenter]);
+
+	return (<div id="privacy-center-box"></div>)
+}
+
+```
+
+Then use `React.lazy` and `React.Suspense` when declaring that component elsewhere.
+
+```tsx
+// AnotherComponent.tsx
+
+import React, { useState, useCallback, useEffect } from "react";
+
+const PrivacyCenterBox = React.lazy(() => import('yourPathTo/PrivacyCenterBox'));
+
+export default function PrivacyCenterContainer() {
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => setIsClient(true), []);
+
+	const onReady = useCallback(() => setIsPrivacyCenterLoading(false), []);
+
+	return (
+		<div>
+		  {isClient && 
+		  <React.Suspense fallback={
+			<div>
+				Loading...
+			</div>
+		  }>
+			<PrivacyCenterBox onReady={onReady} />
+		  </React.Suspense>
+		  }
+		</div>
+	)
+}
+```
