@@ -17,7 +17,7 @@ export function getFullUrl(options: RequestConfig): string {
   const baseUrl = options.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
   const urlParams = Object.entries(options.configProps)
     .filter(([key, value]) => value || key === 'disclosureRequestId')
-    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
     .join('&');
   const path = getPath(options);
 

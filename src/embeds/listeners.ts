@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/require-await */
 import {
+  ConsentEvent,
   IFRAME_HEIGHT_CHANGE,
   IFRAME_READY,
   IframeHeightChangeEvent,
@@ -86,7 +88,7 @@ export async function setupPostrobotListeners() {
     if (onStateChange) onStateChange(eventData);
   });
 
-  globalInfoEventListener = postRobot.on(INFO_EVENT, async ({ data }) => {
+  globalInfoEventListener = postRobot.on(INFO_EVENT, async ({ data }: { data: ConsentEvent }) => {
     const { identifier, ...dataWithoutIdentifier } = data;
     const onInfo = instanceListeners.onInfo[identifier];
     if (onInfo) onInfo(dataWithoutIdentifier);
