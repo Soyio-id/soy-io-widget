@@ -26,7 +26,6 @@ async function buildEventListener(hooks: Hooks) {
 
   if (activeListener) removeListener();
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   activeListener = postRobot.on(WIDGET_EVENT, async ({ data }: { data: EventData }) => {
     onEvent(data);
     if (FINISHING_EVENTS.includes(data.eventName)) {
@@ -34,6 +33,8 @@ async function buildEventListener(hooks: Hooks) {
     } else if (data.eventName === CLOSED_EVENT) {
       clearOverlayEffects();
     }
+
+    return Promise.resolve();
   });
 }
 
