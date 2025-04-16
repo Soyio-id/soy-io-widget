@@ -67,13 +67,12 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     if (parentElement) parentElement.style.display = 'none';
   }
 
-  protected handleIframeReady(): void {
+  protected async handleIframeReady(): Promise<void> {
     if (!this.iframe) return;
 
     if (this.options.onReady) this.options.onReady();
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
+    await sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
 
     if (this.skeleton) this.skeleton.hide();
   }
