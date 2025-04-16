@@ -27,7 +27,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
 
   protected readonly options: T;
   protected readonly appearance: SoyioAppearance | null;
-  protected readonly tooltipManager: TooltipManager | null = null;
+  protected readonly tooltipManager: TooltipManager;
   readonly defaultIframeCSSConfig: IframeCSSConfig = DEFAULT_IFRAME_CSS_CONFIG;
   protected Skeleton: SkeletonConstructor | null = null;
 
@@ -37,9 +37,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   constructor(options: T) {
     this.options = options;
     this.appearance = options.appearance || null;
-    if (isBrowser) {
-      this.tooltipManager = new TooltipManager();
-    }
+    this.tooltipManager = new TooltipManager();
+
     this.defaultUniqueId = BaseIframeBox.generateUniqueId();
   }
 
@@ -89,9 +88,9 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     const absoluteY = coordinates.y + iframeRect.top;
 
     if (isVisible) {
-      this.tooltipManager?.show(text, absoluteX, absoluteY);
+      this.tooltipManager.show(text, absoluteX, absoluteY);
     } else {
-      this.tooltipManager?.hide();
+      this.tooltipManager.hide();
     }
   }
 

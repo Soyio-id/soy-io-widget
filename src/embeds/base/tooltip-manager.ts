@@ -1,3 +1,5 @@
+import { isBrowser } from '@/utils';
+
 export class TooltipManager {
   private tooltipElement: HTMLElement | null = null;
   private tooltipContent: HTMLElement | null = null;
@@ -5,6 +7,8 @@ export class TooltipManager {
   private hideTimeout: NodeJS.Timeout | null = null;
 
   constructor() {
+    if (!isBrowser) return;
+
     this.createTooltipElement();
     this.setupGlobalListeners();
   }
