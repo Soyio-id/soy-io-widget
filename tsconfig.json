@@ -19,6 +19,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+	/* Paths */
+	"baseUrl": ".",
+	"paths": {
+	  "@/*": ["./src/*"]
+	},
+
     "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": [

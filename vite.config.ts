@@ -1,3 +1,4 @@
+import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
 
 import { defineConfig } from 'vite';
@@ -20,6 +21,11 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     target: 'es2015',
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   plugins: [dts({ rollupTypes: true })],
 });
