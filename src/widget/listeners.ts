@@ -39,5 +39,6 @@ async function buildEventListener(hooks: Hooks) {
 }
 
 export function setListeners(hooks: Hooks) {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   buildEventListener(hooks);
 }
