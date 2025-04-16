@@ -73,7 +73,7 @@ export type SignatureRequestConfig = {
 }
 
 export type AuthRequestConfig = {
-  request: 'authentication',
+  request: 'authentication_request',
   configProps: AuthRequestProps,
   onEvent: (data: EventData) => void,
   isSandbox?: boolean,

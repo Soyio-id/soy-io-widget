@@ -253,7 +253,7 @@ The **`auth_request`** is a process where, using a previously created `auth_requ
 
   // Widget configuration
   const widgetConfig = {
-    request: "authentication",
+    request: "authentication_request",
     configProps: {
       authRequestId: "<auth request id>",
       customColor: "<custom color>",
