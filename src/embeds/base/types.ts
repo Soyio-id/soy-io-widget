@@ -14,6 +14,7 @@ export interface ISkeletonView {
 
 export interface IBaseEventData {
   identifier: string;
+  eventName: string;
 }
 
 export interface IframeReadyEvent extends IBaseEventData {

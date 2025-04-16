@@ -1,7 +1,8 @@
-import { CLOSED_EVENT, FINISHING_EVENTS } from '../constants';
-
+import { WIDGET_EVENT } from './constants';
 import { clearOverlayEffects, removePopUp } from './popup';
-import { WIDGET_EVENT } from './types';
+import type { EventData } from './types';
+
+import { CLOSED_EVENT, FINISHING_EVENTS } from '@/constants';
 
 type Hooks = {
   onEvent: (event: any) => void;
@@ -25,16 +26,19 @@ async function buildEventListener(hooks: Hooks) {
 
   if (activeListener) removeListener();
 
-  activeListener = postRobot.on(WIDGET_EVENT, async (event) => {
-    onEvent(event.data);
-    if (FINISHING_EVENTS.includes(event.data.eventName)) {
+  activeListener = postRobot.on(WIDGET_EVENT, async ({ data }: { data: EventData }) => {
+    onEvent(data);
+    if (FINISHING_EVENTS.includes(data.eventName)) {
       removePopUp();
-    } else if (event.data.eventName === CLOSED_EVENT) {
+    } else if (data.eventName === CLOSED_EVENT) {
       clearOverlayEffects();
     }
+
+    return Promise.resolve();
   });
 }
 
 export function setListeners(hooks: Hooks) {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   buildEventListener(hooks);
 }

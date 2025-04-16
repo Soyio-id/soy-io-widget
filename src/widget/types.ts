@@ -1,5 +1,4 @@
-export const WIDGET_MOUNTED = 'WIDGET_MOUNTED';
-export const WIDGET_EVENT = 'WIDGET_EVENT';
+import { CLOSED_EVENT } from '@/constants';
 
 export type ForceErrors =
   | 'facial_validation_error'
@@ -51,8 +50,9 @@ export type EventData = {
     'REJECTED_SIGNATURE' |
     'DISCLOSURE_REQUEST_SUCCESSFUL' |
     'UNEXPECTED_ERROR' |
-    'AUTH_REQUEST_SUCCESSFUL'
-  identityId: `id_${string}`,
+    'AUTH_REQUEST_SUCCESSFUL' |
+    typeof CLOSED_EVENT
+  identityId: `id_${string}`
   userReference?: string
 }
 

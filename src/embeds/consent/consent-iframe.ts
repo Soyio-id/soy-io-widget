@@ -1,4 +1,3 @@
-import { CONSENT_DEFAULT_IFRAME_CSS_CONFIG } from '../../constants';
 import { BaseIframeBox } from '../base/base-iframe';
 import { IframeCSSConfig } from '../base/utils';
 import { mountInstanceListeners } from '../listeners';
@@ -10,6 +9,8 @@ import type {
   ConsentState,
 } from './types';
 import { getIframeUrl } from './utils';
+
+import { CONSENT_DEFAULT_IFRAME_CSS_CONFIG } from '@/constants';
 
 export class ConsentBox extends BaseIframeBox<ConsentConfig> {
   readonly defaultIframePrefix = 'consent-box';

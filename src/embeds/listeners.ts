@@ -1,4 +1,5 @@
 import {
+  ConsentEvent,
   IFRAME_HEIGHT_CHANGE,
   IFRAME_READY,
   IframeHeightChangeEvent,
@@ -66,30 +67,40 @@ export async function setupPostrobotListeners() {
     const eventData = event.data as IframeHeightChangeEvent;
     const onHeightChange = instanceListeners.onHeightChange[eventData.identifier];
     if (onHeightChange) onHeightChange(eventData.height);
+
+    return Promise.resolve();
   });
 
   globalReadyListener = postRobot.on(IFRAME_READY, async (event) => {
     const eventData = event.data as IframeReadyEvent;
     const onIframeReady = instanceListeners.onIframeReady[eventData.identifier];
     if (onIframeReady) onIframeReady();
+
+    return Promise.resolve();
   });
 
   globalTooltipChangeListener = postRobot.on(TOOLTIP_STATE_CHANGE, async (event) => {
     const eventData = event.data as ITooltipStateChangeEvent;
     const onTooltipChange = instanceListeners.onTooltipChange[eventData.identifier];
     if (onTooltipChange) onTooltipChange(eventData);
+
+    return Promise.resolve();
   });
 
   globalStateChangeListener = postRobot.on(CONSENT_STATE_CHANGE, async (event) => {
     const eventData = event.data as ConsentState & { identifier: string };
     const onStateChange = instanceListeners.onStateChange[eventData.identifier];
     if (onStateChange) onStateChange(eventData);
+
+    return Promise.resolve();
   });
 
-  globalInfoEventListener = postRobot.on(INFO_EVENT, async ({ data }) => {
+  globalInfoEventListener = postRobot.on(INFO_EVENT, async ({ data }: { data: ConsentEvent }) => {
     const { identifier, ...dataWithoutIdentifier } = data;
     const onInfo = instanceListeners.onInfo[identifier];
     if (onInfo) onInfo(dataWithoutIdentifier);
+
+    return Promise.resolve();
   });
 }
 

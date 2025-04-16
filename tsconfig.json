@@ -19,14 +19,20 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+	/* Paths */
+	"baseUrl": ".",
+	"paths": {
+	  "@/*": ["./src/*"]
+	},
+
     "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": [
     "src/*.ts",
     "src/**/*.d.ts",
     "./vite.config.ts",
-    "src/types",
-    "src/widget/utils.ts"
+	"src/**/*.ts",
+	".eslintrc.cjs"
   ],
   "exclude": ["node_modules/**"]
 }

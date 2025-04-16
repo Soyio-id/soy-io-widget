@@ -1,4 +1,3 @@
-import { DEFAULT_IFRAME_CSS_CONFIG } from '../../constants';
 import { sendAppearanceConfig } from '../appearance/send';
 import { SoyioAppearance } from '../appearance/types';
 import {
@@ -19,6 +18,9 @@ import {
   IframeCSSConfig,
 } from './utils';
 
+import { DEFAULT_IFRAME_CSS_CONFIG } from '@/constants';
+import { isBrowser } from '@/utils';
+
 export abstract class BaseIframeBox<T extends BaseConfig> {
   protected iframe: HTMLIFrameElement | null = null;
   protected skeleton: ISkeletonView | null = null;
@@ -36,6 +38,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     this.options = options;
     this.appearance = options.appearance || null;
     this.tooltipManager = new TooltipManager();
+
     this.defaultUniqueId = BaseIframeBox.generateUniqueId();
   }
 
@@ -64,11 +67,12 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     if (parentElement) parentElement.style.display = 'none';
   }
 
-  protected handleIframeReady(): void {
+  protected async handleIframeReady(): Promise<void> {
     if (!this.iframe) return;
+
     if (this.options.onReady) this.options.onReady();
 
-    sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
+    await sendAppearanceConfig(this.iframe, this.appearance, this.uniqueIdentifier);
 
     if (this.skeleton) this.skeleton.hide();
   }
@@ -103,6 +107,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   async mount(selector: string): Promise<this> {
+    if (!isBrowser) return this;
+
     await this.setupListeners();
 
     cleanupExistingIframe(this.iframeIdentifier);
@@ -123,6 +129,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   }
 
   unmount(): void {
+    if (!isBrowser) return;
+
     removeInstanceListeners(this.uniqueIdentifier);
 
     if (this.skeleton) {
