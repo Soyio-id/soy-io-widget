@@ -25,15 +25,12 @@ export const CONSENT_DEFAULT_HEIGHT_PX = 120;
 
 export const DEFAULT_IFRAME_CSS_CONFIG: IframeCSSConfig = {
   minWidth: '375px',
-  maxWidth: '50rem',
 };
 
 export const CONSENT_DEFAULT_IFRAME_CSS_CONFIG: IframeCSSConfig = {
   minWidth: '375px',
-  maxWidth: '36rem',
 };
 
 export const PRIVACY_CENTER_DEFAULT_IFRAME_CSS_CONFIG: IframeCSSConfig = {
   minWidth: '375px',
-  maxWidth: '50rem',
 };
