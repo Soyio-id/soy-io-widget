@@ -16,7 +16,6 @@ export class ConsentSkeleton implements ISkeletonView {
       transform: translate(-50%, -50%);
       width: 100%;
       min-width: 375px;
-      max-width: 36rem;
       height: 120px;
       background: #FFFFFF;
       border: 1px solid #E5E7EB;

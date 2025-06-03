@@ -36,7 +36,6 @@ export function getIframeDivContainer(selector: string): HTMLDivElement {
 
 export type IframeCSSConfig = {
   minWidth?: string;
-  maxWidth?: string;
 }
 
 export function createIframe(url: string, identifier: string, cssConfig: IframeCSSConfig): HTMLIFrameElement {
@@ -47,7 +46,6 @@ export function createIframe(url: string, identifier: string, cssConfig: IframeC
   iframe.style.cssText += `
     width: 100% !important;
     min-width: ${cssConfig.minWidth} !important;
-    max-width: ${cssConfig.maxWidth} !important;
     border: none !important;
     overflow: hidden !important;
     opacity: 1;
