@@ -28,7 +28,7 @@ export const DEFAULT_IFRAME_CSS_CONFIG: IframeCSSConfig = {
 };
 
 export const CONSENT_DEFAULT_IFRAME_CSS_CONFIG: IframeCSSConfig = {
-  minWidth: '375px',
+  minWidth: '0px',
 };
 
 export const PRIVACY_CENTER_DEFAULT_IFRAME_CSS_CONFIG: IframeCSSConfig = {
