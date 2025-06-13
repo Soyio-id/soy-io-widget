@@ -1,3 +1,4 @@
+import { version } from '../../../package.json';
 import { PRIVACY_BASE_URL, PRIVACY_SANDBOX_URL } from '../../constants';
 
 import type { PrivacyCenterConfig } from './types';
@@ -7,6 +8,7 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
   const baseUrl = privacyCenterConfig.developmentUrl || (isSandbox ? PRIVACY_SANDBOX_URL : PRIVACY_BASE_URL);
 
   const urlParams = new URLSearchParams();
+  urlParams.set('sdkVersion', version);
 
   if (privacyCenterConfig.sessionToken) {
     urlParams.set('sessionToken', privacyCenterConfig.sessionToken);

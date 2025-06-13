@@ -1,3 +1,4 @@
+import { version } from '../../../package.json';
 import { PRODUCTION_URL, SANDBOX_URL } from '../../constants';
 
 import type { ConsentConfig } from './types';
@@ -15,6 +16,8 @@ function getIframeUrl(consentConfig: ConsentConfig): string {
   const baseUrl = consentConfig.developmentUrl || (isSandbox ? SANDBOX_URL : PRODUCTION_URL);
 
   const urlParams = new URLSearchParams();
+  urlParams.set('sdkVersion', version);
+
   URL_PARAMS.forEach((param) => {
     if (consentConfig[param]) urlParams.set(param, consentConfig[param]!);
   });

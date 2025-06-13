@@ -1,3 +1,4 @@
+import { version } from '../../package.json';
 import { PRODUCTION_URL, SANDBOX_URL } from '../constants';
 import type { RequestConfig } from '../types';
 
@@ -21,5 +22,5 @@ export function getFullUrl(options: RequestConfig): string {
     .join('&');
   const path = getPath(options);
 
-  return `${baseUrl}/${path}?sdk=web&${urlParams}`;
+  return `${baseUrl}/${path}?sdk=web&sdkVersion=${version}&${urlParams}`;
 }
