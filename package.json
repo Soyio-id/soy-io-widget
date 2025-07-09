@@ -42,5 +42,8 @@
     "post-robot": "^10.0.46",
     "vite": "^7.0.1",
     "vite-plugin-dts": "^3.6.4"
+  },
+  "resolutions": {
+    "brace-expansion": "^1.1.12"
   }
 }
