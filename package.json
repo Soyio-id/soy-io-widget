@@ -37,11 +37,11 @@
     "eslint-plugin-tsdoc": "^0.2.17",
     "typedoc": "^0.25.12",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "post-robot": "^10.0.46",
-    "vite": "^5.1.8",
+    "vite": "^7.0.1",
     "vite-plugin-dts": "^3.6.4"
   }
 }
