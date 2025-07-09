@@ -5,6 +5,7 @@ import type { EventData } from './types';
 import { CLOSED_EVENT, FINISHING_EVENTS } from '@/constants';
 
 type Hooks = {
+  // eslint-disable-next-line
   onEvent: (event: any) => void;
 };
 
@@ -39,6 +40,6 @@ async function buildEventListener(hooks: Hooks) {
 }
 
 export function setListeners(hooks: Hooks) {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+   
   buildEventListener(hooks);
 }
