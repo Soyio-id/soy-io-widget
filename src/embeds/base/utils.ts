@@ -1,7 +1,7 @@
 export function cleanupExistingIframe(identifier: string): void {
   const existingIframe = document.getElementById(identifier);
   if (existingIframe) {
-    // eslint-disable-next-line no-console
+     
     console.warn('ConsentBox iframe already exists. Removing existing before mounting new one.');
     existingIframe.remove();
   }
