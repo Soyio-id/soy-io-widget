@@ -365,6 +365,70 @@ The `onEvent` follows the following format:
 
   We don't support hiding the mandatory consent, and we strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
 
+## Privacy Center
+
+The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You can scope which features to show and which data subjects are relevant to your interface. For more info check [our docs](https://docs.soyio.id/).
+
+```html
+<!-- Add a container div where the Privacy Center will be mounted -->
+<div id="privacy-center-box"></div>
+
+<script>
+  import { PrivacyCenterBox } from "@soyio/soyio-widget";
+
+  // Configuration for the Privacy Center
+  const privacyCenterOptions = {
+    // Choose ONE of the following authentication modes:
+    // 1) Session token mode
+    // sessionToken: "<session token>",
+
+    // 2) Company/subject mode
+    companyId: "<company id>", // e.g. com_...
+    subjectId: "<subject id>", // Optional, e.g. ent_...
+
+    // Feature flags (optional)
+    enabledFeatures: ["DataSubjectRequest", "ConsentManagement"],
+
+    // Limit consent view to specific data subjects (optional)
+    dataSubjects: ["customer", "employee"],
+
+    // Common options
+    onEvent: (event) => console.log(event),
+    onReady: () => console.log("PrivacyCenterBox is ready"),
+    isSandbox: true, // Optional
+    appearance: {}, // Optional
+  };
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    const privacyCenter = new PrivacyCenterBox(privacyCenterOptions);
+    privacyCenter.mount("#privacy-center-box");
+  });
+</script>
+```
+
+### Attribute Descriptions
+
+- `sessionToken`: Use this to authenticate a session directly.
+- `companyId`: The company identifier. Must start with `com_`. Use this when Privacy Center is mounted in a non authenticated environment.
+- `subjectId`: Optional subject identifier. Must start with `ent_`.
+- `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
+- `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
+- `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
+- `appearance`: Customize the iframe appearance. See Appearance section below.
+- `onEvent`: Callback that receives events from the iframe.
+- `onReady`: Optional callback fired when the iframe becomes ready.
+
+Note:
+- When `sessionToken` is provided, do not pass `companyId` or `subjectId`.
+
+### Privacy Center Events
+
+- **`REQUEST_SUBMITTED`**: This event occurs when a user successfully submits a Data Subject Request. The event object includes:
+  - `eventName`: The name of the event, in this case, `'REQUEST_SUBMITTED'`.
+  - `subjectId`: The identifier for the user.
+  - `kind`: The kind of the Data Subject Request submitted. Supported values are: `access`, `opposition`, `rectification`, `suppression` and `portability`
+
 # Appearance
 
 Customize the look and feel of Soyio UI components by passing an `appearance` object to the configuration. The appearance object supports themes, CSS variables, and CSS rules for granular control over the styling.
