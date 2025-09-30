@@ -1,6 +1,6 @@
 import { BaseConfig } from '../base/types';
 
-export type PrivacyManagerFeature = 'DataSubjectRequest' | 'ConsentManagement';
+export type PrivacyManagerFeature = 'DataSubjectRequest' | 'ConsentManagement' | 'RequestTracking';
 
 export type DataSubject =
 | 'anonymous_user'
