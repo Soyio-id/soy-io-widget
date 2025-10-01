@@ -24,6 +24,10 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('enabledFeatures', privacyCenterConfig.enabledFeatures.join(','));
   }
 
+  if (privacyCenterConfig.dataSubjects?.length) {
+    urlParams.set('dataSubjects', privacyCenterConfig.dataSubjects.join(','));
+  }
+
   const queryString = urlParams.toString();
   return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
 }
