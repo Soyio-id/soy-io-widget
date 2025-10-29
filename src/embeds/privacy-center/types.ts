@@ -19,22 +19,16 @@ export type DataSubject =
 | 'trainee'
 | 'visitor';
 
-export type PrivacyCenterConfigWithSessionToken = BaseConfig & {
-  sessionToken: string;
+export type PrivacyCenterConfig = BaseConfig & {
   enabledFeatures?: PrivacyManagerFeature[];
-  companyId?: never;
-  subjectId?: never;
   dataSubjects?: DataSubject[];
-};
-
-export type PrivacyCenterConfigWithoutSessionToken = BaseConfig & {
-  sessionToken?: never;
-  enabledFeatures?: PrivacyManagerFeature[];
-  companyId: `com_${string}`;
-  subjectId?: `ent_${string}`;
-  dataSubjects?: DataSubject[];
-};
-
-export type PrivacyCenterConfig =
-  | PrivacyCenterConfigWithSessionToken
-  | PrivacyCenterConfigWithoutSessionToken;
+} & (
+  | {
+      companyId: `com_${string}`;
+      sessionToken?: never;
+    }
+  | {
+      sessionToken: string;
+      companyId?: never;
+    }
+);
