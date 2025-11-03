@@ -14,10 +14,6 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('sessionToken', privacyCenterConfig.sessionToken);
   } else if (privacyCenterConfig.companyId) {
     urlParams.set('companyId', privacyCenterConfig.companyId);
-
-    if (privacyCenterConfig.subjectId) {
-      urlParams.set('subjectId', privacyCenterConfig.subjectId);
-    }
   }
 
   if (privacyCenterConfig.enabledFeatures?.length) {

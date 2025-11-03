@@ -379,12 +379,11 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
   // Configuration for the Privacy Center
   const privacyCenterOptions = {
     // Choose ONE of the following authentication modes:
-    // 1) Session token mode
-    // sessionToken: "<session token>",
-
-    // 2) Company/subject mode
+    // 1) Public mode
     companyId: "<company id>", // e.g. com_...
-    subjectId: "<subject id>", // Optional, e.g. ent_...
+
+    // 2) Authenticated mode
+    // sessionToken: "<session token>",
 
     // Feature flags (optional)
     enabledFeatures: ["DataSubjectRequest", "ConsentManagement"],
@@ -394,7 +393,7 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 
     // Common options
     onEvent: (event) => console.log(event),
-    onReady: () => console.log("PrivacyCenterBox is ready"),
+    onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
     isSandbox: true, // Optional
     appearance: {}, // Optional
   };
@@ -411,7 +410,6 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 
 - `sessionToken`: Use this to authenticate a session directly.
 - `companyId`: The company identifier. Must start with `com_`. Use this when Privacy Center is mounted in a non authenticated environment.
-- `subjectId`: Optional subject identifier. Must start with `ent_`.
 - `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
 - `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
 - `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
@@ -420,13 +418,12 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `onReady`: Optional callback fired when the iframe becomes ready.
 
 Note:
-- When `sessionToken` is provided, do not pass `companyId` or `subjectId`.
+- When `sessionToken` is provided, do not pass `companyId`.
 
 ### Privacy Center Events
 
 - **`REQUEST_SUBMITTED`**: This event occurs when a user successfully submits a Data Subject Request. The event object includes:
   - `eventName`: The name of the event, in this case, `'REQUEST_SUBMITTED'`.
-  - `subjectId`: The identifier for the user.
   - `kind`: The kind of the Data Subject Request submitted. Supported values are: `access`, `opposition`, `rectification`, `suppression` and `portability`
 
 # Appearance
