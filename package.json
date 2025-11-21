@@ -1,6 +1,6 @@
 {
   "name": "@soyio/soyio-widget",
-  "version": "2.14.1",
+  "version": "2.14.2",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
