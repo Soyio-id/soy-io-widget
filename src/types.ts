@@ -8,7 +8,6 @@ export type { PrivacyCenterConfig } from './embeds/privacy-center/types';
 export type { SoyioAppearance } from './embeds/appearance/types';
 
 export type {
-  ForceErrors,
   Request,
   NewDisclosureRequestProps,
   ExistingDisclosureRequestProps,

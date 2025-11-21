@@ -1,11 +1,5 @@
 import { CLOSED_EVENT } from '@/constants';
 
-export type ForceErrors =
-  | 'facial_validation_error'
-  | 'document_validation_error'
-  | 'unknown_error'
-  | 'expiration_error'
-  | 'camera_permission_error';
 export type Request = 'disclosure' | 'signature' | 'authentication';
 
 export type NewDisclosureRequestProps = {
@@ -14,7 +8,6 @@ export type NewDisclosureRequestProps = {
   disclosureRequestId?: never;
   userReference: string;
   userEmail?: string;
-  forceError?: ForceErrors;
   customColor?: string;
 }
 
@@ -24,7 +17,6 @@ export type ExistingDisclosureRequestProps = {
   disclosureRequestId: `dreq_${string}`;
   userReference?: never;
   userEmail?: never;
-  forceError?: ForceErrors;
   customColor?: string;
 }
 
@@ -32,7 +24,6 @@ export type DisclosureRequestProps = NewDisclosureRequestProps | ExistingDisclos
 
 export type SignatureAttemptProps = {
   signatureAttemptId: `sa_${string}`
-  forceError?: ForceErrors
   customColor?: string
 }
 

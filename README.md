@@ -61,7 +61,6 @@ This doesn't require any previous setup. Given your company and disclosure templ
       userReference: "<user identifier of company>",
       userEmail: "<user email>",
       templateId: "<template id>",
-      forceError: "<error type>",
       customColor: "<custom color>",
     },
     onEvent: (data) => console.log(data),
@@ -83,7 +82,6 @@ This doesn't require any previous setup. Given your company and disclosure templ
 Optional props:
 
 - `userEmail`
-- `forceError`
 - `customColor`.
 
 ### 2. Created Disclosure Request
@@ -105,7 +103,6 @@ To use this option, simply specify the disclosure request ID along with any opti
     request: "disclosure",
     configProps: {
       disclosureRequestId: "<disclosure request id>",
-      forceError: "<error type>",
       customColor: "<custom color>",
     },
     onEvent: (data) => console.log(data),
@@ -126,7 +123,6 @@ To use this option, simply specify the disclosure request ID along with any opti
 
 Optional properties:
 
-- `forceError`
 - `customColor`
 
 Note: User and template properties are not specified here because they must be specified when creating the disclosure request beforehand.
@@ -161,18 +157,8 @@ The `onEvent` callback is designed to handle various events that occur during wi
 - **`disclosureRequestId`**: If created beforehand, you can target a specific disclosure request that the user must complete. It is useful if you need to match some data between the disclosure process and your database records. It must start with `'dreq_'`
 - **`identityId`**: This identifier must start with `'id_'` and signifies the user's identity.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
-- **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`customColor`**: A hex code string that specifies the base color of the interface.
-
-### Force Error Types
-
-The `forceError` parameter can simulate the following error conditions:
-
-- `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
-- `'document_validation_error'`: Indicates an issue with validating the photos of the documents provided by the user.
-- `'unknown_error'`: Generates a generic error, representing an unspecified problem.
-- `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
 
 ## Signature Attempt
 
@@ -189,7 +175,6 @@ The **`signature_attempt`** is a process where, using a previously created `sign
     request: "signature",
     configProps: {
       signatureAttemptId: "<signature attempt id>",
-      forceError: "<error type>",
       customColor: "<custom color>",
     },
     onEvent: (data) => console.log(data),
@@ -210,7 +195,6 @@ The **`signature_attempt`** is a process where, using a previously created `sign
 
 Optional props:
 
-- `forceError`
 - `customColor`.
 
 ### Signature Attempt Events
@@ -229,17 +213,8 @@ Optional props:
 
 - **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
-- **`forceError`**: Triggers specific errors for testing or debugging. Used to simulate failure scenarios. Only works in `sandbox` mode.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`customColor`**: A hex code string that specifies the base color of the interface.
-
-### Force Error Types
-
-The `forceError` parameter can simulate the following error conditions:
-
-- `'facial_validation_error'`: Simulates a failure in the facial video liveness test, indicating the system could not verify the user's live presence.
-- `'unknown_error'`: Generates a generic error, representing an unspecified problem.
-- `'expiration_error'`: Occurs when there is an issue with the identity provider that prevents the validation of one or both documents provided by the user, due to unspecified problems in the validation process.
 
 ## Auth Request
 
