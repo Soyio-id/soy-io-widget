@@ -363,6 +363,10 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
     // Feature flags (optional)
     enabledFeatures: ["DataSubjectRequest", "ConsentManagement"],
 
+    // Request reference (optional)
+    // Will be attached to data subject requests
+    requestReference: "<reference>", // e.g. some uuid or id to match our created records with your frontend flows
+
     // Limit consent view to specific data subjects (optional)
     dataSubjects: ["customer", "employee"],
 
@@ -386,6 +390,7 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `sessionToken`: Use this to authenticate a session directly.
 - `companyId`: The company identifier. Must start with `com_`. Use this when Privacy Center is mounted in a non authenticated environment.
 - `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
+- `requestReference`: Optional string, intended to be a reference of the current session. It will be attached to created data subject requests.
 - `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
 - `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
 - `appearance`: Customize the iframe appearance. See Appearance section below.

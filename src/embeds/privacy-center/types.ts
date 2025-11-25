@@ -22,6 +22,7 @@ export type DataSubject =
 export type PrivacyCenterConfig = BaseConfig & {
   enabledFeatures?: PrivacyManagerFeature[];
   dataSubjects?: DataSubject[];
+  requestReference?: string;
 } & (
   | {
       companyId: `com_${string}`;
