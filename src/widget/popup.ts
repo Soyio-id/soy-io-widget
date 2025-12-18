@@ -57,21 +57,31 @@ export function showPopUp(options: RequestConfig) {
   const left = (width - w) / 2 / systemZoom + dualScreenLeft;
   const top = (height - h) / 2 / systemZoom + dualScreenTop;
 
-  document.body.style.filter = 'blur(5px)';
-  document.body.addEventListener('click', focusPopup);
+  const popupFeatures = [
+    'scrollbars=yes',
+    `width=${w}`,
+    `height=${h}`,
+    `top=${top}`,
+    `left=${left}`,
+  ].join(',');
 
-  popupWindow = window.open(
-    url,
-    'Soyio',
-    `scrollbars=yes,
-     width=${w},
-     height=${h},
-     top=${top},
-     left=${left}`,
-  );
+  // Safari and some blockers require the window to be opened synchronously with a user gesture.
+  // Start with about:blank, then redirect to the target URL once the window exists.
+  const newPopup = window.open('about:blank', 'Soyio', popupFeatures);
 
-  focusPopup();
-  setPopupCheckInterval();
+  if (newPopup) {
+    popupWindow = newPopup;
+    popupWindow.location.href = url;
+
+    document.body.style.filter = 'blur(5px)';
+    document.body.addEventListener('click', focusPopup);
+
+    focusPopup();
+    setPopupCheckInterval();
+  } else {
+    clearOverlayEffects();
+    alert('Debes habilitar las ventanas emergentes para poder iniciar el flujo.');
+  }
 }
 
 export function removePopUp() {
