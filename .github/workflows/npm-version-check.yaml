@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - ".github/**"
 
 jobs:
   check-version:
@@ -38,4 +40,3 @@ jobs:
             echo "Error: The version in package.json ($PACKAGE_VERSION) must be greater than the version on npm ($NPM_VERSION)."
             exit 1
           fi
-
