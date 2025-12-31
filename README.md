@@ -101,7 +101,7 @@ The `onEvent` follows the following format:
 ```typescript
 {
   eventName: 'CONSENT_CHECKBOX_CHANGE',
-  isSelected: boolean
+  isSelected: boolean,
   actionToken: string,
 }
 ```
@@ -122,7 +122,6 @@ The `onEvent` follows the following format:
 
 - **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
 - **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
-- **`actionToken`**: token containing necessary information for creation of the consent commit. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
 - **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/integration-guide/modules/consent).
 - **`actionToken`**: In case of losing the state of the consent (i.e. page reload), you can use a previously generated `actionToken` to restore the state of the consent.
 - **`entityId`**: Identifier of the `entity` associated with a `ConsentAction`. If provided and a consent was previously granted by this entity, the UI will display a message indicating that consent has already been given.
