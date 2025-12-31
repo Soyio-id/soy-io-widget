@@ -1,6 +1,6 @@
 {
   "name": "@soyio/soyio-widget",
-  "version": "2.15.2",
+  "version": "2.15.3",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
@@ -45,6 +45,7 @@
   },
   "resolutions": {
     "brace-expansion": "^1.1.12",
-    "vite": "7.2.6"
+    "vite": "7.2.6",
+    "js-yaml": "^4.1.1"
   }
 }
