@@ -1,8 +1,8 @@
-<h1 align="center">Soyio desktop widget</h1>
+<h1 align="center">Soyio Widget</h1>
 
 <p align="center">
     <em>
-        Use the Soyio widget within your web application as a Window.
+        Our SDK for web based integrations
     </em>
 </p>
 
@@ -11,6 +11,21 @@
     <img src="https://img.shields.io/npm/v/@soyio/soyio-widget?label=version&logo=nodedotjs&logoColor=%23fff&color=306998" alt="NPM - Version">
 </a>
 </p>
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Modules](#modules)
+- [Consent Request Box](#consent-request-box)
+- [Privacy Center](#privacy-center)
+- [Disclosure Request](#disclosure-request)
+- [Signature Attempt](#signature-attempt)
+- [Auth Request](#auth-request)
+- [Appearance](#appearance)
+- [TypeScript](#typescript)
+- [Server Side Rendering (SSR)](#server-side-rendering-ssr)
+
 
 ## Installation
 
@@ -22,17 +37,183 @@ npm install @soyio/soyio-widget
 
 # Using yarn
 yarn add @soyio/soyio-widget
+
+# Using pnpm
+pnpm add @soyio/soyio-widget
 ```
 
 ## Usage
 
 Integrate the widget into your frontend framework using the script below. Ensure to replace placeholders (e.g., \<request>, \<company id>) with actual values relevant to your implementation.
 
-## Browser Compatibility Notes
+---
 
-**Important Safari Limitation**: In Safari browsers, the widget can only be opened as a result of a direct user interaction (like a click event). This is due to Safari's security policies regarding popup windows. Always ensure the widget initialization is triggered by a user action when supporting Safari browsers.
+## Modules
+
+The Soyio Widget provides several modules that you can integrate into your application:
+
+- **Consent Request Box**: Embed consent requests directly within your webpage
+- **Privacy Center**: Embed the Privacy Center inside your page with customizable features
+- **Disclosure Request**: Verify users and collect required data through validation or authentication
+- **Signature Attempt**: Enable users to digitally sign documents after authentication
+- **Auth Request**: Authenticate users using access keys or facial video
+
+## Consent Request Box
+
+> 📖 [Integration Guide](https://docs.soyio.id/docs/integration-guide/consent/introduction)
+
+The **`ConsentBox`** is a component that allows you to embed a consent request directly within your webpage, rather than opening it in a popup window. This is particularly useful when you want to integrate the consent flow seamlessly into your application's interface.
+
+```html
+<!-- Add a container div where the consent request will be mounted -->
+<div id="consent-request-box"></div>
+
+<script>
+  import { ConsentBox } from "@soyio/soyio-widget";
+
+  // Configuration for the consent request
+  const consentOptions = {
+    consentTemplateId: "<consent template id>",
+    onEvent: (data) => console.log(data),
+    isSandbox: true, // Optional
+    appearance: {}, // Optional
+    actionToken: "<action token>", // Optional
+    entityId: "<entity id>", // Optional
+    context: "<context>", // Optional
+    onReady: () => console.log("ConsentBox is ready"), // Optional
+    optionalReconsentBehavior: "notice", // Optional
+    mandatoryReconsentBehavior: "notice", // Optional
+  };
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    // Create and mount the consent request box
+    const consentBox = new ConsentBox(consentOptions);
+    consentBox.mount("#consent-request-box");
+  });
+</script>
+```
+
+### Consent Request Box Events
+
+The `onEvent` follows the following format:
+
+```typescript
+{
+  eventName: 'CONSENT_CHECKBOX_CHANGE',
+  isSelected: boolean
+  actionToken: string,
+}
+```
+
+### Methods
+
+- **`getState()`**: Returns the current state of the consent box. The returned object has the following structure:
+
+```typescript
+{
+  isSelected: boolean,
+  actionToken: string | null,
+}
+
+```
+
+### Attribute Descriptions
+
+- **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
+- **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
+- **`actionToken`**: token containing necessary information for creation of the consent commit. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
+- **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/integration-guide/modules/consent).
+- **`actionToken`**: In case of losing the state of the consent (i.e. page reload), you can use a previously generated `actionToken` to restore the state of the consent.
+- **`entityId`**: Identifier of the `entity` associated with a `ConsentAction`. If provided and a consent was previously granted by this entity, the UI will display a message indicating that consent has already been given.
+- **`context`**: Additional information that will be saved with the consent. Useful when you want to track the consent from a specific context.
+- **`onReady`**: Optional callback that executes when the consent box is ready to use. You can use this to handle logic when the iframe is not mounted yet.
+- **`optionalReconsentBehavior`**: What should happen when the consent is initialized with an `entityId` that has already given consent on an optional category.
+  - `notice` will show a message letting the user know that they have already given consent,
+  - `askAgain` will show the consent as if it wasn't given in the first place,
+  - `hide` will not show the consent at all.
+
+  We strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
+- **`mandatoryReconsentBehavior`**: What should happen when the consent is initialized with an `entityId` that has already given consent on a mandatory category.
+  - `notice` will show a message letting the user know that they have already given consent,
+  - `askAgain` will show the consent as if it wasn't given in the first place,
+
+  We don't support hiding the mandatory consent, and we strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
+
+## Privacy Center
+
+> 📖 [Integration Guide](https://docs.soyio.id/docs/integration-guide/privacy-center/introduction)
+
+The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You can scope which features to show and which data subjects are relevant to your interface. For more info check [our docs](https://docs.soyio.id/).
+
+```html
+<!-- Add a container div where the Privacy Center will be mounted -->
+<div id="privacy-center-box"></div>
+
+<script>
+  import { PrivacyCenterBox } from "@soyio/soyio-widget";
+
+  // Configuration for the Privacy Center
+  const privacyCenterOptions = {
+    // Choose ONE of the following authentication modes:
+    // 1) Public mode
+    companyId: "<company id>", // e.g. com_...
+
+    // 2) Authenticated mode
+    // sessionToken: "<session token>",
+
+    // Feature flags (optional)
+    enabledFeatures: ["DataSubjectRequest", "ConsentManagement"],
+
+    // Request reference (optional)
+    // Will be attached to data subject requests
+    requestReference: "<reference>", // e.g. some uuid or id to match our created records with your frontend flows
+
+    // Limit consent view to specific data subjects (optional)
+    dataSubjects: ["customer", "employee"],
+
+    // Common options
+    onEvent: (event) => console.log(event),
+    onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
+    isSandbox: true, // Optional
+    appearance: {}, // Optional
+  };
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    const privacyCenter = new PrivacyCenterBox(privacyCenterOptions);
+    privacyCenter.mount("#privacy-center-box");
+  });
+</script>
+```
+
+### Attribute Descriptions
+
+- `sessionToken`: Use this to authenticate a session directly.
+- `companyId`: The company identifier. Must start with `com_`. Use this when Privacy Center is mounted in a non authenticated environment.
+- `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
+- `requestReference`: Optional string, intended to be a reference of the current session. It will be attached to created data subject requests.
+- `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
+- `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
+- `appearance`: Customize the iframe appearance. See Appearance section below.
+- `onEvent`: Callback that receives events from the iframe.
+- `onReady`: Optional callback fired when the iframe becomes ready.
+
+Note:
+- When `sessionToken` is provided, do not pass `companyId`.
+
+### Privacy Center Events
+
+- **`REQUEST_SUBMITTED`**: This event occurs when a user successfully submits a Data Subject Request. The event object includes:
+  - `eventName`: The name of the event, in this case, `'REQUEST_SUBMITTED'`.
+  - `kind`: The kind of the Data Subject Request submitted. Supported values are: `access`, `opposition`, `rectification`, `suppression` and `portability`
 
 ## Disclosure Request
+
+> 📖 [Integration Guide](https://docs.soyio.id/docs/integration-guide/disclosure/introduction)
+
+> [!NOTE]
+> In Safari browsers, disclosure requests can only be opened as a result of a direct user interaction (like a click event). This is due to Safari's security policies regarding popup windows. Always ensure the disclosure request initialization is triggered by a user action when supporting Safari browsers.
 
 A **`disclosure_request`** is a process that a user goes through where they are verified, and then they share the necessary data as required by each company.
 This verification can happen in one of the following two ways:
@@ -162,6 +343,8 @@ The `onEvent` callback is designed to handle various events that occur during wi
 
 ## Signature Attempt
 
+> 📖 [Integration Guide](https://docs.soyio.id/docs/integration-guide/signature/introduction)
+
 The **`signature_attempt`** is a process where, using a previously created `signature_attempt_id`, a request is initiated in which a user can digitally sign a document. To sign the document, the user must be authenticated. This authentication can occur either through an access key or facial video. It's important to note that for this request, the user must have been previously verified with Soyio.
 
 ```html
@@ -218,6 +401,8 @@ Optional props:
 
 ## Auth Request
 
+> 📖 [Integration Guide](https://docs.soyio.id/docs/integration-guide/authentication/introduction)
+
 The **`auth_request`** is a process where, using a previously created `auth_request_id`, a request is initiated in which a user can authenticate. This authentication can occur either through an access key or facial video. It's important to note that for this request, the user must have been previously verified with Soyio.
 
 ```html
@@ -260,157 +445,11 @@ Optional props:
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`customColor`**: A hex code string that specifies the base color of the interface.
 
-## Consent Request Box
-
-The **`ConsentBox`** is a component that allows you to embed a consent request directly within your webpage, rather than opening it in a popup window. This is particularly useful when you want to integrate the consent flow seamlessly into your application's interface.
-
-```html
-<!-- Add a container div where the consent request will be mounted -->
-<div id="consent-request-box"></div>
-
-<script>
-  import { ConsentBox } from "@soyio/soyio-widget";
-
-  // Configuration for the consent request
-  const consentOptions = {
-    consentTemplateId: "<consent template id>",
-    onEvent: (data) => console.log(data),
-    isSandbox: true, // Optional
-    appearance: {}, // Optional
-    actionToken: "<action token>", // Optional
-    entityId: "<entity id>", // Optional
-    context: "<context>", // Optional
-    onReady: () => console.log("ConsentBox is ready"), // Optional
-    optionalReconsentBehavior: "notice", // Optional
-    mandatoryReconsentBehavior: "notice", // Optional
-  };
-
-  // Wait for DOM to be fully loaded
-  document.addEventListener("DOMContentLoaded", () => {
-    // Create and mount the consent request box
-    const consentBox = new ConsentBox(consentOptions);
-    consentBox.mount("#consent-request-box");
-  });
-</script>
-```
-
-### Consent Request Box Events
-
-The `onEvent` follows the following format:
-
-```typescript
-{
-  eventName: 'CONSENT_CHECKBOX_CHANGE',
-  isSelected: boolean
-  actionToken: string,
-}
-```
-
-### Methods
-
-- **`getState()`**: Returns the current state of the consent box. The returned object has the following structure:
-
-```typescript
-{
-  isSelected: boolean,
-  actionToken: string | null,
-}
-
-```
-
-### Attribute Descriptions
-
-- **`consentTemplateId`**: Identifier of consent template. It must start with `'constpl_'`.
-- **`isSelected`**: Boolean value indicating whether the consent checkbox is selected or not.
-- **`actionToken`**: token containing necessary information for creation of the consent commit. [Learn more](https://docs.soyio.id/docs/api/resources/create-consent-request).
-- **`appearance`**: Customize the appearance of the iframe. [Learn more](https://docs.soyio.id/docs/integration-guide/modules/consent).
-- **`actionToken`**: In case of losing the state of the consent (i.e. page reload), you can use a previously generated `actionToken` to restore the state of the consent.
-- **`entityId`**: Identifier of the `entity` associated with a `ConsentAction`. If provided and a consent was previously granted by this entity, the UI will display a message indicating that consent has already been given.
-- **`context`**: Additional information that will be saved with the consent. Useful when you want to track the consent from a specific context.
-- **`onReady`**: Optional callback that executes when the consent box is ready to use. You can use this to handle logic when the iframe is not mounted yet.
-- **`optionalReconsentBehavior`**: What should happen when the consent is initialized with an `entityId` that has already given consent on an optional category.
-  - `notice` will show a message letting the user know that they have already given consent,
-  - `askAgain` will show the consent as if it wasn't given in the first place,
-  - `hide` will not show the consent at all.
-
-  We strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
-- **`mandatoryReconsentBehavior`**: What should happen when the consent is initialized with an `entityId` that has already given consent on a mandatory category.
-  - `notice` will show a message letting the user know that they have already given consent,
-  - `askAgain` will show the consent as if it wasn't given in the first place,
-
-  We don't support hiding the mandatory consent, and we strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
-
-## Privacy Center
-
-The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You can scope which features to show and which data subjects are relevant to your interface. For more info check [our docs](https://docs.soyio.id/).
-
-```html
-<!-- Add a container div where the Privacy Center will be mounted -->
-<div id="privacy-center-box"></div>
-
-<script>
-  import { PrivacyCenterBox } from "@soyio/soyio-widget";
-
-  // Configuration for the Privacy Center
-  const privacyCenterOptions = {
-    // Choose ONE of the following authentication modes:
-    // 1) Public mode
-    companyId: "<company id>", // e.g. com_...
-
-    // 2) Authenticated mode
-    // sessionToken: "<session token>",
-
-    // Feature flags (optional)
-    enabledFeatures: ["DataSubjectRequest", "ConsentManagement"],
-
-    // Request reference (optional)
-    // Will be attached to data subject requests
-    requestReference: "<reference>", // e.g. some uuid or id to match our created records with your frontend flows
-
-    // Limit consent view to specific data subjects (optional)
-    dataSubjects: ["customer", "employee"],
-
-    // Common options
-    onEvent: (event) => console.log(event),
-    onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
-    isSandbox: true, // Optional
-    appearance: {}, // Optional
-  };
-
-  // Wait for DOM to be fully loaded
-  document.addEventListener("DOMContentLoaded", () => {
-    const privacyCenter = new PrivacyCenterBox(privacyCenterOptions);
-    privacyCenter.mount("#privacy-center-box");
-  });
-</script>
-```
-
-### Attribute Descriptions
-
-- `sessionToken`: Use this to authenticate a session directly.
-- `companyId`: The company identifier. Must start with `com_`. Use this when Privacy Center is mounted in a non authenticated environment.
-- `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
-- `requestReference`: Optional string, intended to be a reference of the current session. It will be attached to created data subject requests.
-- `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
-- `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
-- `appearance`: Customize the iframe appearance. See Appearance section below.
-- `onEvent`: Callback that receives events from the iframe.
-- `onReady`: Optional callback fired when the iframe becomes ready.
-
-Note:
-- When `sessionToken` is provided, do not pass `companyId`.
-
-### Privacy Center Events
-
-- **`REQUEST_SUBMITTED`**: This event occurs when a user successfully submits a Data Subject Request. The event object includes:
-  - `eventName`: The name of the event, in this case, `'REQUEST_SUBMITTED'`.
-  - `kind`: The kind of the Data Subject Request submitted. Supported values are: `access`, `opposition`, `rectification`, `suppression` and `portability`
-
-# Appearance
+## Appearance
 
 Customize the look and feel of Soyio UI components by passing an `appearance` object to the configuration. The appearance object supports themes, CSS variables, and CSS rules for granular control over the styling.
 
-## Structure
+### Structure
 
 The appearance object consists of three main sections:
 
@@ -422,61 +461,162 @@ const appearance = {
 };
 ```
 
-## Themes
+### Themes
 
 Currently supported themes:
 
 - `"soyio"` (default) - The standard Soyio theme
 
-## Variables
+### Variables
 
 Use variables to adjust common visual attributes across all components.
 
 ```javascript
 interface Variables {
   fontFamily?: string;
+  fontSizeBase?: string;
   colorPrimary?: string;
+  colorSecondary?: string;
   colorBackground?: string;
   colorText?: string;
+  colorTextSecondary?: string;
+  colorTextSubtle?: string;
+  colorTextInverted?: string;
+  colorPrimarySurface?: string;
+  colorSurface?: string;
+  colorSurfaceMuted?: string;
+  colorSurfaceStrong?: string;
+  colorBorder?: string;
+  colorBorderMuted?: string;
+  colorSwitchBorder?: string;
+  colorInfo?: string;
+  colorInfoBg?: string;
+  colorSuccess?: string;
+  colorSuccessBg?: string;
+  colorWarning?: string;
+  colorWarningBg?: string;
+  colorDanger?: string;
+  colorDangerBg?: string;
+  colorOverlay?: string;
   borderRadius?: string;
   borderWidth?: string;
   borderStyle?: string;
 }
 ```
 
-### Available Variables
+#### Available Variables
 
 | Variable          | Description                              | Default                   |
 | ----------------- | ---------------------------------------- | ------------------------- |
-| `fontFamily`      | The font stack to use for text           | `"system-ui, sans-serif"` |
-| `colorPrimary`    | Primary color for interactive elements   | `"#0570DE"`               |
-| `colorSecondary`  | Secondary color for interactive elements | `"#0570DE"`               |
-| `colorBackground` | Background color                         | `"#FFFFFF"`               |
-| `colorText`       | Main text color                          | `"#1A1F36"`               |
-| `borderRadius`    | Border radius for elements               | `"4px"`                   |
-| `borderWidth`     | Border width for elements                | `"1px"`                   |
-| `borderStyle`     | Border style for elements                | `"solid"`                 |
+| `fontFamily`          | The font stack to use for text                          | `"system-ui, sans-serif"` |
+| `colorPrimary`        | Primary color for interactive elements                  | `"#0570DE"`               |
+| `colorPrimarySurface` | Background color for primary elements (e.g. active tab) | `"#EEF2FF"`               |
+| `colorSecondary`      | Secondary color for interactive elements                | `"#A180F0"`               |
+| `colorBackground`     | Background color                                        | `"#FFFFFF"`               |
+| `colorSurface`        | Surface color for cards and sections                    | `"#F9FAFB"`               |
+| `colorSurfaceMuted`   | Muted surface color                                     | `"#F3F4F6"`               |
+| `colorSurfaceStrong`  | Strong surface color                                    | `"#E5E7EB"`               |
+| `colorBorder`         | Border color                                            | `"#D1D5DB"`               |
+| `colorBorderMuted`    | Muted border color                                      | `"#E5E7EB"`               |
+| `colorSwitchBorder`   | Border color for Switch component (unchecked)           | `"#000000"`               |
+| `colorText`           | Main text color                                         | `"#1E1B4B"`               |
+| `colorTextSecondary`  | Secondary text color                                    | `"#6B7280"`               |
+| `colorTextSubtle`     | Subtle text color                                       | `"#9CA3AF"`               |
+| `colorTextInverted`   | Inverted text color                                     | `"#FFFFFF"`               |
+| `colorInfo`           | Info status color                                       | `"#1E40AF"`               |
+| `colorInfoBg`         | Info status background color                            | `"#E0E7FF"`               |
+| `colorSuccess`        | Success status color                                    | `"#15803D"`               |
+| `colorSuccessBg`      | Success status background color                         | `"#DCFCE7"`               |
+| `colorWarning`        | Warning status color                                    | `"#B45309"`               |
+| `colorWarningBg`      | Warning status background color                         | `"#FEF3C7"`               |
+| `colorDanger`         | Danger status color                                     | `"#EF4444"`               |
+| `colorDangerBg`       | Danger status background color                          | `"#FEF2F2"`               |
+| `colorOverlay`        | Overlay color                                           | `"rgba(0, 0, 0, 0.5)"`    |
+| `borderRadius`        | Base border radius (scales proportionally for different sizes) | `"0.25rem"`               |
+| `borderWidth`         | Border width for elements                               | `"1px"`                   |
+| `borderStyle`         | Border style for elements                               | `"solid"`                 |
 
-## Rules
+> **Note on Border Radius:** The `borderRadius` variable serves as a base unit. Larger components (like Inputs and Buttons) use a multiple of this value (typically 2x), while smaller elements use a fraction or the base value itself. This ensures consistent scaling across all UI elements.
 
-The `rules` object allows you to apply custom CSS to specific elements. Currently, Soyio supports styling for checkbox components.
+### Rules
 
-### Supported rules
+The `rules` object allows you to apply custom CSS to specific elements. Soyio supports styling for various components including inputs, buttons, switches, and more.
 
-- `.MainContainer` - The main container of the consent request box. Only border CSS properties are allowed to be overridden.
+#### Supported rules
+
+The rules are grouped by component category:
+
+##### Layout
+- `.MainContainer` - The main container.
+- `.Card` - Card containers.
+- `.Dialog` - Dialog containers.
+- `.DialogOverlay` - Dialog overlays.
+- `.DialogContent` - Dialog content areas.
+
+##### Typography
+- `.Title` - Title text.
+- `.Description` - Description text.
+
+##### Inputs
+- `.Input` - Input fields.
+- `.Label` - Labels.
+- `.TextArea` - Text area inputs.
+- `.Select` - Select dropdowns.
+- `.Combobox` - Combobox inputs.
+- `.NinInput` - Styles the input field for national identity numbers.
+
+##### Buttons & Links
 - `.Button` - The button component.
-- `.Checkbox` - The checkbox component.
+- `.Link` - Links.
+
+##### Selection Controls
+
+**Checkbox**
+![Checkbox Appearance](https://soyio-public-assets.s3.us-east-1.amazonaws.com/checkbox-appearance.webp)
+
+- `.Checkbox` - The checkbox container.
 - `.CheckboxInput` - The checkbox input element.
 - `.CheckboxLabel` - The checkbox label.
-
-![Checkbox Components](https://soyio-public-assets.s3.us-east-1.amazonaws.com/checkbox-appearance.webp)
-
-### Supported Selectors
-
 - `.CheckboxInput--checked` - The checked state of the checkbox
 - `.CheckboxInput:hover` - Hover state of the checkbox
 - `.CheckboxInput:focus` - Focus state of the checkbox
 - `.CheckboxInput:focus-visible` - Focus-visible state of the checkbox
+
+**Radio**
+- `.Radio` - Radio button containers.
+- `.RadioLabel` - Radio button labels.
+
+**Switch**
+- `.Switch` - Switch toggles (wrapper).
+- `.SwitchRoot` - Switch control (track).
+- `.SwitchThumb` - Switch thumb (circle).
+- `.SwitchIcon` - Switch icons (check/cross).
+- `.SwitchRoot--checked` - Checked state of the switch track
+- `.SwitchThumb--checked` - Checked state of the switch thumb
+
+**Radio Card**
+- `.RadioCard` - Styles the wrapper card element of a radio card item.
+- `.RadioCardIndicator` - Styles the container of the radio indicator (circle) inside a radio card.
+- `.RadioCardIndicatorPoint` - Styles the inner point of the radio indicator inside a radio card.
+
+##### Feedback
+- `.Loader` - Loading indicators.
+- `.ErrorMessage` - Error message text.
+- `.TooltipContent` - Styles the content popover of a tooltip.
+
+**Alert**
+- `.Alert` - Alert boxes.
+- `.Alert--error` - Error alert variant.
+- `.Alert--warning` - Warning alert variant.
+- `.Alert--information` - Information alert variant.
+- `.Alert--success` - Success alert variant.
+
+**Chip**
+- `.Chip` - Chips/Tags.
+- `.Chip--info` - Info chip variant.
+- `.Chip--green` - Green chip variant.
+- `.Chip--red` - Red chip variant.
+- `.Chip--amber` - Amber chip variant.
 
 ### Example Configuration
 
@@ -525,6 +665,22 @@ const appearance = {
     ".CheckboxInput:focus-visible": {
       outline: "none",
       boxShadow: "0 0 0 2px var(--colorPrimary)",
+    },
+    ".SwitchRoot": {
+      backgroundColor: "#e5e7eb",
+      borderRadius: "9999px",
+      boxShadow: "none", // Remove default shadow
+    },
+    ".SwitchRoot--checked": {
+      backgroundColor: "var(--colorPrimary)",
+    },
+    ".SwitchThumb": {
+      backgroundColor: "white",
+      borderRadius: "9999px",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+    },
+    ".SwitchIcon": {
+      display: "none", // Hide the check/cross icons
     },
   },
 };
@@ -640,7 +796,7 @@ export default function PrivacyCenterContainer() {
 
 	return (
 		<div>
-		  {isClient && 
+		  {isClient &&
 		  <React.Suspense fallback={
 			<div>
 				Loading...

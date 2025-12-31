@@ -73,7 +73,42 @@ export type SoyioBaseRule =
   | '.Button'
   | '.Checkbox'
   | '.CheckboxInput'
-  | '.CheckboxLabel';
+  | '.CheckboxLabel'
+  | '.Input'
+  | '.Label'
+  | '.Title'
+  | '.Link'
+  | '.Card'
+  | '.Select'
+  | '.Loader'
+  | '.TextArea'
+  | '.ErrorMessage'
+  | '.Description'
+  | '.Switch'
+  | '.SwitchRoot'
+  | '.SwitchThumb'
+  | '.SwitchIcon'
+  | '.Alert'
+  | '.Alert--error'
+  | '.Alert--warning'
+  | '.Alert--information'
+  | '.Alert--success'
+  | '.Radio'
+  | '.RadioLabel'
+  | '.Chip'
+  | '.Chip--info'
+  | '.Chip--green'
+  | '.Chip--red'
+  | '.Chip--amber'
+  | '.Dialog'
+  | '.DialogOverlay'
+  | '.DialogContent'
+  | '.Combobox'
+  | '.NinInput'
+  | '.RadioCard'
+  | '.RadioCardIndicator'
+  | '.RadioCardIndicatorPoint'
+  | '.TooltipContent';
 
 export type SoyioRuleKey = `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`;
 
@@ -92,6 +127,24 @@ export interface SoyioAppearanceVariables {
   colorBackground?: string;
   colorText?: string;
   colorTextSecondary?: string;
+  colorTextSubtle?: string;
+  colorTextInverted?: string;
+  colorPrimarySurface?: string;
+  colorSurface?: string;
+  colorSurfaceMuted?: string;
+  colorSurfaceStrong?: string;
+  colorBorder?: string;
+  colorBorderMuted?: string;
+  colorSwitchBorder?: string;
+  colorInfo?: string;
+  colorInfoBg?: string;
+  colorSuccess?: string;
+  colorSuccessBg?: string;
+  colorWarning?: string;
+  colorWarningBg?: string;
+  colorDanger?: string;
+  colorDangerBg?: string;
+  colorOverlay?: string;
 }
 
 export interface SoyioAppearance {
