@@ -45,6 +45,7 @@
   },
   "resolutions": {
     "brace-expansion": "^1.1.12",
-    "vite": "7.2.6"
+    "vite": "7.2.6",
+    "js-yaml": "^4.1.1"
   }
 }
