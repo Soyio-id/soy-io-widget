@@ -164,6 +164,10 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
     // Feature flags (optional)
     enabledFeatures: ["DataSubjectRequest", "ConsentManagement"],
 
+    // DSR rights to show (optional)
+    // When omitted, the DSR form will use arsop right as default
+    enabledRights: ["arsop"],
+
     // Request reference (optional)
     // Will be attached to data subject requests
     requestReference: "<reference>", // e.g. some uuid or id to match our created records with your frontend flows
@@ -197,6 +201,7 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `sessionToken`: Use this to authenticate a session directly.
 - `companyId`: The company identifier. Must start with `com_`. Use this when Privacy Center is mounted in a non authenticated environment.
 - `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
+- `enabledRights`: Optional array of rights for the Data Subject Request (DSR) form. Supported values: `"arsop"`, `"redec"`. When multiple values are provided, the form starts with a right selection step. When a single value is provided, the selection step is skipped. When omitted, the form defaults to arsop rights.
 - `requestReference`: Optional string, intended to be a reference of the current session. It will be attached to created data subject requests.
 - `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
 - `fileRequisites`: Optional object to configure file upload constraints.
