@@ -20,6 +20,10 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('enabledFeatures', privacyCenterConfig.enabledFeatures.join(','));
   }
 
+  if (privacyCenterConfig.enabledRights?.length) {
+    urlParams.set('enabledRights', privacyCenterConfig.enabledRights.join(','));
+  }
+
   if (privacyCenterConfig.dataSubjects?.length) {
     urlParams.set('dataSubjects', privacyCenterConfig.dataSubjects.join(','));
   }
