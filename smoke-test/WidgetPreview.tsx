@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { PrivacyCenterBox, ConsentBox } from '../src/index';
+import type { ConsentConfig } from '../src/embeds/consent/types';
+import type { PrivacyCenterConfig } from '../src/embeds/privacy-center/types';
+import { SmokeTestConfig } from './schema-types';
 
 interface WidgetPreviewProps {
-  config: any;
+  config: SmokeTestConfig;
   widgetType: 'privacy-center' | 'consent-box';
 }
 
@@ -25,14 +28,14 @@ export const WidgetPreview: React.FC<WidgetPreviewProps> = ({ config, widgetType
       const widgetConfig = {
         ...config,
         // developmentUrl: config.developmentUrl || 'http://localhost:5173',
-        onEvent: (event: any) => console.log('[SmokeTest] onEvent:', event),
+        onEvent: (event: unknown) => console.log('[SmokeTest] onEvent:', event),
       };
 
       let widget;
       if (widgetType === 'consent-box') {
-        widget = new ConsentBox(widgetConfig);
+        widget = new ConsentBox(widgetConfig as ConsentConfig);
       } else {
-        widget = new PrivacyCenterBox(widgetConfig);
+        widget = new PrivacyCenterBox(widgetConfig as PrivacyCenterConfig);
       }
 
       widget.mount(`#${containerRef.current.id}`);
