@@ -393,6 +393,7 @@ Optional props:
 
 ### Signature Attempt Attribute Descriptions
 
+
 - **`signatureAttemptId`**: Identifier of signature attempt obtained when creating the `SignatureAttempt`. It must start with `'sa_'`.
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
@@ -574,12 +575,13 @@ The rules are grouped by component category:
 ![Checkbox Appearance](https://soyio-public-assets.s3.us-east-1.amazonaws.com/checkbox-appearance.webp)
 
 - `.Checkbox` - The checkbox container.
-- `.CheckboxInput` - The checkbox input element.
+- `.CheckboxInput` - The styled checkbox element (supports `borderRadius`, `borderColor`, `backgroundColor`).
 - `.CheckboxLabel` - The checkbox label.
+- `.CheckboxCheck` - The checkmark icon inside the checkbox.
 - `.CheckboxInput--checked` - The checked state of the checkbox
+- `.CheckboxInput--focus` - Focus state of the checkbox (visible focus ring)
 - `.CheckboxInput:hover` - Hover state of the checkbox
-- `.CheckboxInput:focus` - Focus state of the checkbox
-- `.CheckboxInput:focus-visible` - Focus-visible state of the checkbox
+
 
 **Radio**
 - `.Radio` - Radio button containers.
@@ -807,4 +809,21 @@ export default function PrivacyCenterContainer() {
 		</div>
 	)
 }
+```
+
+## Development
+
+To run the widget customization smoke test locally:
+
+```sh
+yarn run smoke
+```
+
+The smoke test configuration is loaded from `smoke-test/.env.development`. You can modify this file to change the default values:
+
+```bash
+VITE_COMPANY_ID=com_test
+VITE_PRIVACY_CENTER_URL=http://localhost:5173
+VITE_CONSENT_URL=http://localhost:5173
+VITE_CONSENT_TEMPLATE_ID=constpl_test
 ```
