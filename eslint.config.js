@@ -11,11 +11,15 @@ export default tseslint.config(
   importPlugin.flatConfigs.recommended,
   js.configs.recommended,
   {
-    files: ["**/*.{ts,js,mjs,cjs}"],
+    files: ["**/*.{ts,js,mjs,cjs,tsx,jsx}"],
     settings: {
       "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+          project: "./tsconfig.json",
+        },
         node: {
-          extensions: [".js", ".ts", ".mjs", ".cjs"],
+          extensions: [".js", ".ts", ".mjs", ".cjs", ".tsx", ".jsx"],
         },
       },
     },
@@ -26,7 +30,7 @@ export default tseslint.config(
       "import/no-extraneous-dependencies": [
         "error",
         {
-          devDependencies: ["./src/spec/**", "./eslint.config.js"],
+          devDependencies: ["./src/spec/**", "./eslint.config.js", "./smoke-test/**", "./vite.smoke.config.ts"],
         },
       ],
       "import/order": [
@@ -42,7 +46,7 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ["node_modules", "dist", "eslint.config.*"],
+    ignores: ["node_modules", "dist", "eslint.config.*", "smoke-test/**"],
   },
   tseslint.configs.recommended,
 );
