@@ -52,8 +52,6 @@ const DEFAULT_CONSENT_BOX_CONFIG = {
   },
 };
 
-
-
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<WidgetType>('privacy-center');
 
