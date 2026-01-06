@@ -1,0 +1,248 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  height: 100vh;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  background: white;
+  min-width: 400px;
+  max-width: 50%;
+}
+
+.preview-pane {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #f0f2f5;
+  padding: 20px;
+  overflow: auto;
+}
+
+.header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.header h1 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.subtitle {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.storage-controls {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex: 1;
+}
+
+input, select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+input:focus, select:focus {
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(232, 30, 43, 0.1);
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save {
+  background-color: #1a1a1a;
+  color: white;
+  white-space: nowrap;
+}
+
+.btn-save:hover {
+  background-color: #333;
+}
+
+.tabs {
+  display: flex;
+  padding: 0 20px;
+  border-bottom: 1px solid #ddd;
+  background: #fafafa;
+}
+
+.tab {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.tab:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+.tab.active {
+  color: #1a1a1a;
+  border-bottom-color: #1a1a1a;
+  background: white;
+}
+
+.error-banner {
+  background-color: #fee2e2;
+  color: #dc2626;
+  padding: 10px 20px;
+  font-size: 13px;
+  border-bottom: 1px solid #fecaca;
+}
+
+.editor-container {
+  flex: 1;
+  min-height: 0; /* Important for scroll */
+  padding-top: 10px;
+}
+
+.presets-section {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+.presets-section h4 {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+.presets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.current-preset {
+  font-size: 12px;
+  color: #666;
+}
+
+.current-preset strong {
+  color: #333;
+}
+
+.presets-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.preset-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-preset {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-preset:hover {
+  background: #f0f0f0;
+  border-color: #ccc;
+}
+
+.preset-item.active .btn-preset {
+  background: #333;
+  color: white;
+  border-color: #333;
+}
+
+.btn-update {
+  background-color: #4a5568;
+  color: white;
+  white-space: nowrap;
+}
+
+.btn-update:hover {
+  background-color: #2d3748;
+}
+
+.save-preset-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.save-preset-row input {
+  flex: 1;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 4px;
+  margin: 0;
+}
+
+.btn-delete:hover {
+  color: #dc2626;
+  background: none;
+}
