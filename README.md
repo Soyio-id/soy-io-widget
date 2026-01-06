@@ -171,6 +171,12 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
     // Limit consent view to specific data subjects (optional)
     dataSubjects: ["customer", "employee"],
 
+    // File upload configuration (optional)
+    fileRequisites: {
+      allowedExtensions: ["pdf", "png", "jpeg", "jpg"],
+      maxFileSize: 5 * 1024 * 1024, // 5MB
+    },
+
     // Common options
     onEvent: (event) => console.log(event),
     onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
@@ -193,6 +199,9 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `enabledFeatures`: Optional array of features to show. Supported values: `"DataSubjectRequest"`, `"ConsentManagement"`.
 - `requestReference`: Optional string, intended to be a reference of the current session. It will be attached to created data subject requests.
 - `dataSubjects`: Optional array of data subject categories. When present, the consent management view only shows consent for the specified categories. Supported values include: `"anonymous_user"`, `"citizen_voter"`, `"commuter"`, `"consultant"`, `"customer"`, `"employee"`, `"job_applicant"`, `"next_of_kin"`, `"passenger"`, `"patient"`, `"prospect"`, `"shareholder"`, `"supplier_vendor"`, `"trainee"`, `"visitor"`.
+- `fileRequisites`: Optional object to configure file upload constraints.
+  - `allowedExtensions`: Array of allowed file extensions (e.g. `['pdf', 'jpg']`). Default: `['pdf', 'png', 'jpeg', 'jpg']`.
+  - `maxFileSize`: Maximum file size in bytes. Default: `5 * 1024 * 1024` (5MB).
 - `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
 - `appearance`: Customize the iframe appearance. See Appearance section below.
 - `onEvent`: Callback that receives events from the iframe.
