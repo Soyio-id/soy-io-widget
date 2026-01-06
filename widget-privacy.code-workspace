@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../privacy-center"
+		},
+		{
+			"path": "../soyio"
 		}
 	],
 	"settings": {}
