@@ -1,0 +1,71 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.editor-pane {
+  width: 50%;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-pane {
+  width: 50%;
+  background: #f9f9f9;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align start to prevent content being cut off top when scrolling */
+  overflow: auto; /* Enable scrolling */
+  padding: 1rem; /* Add padding */
+}
+
+.header {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.header p {
+  margin: 0;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.controls {
+  margin: 0.5rem 0;
+}
+
+.controls select {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+}
+
+.editor-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.error-banner {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #fecaca;
+}
