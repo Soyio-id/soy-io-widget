@@ -1,10 +1,14 @@
 {
   "name": "@soyio/soyio-widget",
-  "version": "2.16.2",
+  "version": "2.16.3",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soyio-id/soy-io-widget"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",
