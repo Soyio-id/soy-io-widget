@@ -23,6 +23,11 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org
 
+      - name: Upgrade npm for trusted publishing (OIDC)
+        run: |
+          npm install -g npm@^11.5.1
+          npm --version
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
