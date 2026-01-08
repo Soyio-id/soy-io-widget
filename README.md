@@ -655,7 +655,30 @@ The `rules` object allows you to apply custom CSS to specific elements. Soyio su
 
 #### Supported rules
 
-The rules are grouped by component category:
+The rules are grouped by component category. Most rules support **pseudo-classes** and **pseudo-elements** that can be appended to style different states:
+
+**Supported pseudo-classes:**
+- `:hover` - When the element is hovered
+- `:focus` - When the element is focused
+- `:active` - When the element is active/pressed
+- `:disabled` - When the element is disabled
+- `:autofill` - When the input is autofilled
+- `:focus-visible` - When focused via keyboard navigation
+
+**Supported pseudo-elements:**
+- `::placeholder` - Placeholder text in inputs
+- `::selection` - Selected text
+
+**Example usage:**
+```javascript
+rules: {
+  ".Button": { backgroundColor: "blue" },           // Base style
+  ".Button:hover": { backgroundColor: "darkblue" }, // Hover state
+  ".Button:disabled": { opacity: "0.5" },           // Disabled state
+  ".Input::placeholder": { color: "gray" },         // Placeholder text
+  ".RadioCard:hover": { borderColor: "var(--colorPrimary)" }, // Card hover
+}
+```
 
 ##### Layout
 - `.MainContainer` - The main container.
@@ -694,9 +717,7 @@ The rules are grouped by component category:
 - `.CheckboxInput` - The styled checkbox element (supports `borderRadius`, `borderColor`, `backgroundColor`).
 - `.CheckboxLabel` - The checkbox label.
 - `.CheckboxCheck` - The checkmark icon inside the checkbox.
-- `.CheckboxInput--checked` - The checked state of the checkbox
-- `.CheckboxInput--focus` - Focus state of the checkbox (visible focus ring)
-- `.CheckboxInput:hover` - Hover state of the checkbox
+- `.CheckboxInput--checked` - The checked state of the checkbox.
 
 
 **Radio**
@@ -718,7 +739,6 @@ The rules are grouped by component category:
 **Radio Card**
 - `.RadioCard` - Styles the wrapper card element of a radio card item.
 - `.RadioCard--checked` - Checked state of the radio card.
-- `.RadioCard--hover` - Hover state of the radio card.
 - `.RadioCardButton` - The radio button element inside a radio card.
 - `.RadioCardButton--checked` - Checked state of the radio card button.
 - `.RadioCardIndicator` - The inner indicator point inside a radio card.

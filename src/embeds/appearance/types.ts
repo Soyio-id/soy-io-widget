@@ -75,7 +75,6 @@ export type SoyioBaseRule =
   | '.CheckboxInput'
   | '.CheckboxLabel'
   | '.Input'
-  | '.Input--error'
   | '.Label'
   | '.HintIcon'
   | '.Title'
@@ -91,10 +90,6 @@ export type SoyioBaseRule =
   | '.SwitchThumb'
   | '.SwitchIcon'
   | '.Alert'
-  | '.Alert--error'
-  | '.Alert--warning'
-  | '.Alert--info'
-  | '.Alert--success'
   | '.AlertIcon'
   | '.AlertContent'
   | '.Radio'
@@ -102,10 +97,6 @@ export type SoyioBaseRule =
   | '.RadioIndicator'
   | '.RadioLabel'
   | '.Chip'
-  | '.Chip--info'
-  | '.Chip--green'
-  | '.Chip--red'
-  | '.Chip--amber'
   | '.Dialog'
   | '.DialogOverlay'
   | '.DialogContent'
@@ -115,25 +106,38 @@ export type SoyioBaseRule =
   | '.TrackingCodeInputCell'
   | '.TrackingCodeInputSeparator'
   | '.RadioCard'
-  | '.RadioCard--checked'
-  | '.RadioCard--hover'
   | '.RadioCardButton'
   | '.RadioCardIndicator'
-  | '.RadioCardIndicator--checked'
   | '.StepIndicatorContainer'
   | '.StepIndicator'
-  | '.StepIndicator--active'
-  | '.StepIndicator--completed'
-  | '.StepIndicator--pending'
   | '.StepIndicatorLine'
-  | '.StepIndicatorLine--top'
-  | '.StepIndicatorLine--bottom'
   | '.StepIndicatorIcon'
   | '.StepIndicatorDot'
   | '.StepIndicatorNumber'
   | '.TooltipContent';
 
-export type SoyioRuleKey = `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`;
+// State-specific rules that should not be combined with SoyioElementState
+export type SoyioStateRule =
+  | '.Input--error'
+  | '.Alert--error'
+  | '.Alert--warning'
+  | '.Alert--info'
+  | '.Alert--success'
+  | '.Chip--info'
+  | '.Chip--green'
+  | '.Chip--red'
+  | '.Chip--amber'
+  | '.RadioCard--checked'
+  | '.RadioCardIndicator--checked'
+  | '.StepIndicator--active'
+  | '.StepIndicator--completed'
+  | '.StepIndicator--pending'
+  | '.StepIndicatorLine--top'
+  | '.StepIndicatorLine--bottom';
+
+export type SoyioRuleKey =
+  | `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`
+  | SoyioStateRule;
 
 export type SoyioRule = {
   [K in SoyioRuleKey]?: CSSProperties;
