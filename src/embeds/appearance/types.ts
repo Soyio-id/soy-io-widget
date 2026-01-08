@@ -75,7 +75,9 @@ export type SoyioBaseRule =
   | '.CheckboxInput'
   | '.CheckboxLabel'
   | '.Input'
+  | '.Input--error'
   | '.Label'
+  | '.HintIcon'
   | '.Title'
   | '.Link'
   | '.Card'
@@ -91,9 +93,13 @@ export type SoyioBaseRule =
   | '.Alert'
   | '.Alert--error'
   | '.Alert--warning'
-  | '.Alert--information'
+  | '.Alert--info'
   | '.Alert--success'
+  | '.AlertIcon'
+  | '.AlertContent'
   | '.Radio'
+  | '.RadioButton'
+  | '.RadioIndicator'
   | '.RadioLabel'
   | '.Chip'
   | '.Chip--info'
@@ -105,9 +111,26 @@ export type SoyioBaseRule =
   | '.DialogContent'
   | '.Combobox'
   | '.NinInput'
+  | '.TrackingCodeInput'
+  | '.TrackingCodeInputCell'
+  | '.TrackingCodeInputSeparator'
   | '.RadioCard'
+  | '.RadioCard--checked'
+  | '.RadioCard--hover'
+  | '.RadioCardButton'
   | '.RadioCardIndicator'
-  | '.RadioCardIndicatorPoint'
+  | '.RadioCardIndicator--checked'
+  | '.StepIndicatorContainer'
+  | '.StepIndicator'
+  | '.StepIndicator--active'
+  | '.StepIndicator--completed'
+  | '.StepIndicator--pending'
+  | '.StepIndicatorLine'
+  | '.StepIndicatorLine--top'
+  | '.StepIndicatorLine--bottom'
+  | '.StepIndicatorIcon'
+  | '.StepIndicatorDot'
+  | '.StepIndicatorNumber'
   | '.TooltipContent';
 
 export type SoyioRuleKey = `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`;
@@ -123,19 +146,23 @@ export interface SoyioAppearanceVariables {
   borderWidth?: string;
   borderStyle?: string;
   colorPrimary?: string;
+  colorPrimarySurface?: string;
   colorSecondary?: string;
   colorBackground?: string;
-  colorText?: string;
-  colorTextSecondary?: string;
-  colorTextSubtle?: string;
-  colorTextInverted?: string;
-  colorPrimarySurface?: string;
   colorSurface?: string;
   colorSurfaceMuted?: string;
   colorSurfaceStrong?: string;
   colorBorder?: string;
   colorBorderMuted?: string;
   colorSwitchBorder?: string;
+  colorText?: string;
+  colorTextSecondary?: string;
+  colorTextSubtle?: string;
+  colorTextInverted?: string;
+  colorLink?: string;
+  colorInputFocus?: string;
+  colorInputErrorFocus?: string;
+  colorSelectArrow?: string;
   colorInfo?: string;
   colorInfoBg?: string;
   colorSuccess?: string;
@@ -147,8 +174,60 @@ export interface SoyioAppearanceVariables {
   colorOverlay?: string;
 }
 
+export type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+
+export interface SoyioIconConfig {
+  /**
+   * Icon weight/style variant.
+   * - thin: Thinnest stroke
+   * - light: Light stroke
+   * - regular: Default stroke (default)
+   * - bold: Bold stroke
+   * - fill: Filled/solid icons
+   * - duotone: Two-tone icons with opacity
+   * @default 'regular'
+   */
+  weight?: IconWeight;
+
+  /**
+   * Default icon size in pixels.
+   * @default 24
+   */
+  size?: number;
+}
+
+export interface SoyioAppearanceConfig {
+  helperTextPosition?: 'top' | 'bottom';
+  /**
+   * Icon name to use for hint/help tooltips on input labels.
+   * Available icons: 'Question' (default), 'Info', 'QuestionMark', etc.
+   * @default 'Question'
+   */
+  hintIcon?: string;
+  /**
+   * Global icon appearance configuration.
+   * Controls default weight and size for all icons.
+   */
+  icon?: SoyioIconConfig;
+  /**
+   * Per-component icon overrides.
+   * Allows customizing icon styles for specific components.
+   *
+   * @example
+   * ```ts
+   * iconRules: {
+   *   Alert: { weight: 'fill' },
+   *   Switch: { weight: 'bold' },
+   *   'Alert.error': { weight: 'fill', size: 20 },
+   * }
+   * ```
+   */
+  iconRules?: Record<string, SoyioIconConfig>;
+}
+
 export interface SoyioAppearance {
   theme?: SoyioTheme;
   variables?: SoyioAppearanceVariables;
   rules?: SoyioRule;
+  config?: SoyioAppearanceConfig;
 }
