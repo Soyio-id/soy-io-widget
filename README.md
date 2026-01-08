@@ -533,6 +533,8 @@ const appearance = {
 
 Use `iconRules` to customize icons for specific components. The key is the component name (e.g., `Alert`, `Switch`) or a variant-specific key (e.g., `Alert.error`):
 
+> **Note:** For variant-specific icon rules, use dot notation (`Alert.error`) rather than the CSS double-dash syntax (`Alert--error`).
+
 ```javascript
 const appearance = {
   config: {
