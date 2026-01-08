@@ -460,13 +460,14 @@ Customize the look and feel of Soyio UI components by passing an `appearance` ob
 
 ### Structure
 
-The appearance object consists of three main sections:
+The appearance object consists of four main sections:
 
 ```javascript
 const appearance = {
   theme: string,
   variables: Variables,
   rules: Rules,
+  config: Config,
 };
 ```
 
@@ -475,6 +476,98 @@ const appearance = {
 Currently supported themes:
 
 - `"soyio"` (default) - The standard Soyio theme
+
+### Config
+
+The `config` object allows you to adjust component behavior settings.
+
+```javascript
+interface Config {
+  helperTextPosition?: 'top' | 'bottom';
+  hintIcon?: string;
+  icon?: {
+    weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+    size?: number;
+  };
+  iconRules?: Record<string, { weight?: IconWeight; size?: number }>;
+}
+```
+
+| Property | Description | Default |
+| -------- | ----------- | ------- |
+| `helperTextPosition` | Position of helper/description text relative to form inputs | `"bottom"` |
+| `hintIcon` | Icon name for hint/help tooltips on input labels (see available icons below) | `"Question"` |
+| `icon.weight` | Global icon weight/style variant (see below) | `"regular"` |
+| `icon.size` | Global default icon size in pixels | `24` |
+| `iconRules` | Per-component icon style overrides | `{}` |
+
+#### Icons
+
+Soyio uses [Phosphor Icons](https://phosphoricons.com/), a flexible icon family with multiple weight variants. You can customize the icon appearance globally using the `config.icon` settings, or override icons for specific components using `config.iconRules`.
+
+**Available icon weights:**
+
+| Weight | Description |
+| ------ | ----------- |
+| `thin` | Thinnest stroke width |
+| `light` | Light stroke width |
+| `regular` | Default stroke width |
+| `bold` | Bold stroke width |
+| `fill` | Filled/solid icons |
+| `duotone` | Two-tone icons with opacity |
+
+**Global icon example:**
+
+```javascript
+const appearance = {
+  config: {
+    icon: {
+      weight: "bold",
+      size: 20,
+    },
+  },
+};
+```
+
+**Per-component icon overrides:**
+
+Use `iconRules` to customize icons for specific components. The key is the component name (e.g., `Alert`, `Switch`) or a variant-specific key (e.g., `Alert.error`):
+
+```javascript
+const appearance = {
+  config: {
+    icon: {
+      weight: "regular", // Global default
+    },
+    iconRules: {
+      Alert: { weight: "fill" },           // All alerts use filled icons
+      Switch: { weight: "bold", size: 16 }, // Switch icons are bold and smaller
+      "Alert.error": { weight: "fill" },    // Error alerts specifically
+    },
+  },
+};
+```
+
+**Hint icon customization:**
+
+The hint icon appears next to input labels when a tooltip/hint is available. You can change which icon is displayed using `hintIcon`:
+
+| Icon Name | Description |
+| --------- | ----------- |
+| `Question` | Question mark in circle (default) |
+| `Info` | Information "i" icon |
+| `QuestionMark` | Simple question mark |
+| `Warning` | Warning/exclamation icon |
+
+```javascript
+const appearance = {
+  config: {
+    hintIcon: "Info", // Use info icon instead of question mark
+  },
+};
+```
+
+You can also style the hint icon using the `.HintIcon` rule (see [Supported rules](#supported-rules)).
 
 ### Variables
 
@@ -485,19 +578,23 @@ interface Variables {
   fontFamily?: string;
   fontSizeBase?: string;
   colorPrimary?: string;
+  colorPrimarySurface?: string;
   colorSecondary?: string;
   colorBackground?: string;
-  colorText?: string;
-  colorTextSecondary?: string;
-  colorTextSubtle?: string;
-  colorTextInverted?: string;
-  colorPrimarySurface?: string;
   colorSurface?: string;
   colorSurfaceMuted?: string;
   colorSurfaceStrong?: string;
   colorBorder?: string;
   colorBorderMuted?: string;
   colorSwitchBorder?: string;
+  colorText?: string;
+  colorTextSecondary?: string;
+  colorTextSubtle?: string;
+  colorTextInverted?: string;
+  colorLink?: string;
+  colorInputFocus?: string;
+  colorInputErrorFocus?: string;
+  colorSelectArrow?: string;
   colorInfo?: string;
   colorInfoBg?: string;
   colorSuccess?: string;
@@ -518,6 +615,7 @@ interface Variables {
 | Variable          | Description                              | Default                   |
 | ----------------- | ---------------------------------------- | ------------------------- |
 | `fontFamily`          | The font stack to use for text                          | `"system-ui, sans-serif"` |
+| `fontSizeBase`        | Base font size for text                                 | `"1rem"`                  |
 | `colorPrimary`        | Primary color for interactive elements                  | `"#0570DE"`               |
 | `colorPrimarySurface` | Background color for primary elements (e.g. active tab) | `"#EEF2FF"`               |
 | `colorSecondary`      | Secondary color for interactive elements                | `"#A180F0"`               |
@@ -532,6 +630,10 @@ interface Variables {
 | `colorTextSecondary`  | Secondary text color                                    | `"#6B7280"`               |
 | `colorTextSubtle`     | Subtle text color                                       | `"#9CA3AF"`               |
 | `colorTextInverted`   | Inverted text color                                     | `"#FFFFFF"`               |
+| `colorLink`           | Color for link elements                                 | `"#0570DE"`               |
+| `colorInputFocus`     | Focus border/ring color for input elements              | `"#0570DE"`               |
+| `colorInputErrorFocus`| Focus border/ring color for input elements in error state | `"#EF4444"`             |
+| `colorSelectArrow`    | Color for select dropdown arrow icon                    | `"#6B7280"`               |
 | `colorInfo`           | Info status color                                       | `"#1E40AF"`               |
 | `colorInfoBg`         | Info status background color                            | `"#E0E7FF"`               |
 | `colorSuccess`        | Success status color                                    | `"#15803D"`               |
@@ -568,11 +670,16 @@ The rules are grouped by component category:
 
 ##### Inputs
 - `.Input` - Input fields.
+- `.Input--error` - Input fields in error state.
 - `.Label` - Labels.
+- `.HintIcon` - Hint/help icons next to input labels.
 - `.TextArea` - Text area inputs.
 - `.Select` - Select dropdowns.
 - `.Combobox` - Combobox inputs.
 - `.NinInput` - Styles the input field for national identity numbers.
+- `.TrackingCodeInput` - Styles the tracking code input component.
+- `.TrackingCodeInputCell` - Styles individual cells in the tracking code input.
+- `.TrackingCodeInputSeparator` - Styles the separator between tracking code cells.
 
 ##### Buttons & Links
 - `.Button` - The button component.
@@ -594,6 +701,10 @@ The rules are grouped by component category:
 
 **Radio**
 - `.Radio` - Radio button containers.
+- `.RadioButton` - The radio button element (the clickable circle).
+- `.RadioButton--checked` - Checked state of the radio button.
+- `.RadioIndicator` - The inner indicator point of the radio button.
+- `.RadioIndicator--checked` - Checked state of the radio indicator (visible when selected).
 - `.RadioLabel` - Radio button labels.
 
 **Switch**
@@ -606,8 +717,28 @@ The rules are grouped by component category:
 
 **Radio Card**
 - `.RadioCard` - Styles the wrapper card element of a radio card item.
-- `.RadioCardIndicator` - Styles the container of the radio indicator (circle) inside a radio card.
-- `.RadioCardIndicatorPoint` - Styles the inner point of the radio indicator inside a radio card.
+- `.RadioCard--checked` - Checked state of the radio card.
+- `.RadioCard--hover` - Hover state of the radio card.
+- `.RadioCardButton` - The radio button element inside a radio card.
+- `.RadioCardButton--checked` - Checked state of the radio card button.
+- `.RadioCardIndicator` - The inner indicator point inside a radio card.
+- `.RadioCardIndicator--checked` - Checked state of the radio card indicator.
+
+##### Step Indicator
+
+The step indicator shows progress through multi-step forms.
+
+- `.StepIndicatorContainer` - The container wrapping all step indicators.
+- `.StepIndicator` - Individual step indicator item.
+- `.StepIndicator--active` - The currently active step.
+- `.StepIndicator--completed` - Steps that have been completed.
+- `.StepIndicator--pending` - Steps that are not yet reached.
+- `.StepIndicatorLine` - The connecting line between steps.
+- `.StepIndicatorLine--top` - The line segment above a step indicator.
+- `.StepIndicatorLine--bottom` - The line segment below a step indicator.
+- `.StepIndicatorIcon` - Icon displayed inside a step indicator (for completed steps).
+- `.StepIndicatorDot` - The dot marker in a step indicator.
+- `.StepIndicatorNumber` - The step number displayed in the indicator.
 
 ##### Feedback
 - `.Loader` - Loading indicators.
@@ -618,8 +749,10 @@ The rules are grouped by component category:
 - `.Alert` - Alert boxes.
 - `.Alert--error` - Error alert variant.
 - `.Alert--warning` - Warning alert variant.
-- `.Alert--information` - Information alert variant.
+- `.Alert--info` - Information alert variant.
 - `.Alert--success` - Success alert variant.
+- `.AlertIcon` - The icon inside an alert.
+- `.AlertContent` - The content/text area inside an alert.
 
 **Chip**
 - `.Chip` - Chips/Tags.
@@ -692,6 +825,9 @@ const appearance = {
     ".SwitchIcon": {
       display: "none", // Hide the check/cross icons
     },
+  },
+  config: {
+    helperTextPosition: "top", // Position helper text above inputs
   },
 };
 ```
