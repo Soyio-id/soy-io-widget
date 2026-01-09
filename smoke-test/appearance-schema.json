@@ -11,6 +11,16 @@
         "accentColor": {
           "type": "string"
         },
+        "alignItems": {
+          "enum": [
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline",
+            "stretch"
+          ],
+          "type": "string"
+        },
         "appearance": {
           "type": "string"
         },
@@ -92,6 +102,9 @@
         "borderWidth": {
           "type": "string"
         },
+        "bottom": {
+          "type": "string"
+        },
         "boxShadow": {
           "type": "string"
         },
@@ -101,11 +114,44 @@
         "cursor": {
           "type": "string"
         },
+        "display": {
+          "enum": [
+            "block",
+            "inline",
+            "inline-block",
+            "flex",
+            "inline-flex",
+            "grid",
+            "inline-grid",
+            "none"
+          ],
+          "type": "string"
+        },
         "fill": {
           "type": "string"
         },
         "fillOpacity": {
           "type": "number"
+        },
+        "flex": {
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column",
+            "column-reverse"
+          ],
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap",
+            "wrap-reverse"
+          ],
+          "type": "string"
         },
         "fontFamily": {
           "type": "string"
@@ -122,7 +168,24 @@
             "number"
           ]
         },
+        "gap": {
+          "type": "string"
+        },
         "height": {
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "flex-end",
+            "center",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ],
+          "type": "string"
+        },
+        "left": {
           "type": "string"
         },
         "letterSpacing": {
@@ -166,6 +229,33 @@
         "outlineOffset": {
           "type": "string"
         },
+        "overflow": {
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "overflowX": {
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "overflowY": {
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto"
+          ],
+          "type": "string"
+        },
         "padding": {
           "type": "string"
         },
@@ -181,6 +271,72 @@
         "paddingTop": {
           "type": "string"
         },
+        "position": {
+          "enum": [
+            "static",
+            "relative",
+            "absolute",
+            "fixed",
+            "sticky"
+          ],
+          "type": "string"
+        },
+        "right": {
+          "type": "string"
+        },
+        "textAlign": {
+          "enum": [
+            "left",
+            "right",
+            "center",
+            "justify"
+          ],
+          "type": "string"
+        },
+        "textDecoration": {
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "capitalize",
+            "uppercase",
+            "lowercase"
+          ],
+          "type": "string"
+        },
+        "top": {
+          "type": "string"
+        },
+        "transform": {
+          "type": "string"
+        },
+        "transformOrigin": {
+          "type": "string"
+        },
+        "transition": {
+          "type": "string"
+        },
+        "transitionDelay": {
+          "type": "string"
+        },
+        "transitionDuration": {
+          "type": "string"
+        },
+        "transitionProperty": {
+          "type": "string"
+        },
+        "transitionTimingFunction": {
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "type": "string"
+        },
         "webkitFontSmoothing": {
           "enum": [
             "auto",
@@ -192,8 +348,33 @@
         "webkitTextFillColor": {
           "type": "string"
         },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "nowrap",
+            "pre",
+            "pre-wrap",
+            "pre-line"
+          ],
+          "type": "string"
+        },
         "width": {
           "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "break-all",
+            "keep-all",
+            "break-word"
+          ],
+          "type": "string"
+        },
+        "zIndex": {
+          "type": [
+            "number",
+            "string"
+          ]
         }
       },
       "type": "object"
@@ -380,6 +561,17 @@
           },
           "description": "Per-component icon overrides. Allows customizing icon styles for specific components.",
           "type": "object"
+        },
+        "mainPageColumns": {
+          "default": 2,
+          "description": "Number of columns in the main page feature cards grid.",
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "number"
         }
       },
       "type": "object"
@@ -471,6 +663,9 @@
         "colorTextSubtle": {
           "type": "string"
         },
+        "colorTextTitle": {
+          "type": "string"
+        },
         "colorWarning": {
           "type": "string"
         },
@@ -478,6 +673,12 @@
           "type": "string"
         },
         "fontFamily": {
+          "type": "string"
+        },
+        "fontFamilyBody": {
+          "type": "string"
+        },
+        "fontFamilyTitle": {
           "type": "string"
         },
         "fontSizeBase": {
@@ -667,6 +868,36 @@
           "$ref": "#/definitions/CSSProperties"
         },
         ".Card:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
         ".Checkbox": {
@@ -921,6 +1152,36 @@
         ".DialogContent:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
+        ".DialogDescription": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
         ".DialogOverlay": {
           "$ref": "#/definitions/CSSProperties"
         },
@@ -949,6 +1210,36 @@
           "$ref": "#/definitions/CSSProperties"
         },
         ".DialogOverlay:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
         ".ErrorMessage": {
@@ -1344,6 +1635,36 @@
         ".RadioCardIndicator:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
+        ".RadioCardTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
         ".RadioIndicator": {
           "$ref": "#/definitions/CSSProperties"
         },
@@ -1627,6 +1948,36 @@
           "$ref": "#/definitions/CSSProperties"
         },
         ".StepIndicatorNumber:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
         ".Switch": {
@@ -1933,7 +2284,11 @@
       "type": "object"
     },
     "SoyioTheme": {
-      "const": "soyio",
+      "enum": [
+        "soyio",
+        "night",
+        "flat"
+      ],
       "type": "string"
     }
   }
