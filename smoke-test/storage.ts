@@ -46,3 +46,58 @@ export const listConfigs = (): string[] => {
 export const deleteConfig = (name: string): void => {
   localStorage.removeItem(`${STORAGE_PREFIX}${name}`);
 };
+
+// Export all configs to a JSON file
+export const exportConfigs = (): void => {
+  const configs: Record<string, SavedConfig> = {};
+  const configNames = listConfigs();
+
+  configNames.forEach(name => {
+    const config = loadConfig(name);
+    if (config) {
+      configs[name] = config;
+    }
+  });
+
+  const dataStr = JSON.stringify(configs, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `soyio-widget-presets-${Date.now()}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+// Import configs from a JSON file
+export const importConfigs = (file: File): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const configs: Record<string, SavedConfig> = JSON.parse(content);
+
+        let importedCount = 0;
+        Object.entries(configs).forEach(([name, config]) => {
+          // Validate the config structure
+          if (config.privacyConfig && config.consentConfig && config.activeTab) {
+            saveConfig(name, config.privacyConfig, config.consentConfig, config.activeTab);
+            importedCount++;
+          }
+        });
+
+        resolve(importedCount);
+      } catch (error) {
+        reject(new Error('Invalid preset file format'));
+      }
+    };
+
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsText(file);
+  });
+};

@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
 import { WidgetPreview } from './WidgetPreview';
 import appearanceSchema from './appearance-schema.json';
-import { saveConfig, loadConfig, listConfigs, deleteConfig, WidgetType } from './storage';
+import { saveConfig, loadConfig, listConfigs, deleteConfig, exportConfigs, importConfigs, WidgetType } from './storage';
 
 const COMPANY_ID = import.meta.env.VITE_COMPANY_ID || 'com_test';
 const PRIVACY_CENTER_URL = import.meta.env.VITE_PRIVACY_CENTER_URL || 'http://localhost:5173';
@@ -15,8 +15,6 @@ const DEFAULT_PRIVACY_CENTER_CONFIG = {
   developmentUrl: PRIVACY_CENTER_URL, // Default to local privacy-center
   appearance: {
     variables: {
-      colorPrimary: '#E81E2B',
-      fontFamily: 'Ubuntu sans, sans-serif',
       borderRadius: '0.25rem',
       colorBackground: '#ffffff',
     },
@@ -24,10 +22,7 @@ const DEFAULT_PRIVACY_CENTER_CONFIG = {
       '.Button': {
         fontWeight: 'bold',
         padding: '12px 24px',
-      },
-      '.Input': {
-        borderColor: '#E81E2B',
-      },
+      }
     },
   },
 };
@@ -38,22 +33,22 @@ const DEFAULT_CONSENT_BOX_CONFIG = {
   developmentUrl: CONSENT_URL, // Default to local privacy-center
   appearance: {
     variables: {
-      colorPrimary: '#E81E2B',
-      fontFamily: 'Ubuntu sans, sans-serif',
       borderRadius: '0.25rem',
       colorBackground: '#ffffff',
     },
     rules: {
       '.CheckboxInput': {
-        borderRadius: '4px',
-        borderColor: '#E81E2B',
+        borderRadius: '4px'
       },
     },
   },
 };
 
+type ViewportMode = 'desktop' | 'mobile';
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<WidgetType>('privacy-center');
+  const [viewport, setViewport] = useState<ViewportMode>('desktop');
 
   // State for both configurations
   const [privacyJson, setPrivacyJson] = useState(JSON.stringify(DEFAULT_PRIVACY_CENTER_CONFIG, null, 2));
@@ -127,6 +122,26 @@ const App: React.FC = () => {
     if (currentPreset === name) {
       setCurrentPreset(null);
     }
+  };
+
+  const handleExportConfigs = () => {
+    exportConfigs();
+  };
+
+  const handleImportConfigs = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const count = await importConfigs(file);
+      setSavedConfigs(listConfigs());
+      alert(`Successfully imported ${count} preset(s)`);
+    } catch (error) {
+      alert(`Failed to import presets: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+
+    // Reset input so the same file can be imported again
+    e.target.value = '';
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -214,14 +229,60 @@ const App: React.FC = () => {
             />
             <button onClick={handleSaveConfig} className="btn-save">Save New</button>
           </div>
+          <div className="import-export-row">
+            <button onClick={handleExportConfigs} className="btn-export" disabled={savedConfigs.length === 0}>
+              Export All Presets
+            </button>
+            <label className="btn-import">
+              Import Presets
+              <input
+                type="file"
+                accept="application/json,.json"
+                onChange={handleImportConfigs}
+                style={{ display: 'none' }}
+              />
+            </label>
+          </div>
         </div>
       </div>
       <div className="preview-pane">
-        {config ? (
-          <WidgetPreview config={config} widgetType={activeTab} />
-        ) : (
-          <div style={{ color: '#999' }}>Fix JSON to see preview</div>
-        )}
+        <div className="preview-header">
+          <div className="viewport-toggle">
+            <button
+              className={`viewport-btn ${viewport === 'desktop' ? 'active' : ''}`}
+              onClick={() => setViewport('desktop')}
+              title="Desktop view"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+              Desktop
+            </button>
+            <button
+              className={`viewport-btn ${viewport === 'mobile' ? 'active' : ''}`}
+              onClick={() => setViewport('mobile')}
+              title="Mobile view"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="5" y="2" width="14" height="20" rx="2" />
+                <line x1="12" y1="18" x2="12" y2="18" strokeLinecap="round" />
+              </svg>
+              Mobile
+            </button>
+          </div>
+          <span className="viewport-label">
+            {viewport === 'mobile' ? '390px' : 'Full width'}
+          </span>
+        </div>
+        <div className={`preview-container ${viewport}`}>
+          {config ? (
+            <WidgetPreview config={config} widgetType={activeTab} />
+          ) : (
+            <div style={{ color: '#999' }}>Fix JSON to see preview</div>
+          )}
+        </div>
       </div>
     </div>
   );
