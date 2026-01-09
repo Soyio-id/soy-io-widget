@@ -25,11 +25,110 @@ body, html, #root {
 .preview-pane {
   flex: 1;
   display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+  overflow: hidden;
+  min-width: 0; /* Prevent flex overflow */
+}
+
+.preview-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #e8e8ec;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.viewport-toggle {
+  display: flex;
+  background: #d8d8dc;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.viewport-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.viewport-btn:hover {
+  color: #333;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.viewport-btn.active {
+  background: white;
+  color: #1a1a1a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.viewport-btn svg {
+  flex-shrink: 0;
+}
+
+.viewport-label {
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+}
+
+.preview-container {
+  flex: 1;
+  display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: #f0f2f5;
   padding: 20px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+.preview-container.desktop #widget-container {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.preview-container.desktop #widget-container iframe {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.preview-container.mobile {
+  justify-content: center;
+}
+
+.preview-container.mobile #widget-container {
+  width: 390px !important;
+  min-width: 390px !important;
+  max-width: 390px !important;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.preview-container.mobile #widget-container iframe {
+  width: 100% !important;
+  min-width: 100% !important;
 }
 
 .header {
@@ -245,4 +344,38 @@ button {
 .btn-delete:hover {
   color: #dc2626;
   background: none;
+}
+
+.import-export-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.btn-export,
+.btn-import {
+  flex: 1;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-weight: 500;
+}
+
+.btn-export:hover:not(:disabled),
+.btn-import:hover {
+  background: #f0f0f0;
+  border-color: #ccc;
+}
+
+.btn-export:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
