@@ -473,9 +473,36 @@ const appearance = {
 
 ### Themes
 
-Currently supported themes:
+Built-in themes provide pre-configured color palettes and component styles:
 
-- `"soyio"` (default) - The standard Soyio theme
+| Theme | Description |
+| ----- | ----------- |
+| `"soyio"` | Default light theme with Soyio brand colors (purple/indigo), uppercase titles |
+| `"night"` | Dark mode theme with deep blues, muted colors, and subtle borders |
+| `"flat"` | Minimal theme with square corners, normal-case titles, thicker borders |
+
+**Theme style differences:**
+
+- **soyio**: Standard styling with rounded corners and uppercase card titles
+- **night**: Dark backgrounds, lighter text, borders using theme variables
+- **flat**: No border radius, sentence-case titles (no uppercase), 2px borders, lighter font weights
+
+**Example:**
+```javascript
+const appearance = {
+  theme: "night", // Use the dark theme
+  variables: {
+    // You can still override specific variables
+    colorPrimary: "#FF6B6B",
+  },
+  rules: {
+    // You can also override theme rules
+    ".CardTitle": { fontWeight: "700" },
+  },
+};
+```
+
+Theme variables and rules are applied first, then your custom overrides take precedence.
 
 ### Config
 
@@ -490,6 +517,7 @@ interface Config {
     size?: number;
   };
   iconRules?: Record<string, { weight?: IconWeight; size?: number }>;
+  mainPageColumns?: 1 | 2 | 3 | 4;
 }
 ```
 
@@ -500,6 +528,7 @@ interface Config {
 | `icon.weight` | Global icon weight/style variant (see below) | `"regular"` |
 | `icon.size` | Global default icon size in pixels | `24` |
 | `iconRules` | Per-component icon style overrides | `{}` |
+| `mainPageColumns` | Number of columns in the main page feature cards grid (1-4) | `2` |
 
 #### Icons
 
@@ -578,6 +607,8 @@ Use variables to adjust common visual attributes across all components.
 ```javascript
 interface Variables {
   fontFamily?: string;
+  fontFamilyBody?: string;
+  fontFamilyTitle?: string;
   fontSizeBase?: string;
   colorPrimary?: string;
   colorPrimarySurface?: string;
@@ -593,6 +624,7 @@ interface Variables {
   colorTextSecondary?: string;
   colorTextSubtle?: string;
   colorTextInverted?: string;
+  colorTextTitle?: string;
   colorLink?: string;
   colorInputFocus?: string;
   colorInputErrorFocus?: string;
@@ -616,7 +648,9 @@ interface Variables {
 
 | Variable          | Description                              | Default                   |
 | ----------------- | ---------------------------------------- | ------------------------- |
-| `fontFamily`          | The font stack to use for text                          | `"system-ui, sans-serif"` |
+| `fontFamily`          | Base font stack (fallback for body and title)          | `"system-ui, sans-serif"` |
+| `fontFamilyBody`      | Font stack for body/paragraph text (falls back to `fontFamily`) | `var(--fontFamily)` |
+| `fontFamilyTitle`     | Font stack for titles and headings (falls back to `fontFamily`) | `var(--fontFamily)` |
 | `fontSizeBase`        | Base font size for text                                 | `"1rem"`                  |
 | `colorPrimary`        | Primary color for interactive elements                  | `"#0570DE"`               |
 | `colorPrimarySurface` | Background color for primary elements (e.g. active tab) | `"#EEF2FF"`               |
@@ -632,6 +666,7 @@ interface Variables {
 | `colorTextSecondary`  | Secondary text color                                    | `"#6B7280"`               |
 | `colorTextSubtle`     | Subtle text color                                       | `"#9CA3AF"`               |
 | `colorTextInverted`   | Inverted text color                                     | `"#FFFFFF"`               |
+| `colorTextTitle`      | Title/heading text color (falls back to `colorText`)    | `var(--colorText)`        |
 | `colorLink`           | Color for link elements                                 | `"#0570DE"`               |
 | `colorInputFocus`     | Focus border/ring color for input elements              | `"#0570DE"`               |
 | `colorInputErrorFocus`| Focus border/ring color for input elements in error state | `"#EF4444"`             |
@@ -685,12 +720,14 @@ rules: {
 ##### Layout
 - `.MainContainer` - The main container.
 - `.Card` - Card containers.
+- `.CardTitle` - Card title text.
 - `.Dialog` - Dialog containers.
 - `.DialogOverlay` - Dialog overlays.
 - `.DialogContent` - Dialog content areas.
 
 ##### Typography
-- `.Title` - Title text.
+- `.Title` - Title text (base class for all titles).
+- `.StepTitle` - Step indicator title text (also inherits from `.Title`).
 - `.Description` - Description text.
 
 ##### Inputs
@@ -745,6 +782,9 @@ rules: {
 - `.RadioCardButton--checked` - Checked state of the radio card button.
 - `.RadioCardIndicator` - The inner indicator point inside a radio card.
 - `.RadioCardIndicator--checked` - Checked state of the radio card indicator.
+- `.RadioCardTitle` - The title text inside a radio card (also inherits from `.CardTitle`).
+
+> **Note:** `.RadioCardTitle` elements also have the `.CardTitle` class, so you can style all card titles together with `.CardTitle` and override specifically for radio cards with `.RadioCardTitle`.
 
 ##### Step Indicator
 
@@ -994,3 +1034,14 @@ VITE_PRIVACY_CENTER_URL=http://localhost:5173
 VITE_CONSENT_URL=http://localhost:5173
 VITE_CONSENT_TEMPLATE_ID=constpl_test
 ```
+
+### Presets Management
+
+The smoke test includes preset management functionality that allows you to save, load, and share widget configurations:
+
+- **Save Presets**: Save your current widget configuration with a custom name
+- **Load Presets**: Quickly switch between saved configurations
+- **Export Presets**: Download all presets as a JSON file for backup or sharing
+- **Import Presets**: Load presets from a previously exported JSON file
+
+All presets are automatically saved to your browser's localStorage. Use the export feature to persist presets to disk and share them with your team. See [smoke-test/PRESETS.md](./smoke-test/PRESETS.md) for detailed documentation.
