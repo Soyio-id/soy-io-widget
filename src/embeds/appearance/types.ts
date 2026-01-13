@@ -1,4 +1,4 @@
-export type SoyioTheme = 'soyio';
+export type SoyioTheme = 'soyio' | 'night' | 'flat';
 
 export type CSSProperties = {
   appearance?: string;
@@ -58,7 +58,41 @@ export type CSSProperties = {
   WebkitAppearance?: string;
   webkitFontSmoothing?: 'auto' | 'antialiased' | 'subpixel-antialiased';
   webkitTextFillColor?: string;
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
   width?: string;
+  // Layout
+  display?: 'block' | 'inline' | 'inline-block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | 'none';
+  justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  flex?: string;
+  gap?: string;
+  // Positioning
+  position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
+  zIndex?: number | string;
+  // Transitions & Transforms
+  transition?: string;
+  transitionProperty?: string;
+  transitionDuration?: string;
+  transitionTimingFunction?: string;
+  transitionDelay?: string;
+  transform?: string;
+  transformOrigin?: string;
+  // Visibility & Overflow
+  visibility?: 'visible' | 'hidden' | 'collapse';
+  overflow?: 'visible' | 'hidden' | 'scroll' | 'auto';
+  overflowX?: 'visible' | 'hidden' | 'scroll' | 'auto';
+  overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto';
+  // Text
+  textAlign?: 'left' | 'right' | 'center' | 'justify';
+  textDecoration?: string;
+  whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
+  wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
 };
 
 export type SoyioElementState =
@@ -76,9 +110,12 @@ export type SoyioBaseRule =
   | '.CheckboxLabel'
   | '.Input'
   | '.Label'
+  | '.HintIcon'
   | '.Title'
+  | '.StepTitle'
   | '.Link'
   | '.Card'
+  | '.CardTitle'
   | '.Select'
   | '.Loader'
   | '.TextArea'
@@ -89,28 +126,57 @@ export type SoyioBaseRule =
   | '.SwitchThumb'
   | '.SwitchIcon'
   | '.Alert'
-  | '.Alert--error'
-  | '.Alert--warning'
-  | '.Alert--information'
-  | '.Alert--success'
+  | '.AlertIcon'
+  | '.AlertContent'
   | '.Radio'
+  | '.RadioButton'
+  | '.RadioIndicator'
   | '.RadioLabel'
   | '.Chip'
+  | '.Dialog'
+  | '.DialogOverlay'
+  | '.DialogContent'
+  | '.DialogTitle'
+  | '.DialogDescription'
+  | '.Combobox'
+  | '.NinInput'
+  | '.TrackingCodeInput'
+  | '.TrackingCodeInputCell'
+  | '.TrackingCodeInputSeparator'
+  | '.RadioCard'
+  | '.RadioCardButton'
+  | '.RadioCardIndicator'
+  | '.RadioCardTitle'
+  | '.StepIndicatorContainer'
+  | '.StepIndicator'
+  | '.StepIndicatorLine'
+  | '.StepIndicatorIcon'
+  | '.StepIndicatorDot'
+  | '.StepIndicatorNumber'
+  | '.TooltipContent';
+
+// State-specific rules that should not be combined with SoyioElementState
+export type SoyioStateRule =
+  | '.Input--error'
+  | '.Alert--error'
+  | '.Alert--warning'
+  | '.Alert--info'
+  | '.Alert--success'
   | '.Chip--info'
   | '.Chip--green'
   | '.Chip--red'
   | '.Chip--amber'
-  | '.Dialog'
-  | '.DialogOverlay'
-  | '.DialogContent'
-  | '.Combobox'
-  | '.NinInput'
-  | '.RadioCard'
-  | '.RadioCardIndicator'
-  | '.RadioCardIndicatorPoint'
-  | '.TooltipContent';
+  | '.RadioCard--checked'
+  | '.RadioCardIndicator--checked'
+  | '.StepIndicator--active'
+  | '.StepIndicator--completed'
+  | '.StepIndicator--pending'
+  | '.StepIndicatorLine--top'
+  | '.StepIndicatorLine--bottom';
 
-export type SoyioRuleKey = `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`;
+export type SoyioRuleKey =
+  | `${SoyioBaseRule}${SoyioElementState | SoyioPseudoClass | SoyioPseudoElement | ''}`
+  | SoyioStateRule;
 
 export type SoyioRule = {
   [K in SoyioRuleKey]?: CSSProperties;
@@ -118,24 +184,31 @@ export type SoyioRule = {
 
 export interface SoyioAppearanceVariables {
   fontFamily?: string;
+  fontFamilyBody?: string;
+  fontFamilyTitle?: string;
   fontSizeBase?: string;
   borderRadius?: string;
   borderWidth?: string;
   borderStyle?: string;
   colorPrimary?: string;
+  colorPrimarySurface?: string;
   colorSecondary?: string;
   colorBackground?: string;
-  colorText?: string;
-  colorTextSecondary?: string;
-  colorTextSubtle?: string;
-  colorTextInverted?: string;
-  colorPrimarySurface?: string;
   colorSurface?: string;
   colorSurfaceMuted?: string;
   colorSurfaceStrong?: string;
   colorBorder?: string;
   colorBorderMuted?: string;
   colorSwitchBorder?: string;
+  colorText?: string;
+  colorTextSecondary?: string;
+  colorTextSubtle?: string;
+  colorTextInverted?: string;
+  colorTextTitle?: string;
+  colorLink?: string;
+  colorInputFocus?: string;
+  colorInputErrorFocus?: string;
+  colorSelectArrow?: string;
   colorInfo?: string;
   colorInfoBg?: string;
   colorSuccess?: string;
@@ -147,8 +220,65 @@ export interface SoyioAppearanceVariables {
   colorOverlay?: string;
 }
 
+export type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+
+export interface SoyioIconConfig {
+  /**
+   * Icon weight/style variant.
+   * - thin: Thinnest stroke
+   * - light: Light stroke
+   * - regular: Default stroke (default)
+   * - bold: Bold stroke
+   * - fill: Filled/solid icons
+   * - duotone: Two-tone icons with opacity
+   * @default 'regular'
+   */
+  weight?: IconWeight;
+
+  /**
+   * Default icon size in pixels.
+   * @default 24
+   */
+  size?: number;
+}
+
+export interface SoyioAppearanceConfig {
+  helperTextPosition?: 'top' | 'bottom';
+  /**
+   * Icon name to use for hint/help tooltips on input labels.
+   * Available icons: 'Question' (default), 'Info', 'QuestionMark', etc.
+   * @default 'Question'
+   */
+  hintIcon?: string;
+  /**
+   * Global icon appearance configuration.
+   * Controls default weight and size for all icons.
+   */
+  icon?: SoyioIconConfig;
+  /**
+   * Per-component icon overrides.
+   * Allows customizing icon styles for specific components.
+   *
+   * @example
+   * ```ts
+   * iconRules: {
+   *   Alert: { weight: 'fill' },
+   *   Switch: { weight: 'bold' },
+   *   'Alert.error': { weight: 'fill', size: 20 },
+   * }
+   * ```
+   */
+  iconRules?: Record<string, SoyioIconConfig>;
+  /**
+   * Number of columns in the main page feature cards grid.
+   * @default 2
+   */
+  mainPageColumns?: 1 | 2 | 3 | 4;
+}
+
 export interface SoyioAppearance {
   theme?: SoyioTheme;
   variables?: SoyioAppearanceVariables;
   rules?: SoyioRule;
+  config?: SoyioAppearanceConfig;
 }

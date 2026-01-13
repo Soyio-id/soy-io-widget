@@ -460,21 +460,145 @@ Customize the look and feel of Soyio UI components by passing an `appearance` ob
 
 ### Structure
 
-The appearance object consists of three main sections:
+The appearance object consists of four main sections:
 
 ```javascript
 const appearance = {
   theme: string,
   variables: Variables,
   rules: Rules,
+  config: Config,
 };
 ```
 
 ### Themes
 
-Currently supported themes:
+Built-in themes provide pre-configured color palettes and component styles:
 
-- `"soyio"` (default) - The standard Soyio theme
+| Theme | Description |
+| ----- | ----------- |
+| `"soyio"` | Default light theme with Soyio brand colors (purple/indigo), uppercase titles |
+| `"night"` | Dark mode theme with deep blues, muted colors, and subtle borders |
+| `"flat"` | Minimal theme with square corners, normal-case titles, thicker borders |
+
+**Theme style differences:**
+
+- **soyio**: Standard styling with rounded corners and uppercase card titles
+- **night**: Dark backgrounds, lighter text, borders using theme variables
+- **flat**: No border radius, sentence-case titles (no uppercase), 2px borders, lighter font weights
+
+**Example:**
+```javascript
+const appearance = {
+  theme: "night", // Use the dark theme
+  variables: {
+    // You can still override specific variables
+    colorPrimary: "#FF6B6B",
+  },
+  rules: {
+    // You can also override theme rules
+    ".CardTitle": { fontWeight: "700" },
+  },
+};
+```
+
+Theme variables and rules are applied first, then your custom overrides take precedence.
+
+### Config
+
+The `config` object allows you to adjust component behavior settings.
+
+```javascript
+interface Config {
+  helperTextPosition?: 'top' | 'bottom';
+  hintIcon?: string;
+  icon?: {
+    weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+    size?: number;
+  };
+  iconRules?: Record<string, { weight?: IconWeight; size?: number }>;
+  mainPageColumns?: 1 | 2 | 3 | 4;
+}
+```
+
+| Property | Description | Default |
+| -------- | ----------- | ------- |
+| `helperTextPosition` | Position of helper/description text relative to form inputs | `"bottom"` |
+| `hintIcon` | Icon name for hint/help tooltips on input labels (see available icons below) | `"Question"` |
+| `icon.weight` | Global icon weight/style variant (see below) | `"regular"` |
+| `icon.size` | Global default icon size in pixels | `24` |
+| `iconRules` | Per-component icon style overrides | `{}` |
+| `mainPageColumns` | Number of columns in the main page feature cards grid (1-4) | `2` |
+
+#### Icons
+
+Soyio uses [Phosphor Icons](https://phosphoricons.com/), a flexible icon family with multiple weight variants. You can customize the icon appearance globally using the `config.icon` settings, or override icons for specific components using `config.iconRules`.
+
+**Available icon weights:**
+
+| Weight | Description |
+| ------ | ----------- |
+| `thin` | Thinnest stroke width |
+| `light` | Light stroke width |
+| `regular` | Default stroke width |
+| `bold` | Bold stroke width |
+| `fill` | Filled/solid icons |
+| `duotone` | Two-tone icons with opacity |
+
+**Global icon example:**
+
+```javascript
+const appearance = {
+  config: {
+    icon: {
+      weight: "bold",
+      size: 20,
+    },
+  },
+};
+```
+
+**Per-component icon overrides:**
+
+Use `iconRules` to customize icons for specific components. The key is the component name (e.g., `Alert`, `Switch`) or a variant-specific key (e.g., `Alert.error`):
+
+> **Note:** For variant-specific icon rules, use dot notation (`Alert.error`) rather than the CSS double-dash syntax (`Alert--error`).
+
+```javascript
+const appearance = {
+  config: {
+    icon: {
+      weight: "regular", // Global default
+    },
+    iconRules: {
+      Alert: { weight: "fill" },           // All alerts use filled icons
+      Switch: { weight: "bold", size: 16 }, // Switch icons are bold and smaller
+      "Alert.error": { weight: "fill" },    // Error alerts specifically
+    },
+  },
+};
+```
+
+**Hint icon customization:**
+
+The hint icon appears next to input labels when a tooltip/hint is available. You can change which icon is displayed using `hintIcon`:
+
+| Icon Name | Description |
+| --------- | ----------- |
+| `Question` | Question mark in circle (default) |
+| `Info` | Information "i" icon |
+| `QuestionMark` | Simple question mark |
+| `Warning` | Warning/exclamation icon |
+
+```javascript
+const appearance = {
+  config: {
+    hintIcon: "Info", // Use info icon instead of question mark
+  },
+};
+```
+
+You can also style the hint icon using the `.HintIcon` rule (see [Supported rules](#supported-rules)).
 
 ### Variables
 
@@ -483,21 +607,28 @@ Use variables to adjust common visual attributes across all components.
 ```javascript
 interface Variables {
   fontFamily?: string;
+  fontFamilyBody?: string;
+  fontFamilyTitle?: string;
   fontSizeBase?: string;
   colorPrimary?: string;
+  colorPrimarySurface?: string;
   colorSecondary?: string;
   colorBackground?: string;
-  colorText?: string;
-  colorTextSecondary?: string;
-  colorTextSubtle?: string;
-  colorTextInverted?: string;
-  colorPrimarySurface?: string;
   colorSurface?: string;
   colorSurfaceMuted?: string;
   colorSurfaceStrong?: string;
   colorBorder?: string;
   colorBorderMuted?: string;
   colorSwitchBorder?: string;
+  colorText?: string;
+  colorTextSecondary?: string;
+  colorTextSubtle?: string;
+  colorTextInverted?: string;
+  colorTextTitle?: string;
+  colorLink?: string;
+  colorInputFocus?: string;
+  colorInputErrorFocus?: string;
+  colorSelectArrow?: string;
   colorInfo?: string;
   colorInfoBg?: string;
   colorSuccess?: string;
@@ -517,7 +648,10 @@ interface Variables {
 
 | Variable          | Description                              | Default                   |
 | ----------------- | ---------------------------------------- | ------------------------- |
-| `fontFamily`          | The font stack to use for text                          | `"system-ui, sans-serif"` |
+| `fontFamily`          | Base font stack (fallback for body and title)          | `"system-ui, sans-serif"` |
+| `fontFamilyBody`      | Font stack for body/paragraph text (falls back to `fontFamily`) | `var(--fontFamily)` |
+| `fontFamilyTitle`     | Font stack for titles and headings (falls back to `fontFamily`) | `var(--fontFamily)` |
+| `fontSizeBase`        | Base font size for text                                 | `"1rem"`                  |
 | `colorPrimary`        | Primary color for interactive elements                  | `"#0570DE"`               |
 | `colorPrimarySurface` | Background color for primary elements (e.g. active tab) | `"#EEF2FF"`               |
 | `colorSecondary`      | Secondary color for interactive elements                | `"#A180F0"`               |
@@ -532,6 +666,11 @@ interface Variables {
 | `colorTextSecondary`  | Secondary text color                                    | `"#6B7280"`               |
 | `colorTextSubtle`     | Subtle text color                                       | `"#9CA3AF"`               |
 | `colorTextInverted`   | Inverted text color                                     | `"#FFFFFF"`               |
+| `colorTextTitle`      | Title/heading text color (falls back to `colorText`)    | `var(--colorText)`        |
+| `colorLink`           | Color for link elements                                 | `"#0570DE"`               |
+| `colorInputFocus`     | Focus border/ring color for input elements              | `"#0570DE"`               |
+| `colorInputErrorFocus`| Focus border/ring color for input elements in error state | `"#EF4444"`             |
+| `colorSelectArrow`    | Color for select dropdown arrow icon                    | `"#6B7280"`               |
 | `colorInfo`           | Info status color                                       | `"#1E40AF"`               |
 | `colorInfoBg`         | Info status background color                            | `"#E0E7FF"`               |
 | `colorSuccess`        | Success status color                                    | `"#15803D"`               |
@@ -553,26 +692,56 @@ The `rules` object allows you to apply custom CSS to specific elements. Soyio su
 
 #### Supported rules
 
-The rules are grouped by component category:
+The rules are grouped by component category. Most rules support **pseudo-classes** and **pseudo-elements** that can be appended to style different states:
+
+**Supported pseudo-classes:**
+- `:hover` - When the element is hovered
+- `:focus` - When the element is focused
+- `:active` - When the element is active/pressed
+- `:disabled` - When the element is disabled
+- `:autofill` - When the input is autofilled
+- `:focus-visible` - When focused via keyboard navigation
+
+**Supported pseudo-elements:**
+- `::placeholder` - Placeholder text in inputs
+- `::selection` - Selected text
+
+**Example usage:**
+```javascript
+rules: {
+  ".Button": { backgroundColor: "blue" },           // Base style
+  ".Button:hover": { backgroundColor: "darkblue" }, // Hover state
+  ".Button:disabled": { opacity: "0.5" },           // Disabled state
+  ".Input::placeholder": { color: "gray" },         // Placeholder text
+  ".RadioCard:hover": { borderColor: "var(--colorPrimary)" }, // Card hover
+}
+```
 
 ##### Layout
 - `.MainContainer` - The main container.
 - `.Card` - Card containers.
+- `.CardTitle` - Card title text.
 - `.Dialog` - Dialog containers.
 - `.DialogOverlay` - Dialog overlays.
 - `.DialogContent` - Dialog content areas.
 
 ##### Typography
-- `.Title` - Title text.
+- `.Title` - Title text (base class for all titles).
+- `.StepTitle` - Step indicator title text (also inherits from `.Title`).
 - `.Description` - Description text.
 
 ##### Inputs
 - `.Input` - Input fields.
+- `.Input--error` - Input fields in error state.
 - `.Label` - Labels.
+- `.HintIcon` - Hint/help icons next to input labels.
 - `.TextArea` - Text area inputs.
 - `.Select` - Select dropdowns.
 - `.Combobox` - Combobox inputs.
 - `.NinInput` - Styles the input field for national identity numbers.
+- `.TrackingCodeInput` - Styles the tracking code input component.
+- `.TrackingCodeInputCell` - Styles individual cells in the tracking code input.
+- `.TrackingCodeInputSeparator` - Styles the separator between tracking code cells.
 
 ##### Buttons & Links
 - `.Button` - The button component.
@@ -587,13 +756,15 @@ The rules are grouped by component category:
 - `.CheckboxInput` - The styled checkbox element (supports `borderRadius`, `borderColor`, `backgroundColor`).
 - `.CheckboxLabel` - The checkbox label.
 - `.CheckboxCheck` - The checkmark icon inside the checkbox.
-- `.CheckboxInput--checked` - The checked state of the checkbox
-- `.CheckboxInput--focus` - Focus state of the checkbox (visible focus ring)
-- `.CheckboxInput:hover` - Hover state of the checkbox
+- `.CheckboxInput--checked` - The checked state of the checkbox.
 
 
 **Radio**
 - `.Radio` - Radio button containers.
+- `.RadioButton` - The radio button element (the clickable circle).
+- `.RadioButton--checked` - Checked state of the radio button.
+- `.RadioIndicator` - The inner indicator point of the radio button.
+- `.RadioIndicator--checked` - Checked state of the radio indicator (visible when selected).
 - `.RadioLabel` - Radio button labels.
 
 **Switch**
@@ -606,8 +777,30 @@ The rules are grouped by component category:
 
 **Radio Card**
 - `.RadioCard` - Styles the wrapper card element of a radio card item.
-- `.RadioCardIndicator` - Styles the container of the radio indicator (circle) inside a radio card.
-- `.RadioCardIndicatorPoint` - Styles the inner point of the radio indicator inside a radio card.
+- `.RadioCard--checked` - Checked state of the radio card.
+- `.RadioCardButton` - The radio button element inside a radio card.
+- `.RadioCardButton--checked` - Checked state of the radio card button.
+- `.RadioCardIndicator` - The inner indicator point inside a radio card.
+- `.RadioCardIndicator--checked` - Checked state of the radio card indicator.
+- `.RadioCardTitle` - The title text inside a radio card (also inherits from `.CardTitle`).
+
+> **Note:** `.RadioCardTitle` elements also have the `.CardTitle` class, so you can style all card titles together with `.CardTitle` and override specifically for radio cards with `.RadioCardTitle`.
+
+##### Step Indicator
+
+The step indicator shows progress through multi-step forms.
+
+- `.StepIndicatorContainer` - The container wrapping all step indicators.
+- `.StepIndicator` - Individual step indicator item.
+- `.StepIndicator--active` - The currently active step.
+- `.StepIndicator--completed` - Steps that have been completed.
+- `.StepIndicator--pending` - Steps that are not yet reached.
+- `.StepIndicatorLine` - The connecting line between steps.
+- `.StepIndicatorLine--top` - The line segment above a step indicator.
+- `.StepIndicatorLine--bottom` - The line segment below a step indicator.
+- `.StepIndicatorIcon` - Icon displayed inside a step indicator (for completed steps).
+- `.StepIndicatorDot` - The dot marker in a step indicator.
+- `.StepIndicatorNumber` - The step number displayed in the indicator.
 
 ##### Feedback
 - `.Loader` - Loading indicators.
@@ -618,8 +811,10 @@ The rules are grouped by component category:
 - `.Alert` - Alert boxes.
 - `.Alert--error` - Error alert variant.
 - `.Alert--warning` - Warning alert variant.
-- `.Alert--information` - Information alert variant.
+- `.Alert--info` - Information alert variant.
 - `.Alert--success` - Success alert variant.
+- `.AlertIcon` - The icon inside an alert.
+- `.AlertContent` - The content/text area inside an alert.
 
 **Chip**
 - `.Chip` - Chips/Tags.
@@ -692,6 +887,9 @@ const appearance = {
     ".SwitchIcon": {
       display: "none", // Hide the check/cross icons
     },
+  },
+  config: {
+    helperTextPosition: "top", // Position helper text above inputs
   },
 };
 ```
@@ -836,3 +1034,14 @@ VITE_PRIVACY_CENTER_URL=http://localhost:5173
 VITE_CONSENT_URL=http://localhost:5173
 VITE_CONSENT_TEMPLATE_ID=constpl_test
 ```
+
+### Presets Management
+
+The smoke test includes preset management functionality that allows you to save, load, and share widget configurations:
+
+- **Save Presets**: Save your current widget configuration with a custom name
+- **Load Presets**: Quickly switch between saved configurations
+- **Export Presets**: Download all presets as a JSON file for backup or sharing
+- **Import Presets**: Load presets from a previously exported JSON file
+
+All presets are automatically saved to your browser's localStorage. Use the export feature to persist presets to disk and share them with your team. See [smoke-test/PRESETS.md](./smoke-test/PRESETS.md) for detailed documentation.
