@@ -1,7 +1,7 @@
 export function cleanupExistingIframe(identifier: string): void {
   const existingIframe = document.getElementById(identifier);
   if (existingIframe) {
-     
+
     console.warn('ConsentBox iframe already exists. Removing existing before mounting new one.');
     existingIframe.remove();
   }
@@ -20,18 +20,27 @@ export function getIframeDivContainer(selector: string): HTMLDivElement {
 
   const container = iframeDivContainer as HTMLDivElement;
   container.style.position = 'relative';
-  container.style.cssText += `
+
+  return container;
+}
+
+export function createWidgetWrapper(identifier: string): HTMLDivElement {
+  const wrapper = document.createElement('div');
+  wrapper.id = `soyio-widget-wrapper-${identifier}`;
+
+  wrapper.style.cssText = `
     padding: 0 !important;
     margin: 0 !important;
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     border: none !important;
     transition: height 0.35s !important;
     opacity: 1 !important;
+    width: 100% !important;
   `;
 
-  return container;
+  return wrapper;
 }
 
 export type IframeCSSConfig = {

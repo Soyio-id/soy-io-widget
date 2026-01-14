@@ -218,6 +218,7 @@ export interface SoyioAppearanceVariables {
   colorDanger?: string;
   colorDangerBg?: string;
   colorOverlay?: string;
+  dataUseIconColor?: string;
 }
 
 export type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
@@ -240,6 +241,12 @@ export interface SoyioIconConfig {
    * @default 24
    */
   size?: number;
+
+  /**
+   * Override variant for data use icons in consent management.
+   * If not set, uses the company's configured iconVariant.
+   */
+  dataUseVariant?: 'duotone' | 'outline' | 'solid';
 }
 
 export interface SoyioAppearanceConfig {

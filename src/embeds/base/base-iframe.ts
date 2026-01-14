@@ -13,6 +13,7 @@ import type {
 import {
   cleanupExistingIframe,
   createIframe,
+  createWidgetWrapper,
   generateUniqueIframeId,
   getIframeDivContainer,
   IframeCSSConfig,
@@ -23,6 +24,7 @@ import { isBrowser } from '@/utils';
 
 export abstract class BaseIframeBox<T extends BaseConfig> {
   protected iframe: HTMLIFrameElement | null = null;
+  protected wrapper: HTMLDivElement | null = null;
   protected skeleton: ISkeletonView | null = null;
 
   protected readonly options: T;
@@ -116,14 +118,18 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     const iframeDivContainer = getIframeDivContainer(selector);
     const url = this.iframeUrl();
 
+    // Create a wrapper for the widget content to avoid messing with the host container's styles
+    this.wrapper = createWidgetWrapper(this.uniqueIdentifier);
+    iframeDivContainer.appendChild(this.wrapper);
+
     this.iframe = createIframe(url, this.iframeIdentifier, this.defaultIframeCSSConfig);
 
     if (this.Skeleton) {
       this.skeleton = new this.Skeleton(this.uniqueIdentifier);
-      this.skeleton.mount(iframeDivContainer);
+      this.skeleton.mount(this.wrapper);
     }
 
-    iframeDivContainer.appendChild(this.iframe);
+    this.wrapper.appendChild(this.iframe);
 
     return this;
   }
@@ -142,5 +148,19 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
       this.iframe.remove();
       this.iframe = null;
     }
+
+    if (this.wrapper) {
+      this.wrapper.remove();
+      this.wrapper = null;
+    }
+  }
+
+  /**
+   * Update the appearance of the widget without remounting.
+   * This sends the new appearance config to the already-mounted iframe.
+   */
+  async updateAppearance(appearance: SoyioAppearance): Promise<void> {
+    if (!this.iframe) return;
+    await sendAppearanceConfig(this.iframe, appearance, this.uniqueIdentifier);
   }
 }

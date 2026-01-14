@@ -23,6 +23,7 @@ export type PrivacyCenterConfig = BaseConfig & {
   enabledFeatures?: PrivacyManagerFeature[];
   dataSubjects?: DataSubject[];
   requestReference?: string;
+  demo?: boolean;
   fileRequisites?: {
     allowedExtensions?: string[];
     maxFileSize?: number;
