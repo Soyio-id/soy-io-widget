@@ -28,10 +28,11 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   protected skeleton: ISkeletonView | null = null;
 
   protected readonly options: T;
-  protected readonly appearance: SoyioAppearance | null;
+  protected appearance: SoyioAppearance | null;
   protected readonly tooltipManager: TooltipManager;
   readonly defaultIframeCSSConfig: IframeCSSConfig = DEFAULT_IFRAME_CSS_CONFIG;
   protected Skeleton: SkeletonConstructor | null = null;
+  private isIframeReady = false;
 
   private readonly defaultUniqueId: string;
   abstract readonly defaultIframePrefix: string;
@@ -71,6 +72,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
 
   protected async handleIframeReady(): Promise<void> {
     if (!this.iframe) return;
+    if (this.isIframeReady) return;
+    this.isIframeReady = true;
 
     if (this.options.onReady) this.options.onReady();
 
@@ -111,6 +114,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
   async mount(selector: string): Promise<this> {
     if (!isBrowser) return this;
 
+    this.isIframeReady = false;
     await this.setupListeners();
 
     cleanupExistingIframe(this.iframeIdentifier);
@@ -138,6 +142,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     if (!isBrowser) return;
 
     removeInstanceListeners(this.uniqueIdentifier);
+    this.isIframeReady = false;
 
     if (this.skeleton) {
       this.skeleton.hide();
@@ -160,7 +165,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
    * This sends the new appearance config to the already-mounted iframe.
    */
   async updateAppearance(appearance: SoyioAppearance): Promise<void> {
-    if (!this.iframe) return;
+    this.appearance = appearance;
+    if (!this.iframe || !this.isIframeReady) return;
     await sendAppearanceConfig(this.iframe, appearance, this.uniqueIdentifier);
   }
 }
