@@ -174,9 +174,7 @@ const App: React.FC = () => {
               widgetRef.current.updateAppearance(parsed.appearance);
             }
           }
-          // Also sync the background full config state (won't trigger remount)
-          setPrivacyJson(saved.privacyConfig);
-          setConsentJson(saved.consentConfig);
+          // DO NOT update full config state here - it will trigger remount
         } catch {
           // Ignore parse errors
         }
