@@ -1,0 +1,2444 @@
+{
+  "$ref": "#/definitions/SoyioWidgetConfig",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CSSProperties": {
+      "additionalProperties": false,
+      "properties": {
+        "WebkitAppearance": {
+          "type": "string"
+        },
+        "accentColor": {
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline",
+            "stretch"
+          ],
+          "type": "string"
+        },
+        "appearance": {
+          "type": "string"
+        },
+        "backgroundColor": {
+          "type": "string"
+        },
+        "border": {
+          "type": "string"
+        },
+        "borderBottom": {
+          "type": "string"
+        },
+        "borderBottomColor": {
+          "type": "string"
+        },
+        "borderBottomLeftRadius": {
+          "type": "string"
+        },
+        "borderBottomRightRadius": {
+          "type": "string"
+        },
+        "borderBottomStyle": {
+          "type": "string"
+        },
+        "borderBottomWidth": {
+          "type": "string"
+        },
+        "borderColor": {
+          "type": "string"
+        },
+        "borderLeft": {
+          "type": "string"
+        },
+        "borderLeftColor": {
+          "type": "string"
+        },
+        "borderLeftStyle": {
+          "type": "string"
+        },
+        "borderLeftWidth": {
+          "type": "string"
+        },
+        "borderRadius": {
+          "type": "string"
+        },
+        "borderRight": {
+          "type": "string"
+        },
+        "borderRightColor": {
+          "type": "string"
+        },
+        "borderRightStyle": {
+          "type": "string"
+        },
+        "borderRightWidth": {
+          "type": "string"
+        },
+        "borderStyle": {
+          "type": "string"
+        },
+        "borderTop": {
+          "type": "string"
+        },
+        "borderTopColor": {
+          "type": "string"
+        },
+        "borderTopLeftRadius": {
+          "type": "string"
+        },
+        "borderTopRightRadius": {
+          "type": "string"
+        },
+        "borderTopStyle": {
+          "type": "string"
+        },
+        "borderTopWidth": {
+          "type": "string"
+        },
+        "borderWidth": {
+          "type": "string"
+        },
+        "bottom": {
+          "type": "string"
+        },
+        "boxShadow": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "block",
+            "inline",
+            "inline-block",
+            "flex",
+            "inline-flex",
+            "grid",
+            "inline-grid",
+            "none"
+          ],
+          "type": "string"
+        },
+        "fill": {
+          "type": "string"
+        },
+        "fillOpacity": {
+          "type": "number"
+        },
+        "flex": {
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column",
+            "column-reverse"
+          ],
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap",
+            "wrap-reverse"
+          ],
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "fontSize": {
+          "type": "string"
+        },
+        "fontVariant": {
+          "type": "string"
+        },
+        "fontWeight": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "gap": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "flex-end",
+            "center",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ],
+          "type": "string"
+        },
+        "left": {
+          "type": "string"
+        },
+        "letterSpacing": {
+          "type": "string"
+        },
+        "lineHeight": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "margin": {
+          "type": "string"
+        },
+        "marginBottom": {
+          "type": "string"
+        },
+        "marginLeft": {
+          "type": "string"
+        },
+        "marginRight": {
+          "type": "string"
+        },
+        "marginTop": {
+          "type": "string"
+        },
+        "mozOsxFontSmoothing": {
+          "enum": [
+            "auto",
+            "grayscale",
+            "unset"
+          ],
+          "type": "string"
+        },
+        "opacity": {
+          "type": "number"
+        },
+        "outline": {
+          "type": "string"
+        },
+        "outlineOffset": {
+          "type": "string"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "overflowX": {
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "overflowY": {
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "padding": {
+          "type": "string"
+        },
+        "paddingBottom": {
+          "type": "string"
+        },
+        "paddingLeft": {
+          "type": "string"
+        },
+        "paddingRight": {
+          "type": "string"
+        },
+        "paddingTop": {
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "relative",
+            "absolute",
+            "fixed",
+            "sticky"
+          ],
+          "type": "string"
+        },
+        "right": {
+          "type": "string"
+        },
+        "textAlign": {
+          "enum": [
+            "left",
+            "right",
+            "center",
+            "justify"
+          ],
+          "type": "string"
+        },
+        "textDecoration": {
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "capitalize",
+            "uppercase",
+            "lowercase"
+          ],
+          "type": "string"
+        },
+        "top": {
+          "type": "string"
+        },
+        "transform": {
+          "type": "string"
+        },
+        "transformOrigin": {
+          "type": "string"
+        },
+        "transition": {
+          "type": "string"
+        },
+        "transitionDelay": {
+          "type": "string"
+        },
+        "transitionDuration": {
+          "type": "string"
+        },
+        "transitionProperty": {
+          "type": "string"
+        },
+        "transitionTimingFunction": {
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "type": "string"
+        },
+        "webkitFontSmoothing": {
+          "enum": [
+            "auto",
+            "antialiased",
+            "subpixel-antialiased"
+          ],
+          "type": "string"
+        },
+        "webkitTextFillColor": {
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "nowrap",
+            "pre",
+            "pre-wrap",
+            "pre-line"
+          ],
+          "type": "string"
+        },
+        "width": {
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "break-all",
+            "keep-all",
+            "break-word"
+          ],
+          "type": "string"
+        },
+        "zIndex": {
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ConsentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "actionToken": {
+          "type": "string"
+        },
+        "appearance": {
+          "$ref": "#/definitions/SoyioAppearance"
+        },
+        "consentTemplateId": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "developmentUrl": {
+          "type": "string"
+        },
+        "entityId": {
+          "type": "string"
+        },
+        "isSandbox": {
+          "type": "boolean"
+        },
+        "mandatoryReconsentBehavior": {
+          "enum": [
+            "notice",
+            "askAgain"
+          ],
+          "type": "string"
+        },
+        "onEvent": {
+          "$comment": "(event: Record<string, unknown>) => void",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "event": {
+                  "additionalProperties": {},
+                  "type": "object"
+                }
+              },
+              "required": [
+                "event"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "onReady": {
+          "$comment": "() => void"
+        },
+        "optionalReconsentBehavior": {
+          "enum": [
+            "notice",
+            "askAgain",
+            "hide"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "consentTemplateId",
+        "onEvent"
+      ],
+      "type": "object"
+    },
+    "DataSubject": {
+      "enum": [
+        "anonymous_user",
+        "citizen_voter",
+        "commuter",
+        "consultant",
+        "customer",
+        "employee",
+        "job_applicant",
+        "next_of_kin",
+        "passenger",
+        "patient",
+        "prospect",
+        "shareholder",
+        "supplier_vendor",
+        "trainee",
+        "visitor"
+      ],
+      "type": "string"
+    },
+    "IconWeight": {
+      "enum": [
+        "thin",
+        "light",
+        "regular",
+        "bold",
+        "fill",
+        "duotone"
+      ],
+      "type": "string"
+    },
+    "PrivacyCenterConfig": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "appearance": {
+              "$ref": "#/definitions/SoyioAppearance"
+            },
+            "companyId": {
+              "type": "string"
+            },
+            "dataSubjects": {
+              "items": {
+                "$ref": "#/definitions/DataSubject"
+              },
+              "type": "array"
+            },
+            "demo": {
+              "type": "boolean"
+            },
+            "developmentUrl": {
+              "type": "string"
+            },
+            "enabledFeatures": {
+              "items": {
+                "$ref": "#/definitions/PrivacyManagerFeature"
+              },
+              "type": "array"
+            },
+            "fileRequisites": {
+              "additionalProperties": false,
+              "properties": {
+                "allowedExtensions": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "maxFileSize": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "isSandbox": {
+              "type": "boolean"
+            },
+            "onEvent": {
+              "$comment": "(event: Record<string, unknown>) => void",
+              "properties": {
+                "namedArgs": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "event": {
+                      "additionalProperties": {},
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "event"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "onReady": {
+              "$comment": "() => void"
+            },
+            "requestReference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "companyId",
+            "onEvent"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "appearance": {
+              "$ref": "#/definitions/SoyioAppearance"
+            },
+            "dataSubjects": {
+              "items": {
+                "$ref": "#/definitions/DataSubject"
+              },
+              "type": "array"
+            },
+            "demo": {
+              "type": "boolean"
+            },
+            "developmentUrl": {
+              "type": "string"
+            },
+            "enabledFeatures": {
+              "items": {
+                "$ref": "#/definitions/PrivacyManagerFeature"
+              },
+              "type": "array"
+            },
+            "fileRequisites": {
+              "additionalProperties": false,
+              "properties": {
+                "allowedExtensions": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "maxFileSize": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "isSandbox": {
+              "type": "boolean"
+            },
+            "onEvent": {
+              "$comment": "(event: Record<string, unknown>) => void",
+              "properties": {
+                "namedArgs": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "event": {
+                      "additionalProperties": {},
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "event"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "onReady": {
+              "$comment": "() => void"
+            },
+            "requestReference": {
+              "type": "string"
+            },
+            "sessionToken": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "onEvent",
+            "sessionToken"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PrivacyManagerFeature": {
+      "enum": [
+        "DataSubjectRequest",
+        "ConsentManagement",
+        "RequestTracking"
+      ],
+      "type": "string"
+    },
+    "SoyioAppearance": {
+      "additionalProperties": false,
+      "properties": {
+        "config": {
+          "$ref": "#/definitions/SoyioAppearanceConfig"
+        },
+        "rules": {
+          "$ref": "#/definitions/SoyioRule"
+        },
+        "theme": {
+          "$ref": "#/definitions/SoyioTheme"
+        },
+        "variables": {
+          "$ref": "#/definitions/SoyioAppearanceVariables"
+        }
+      },
+      "type": "object"
+    },
+    "SoyioAppearanceConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "helperTextPosition": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "type": "string"
+        },
+        "hintIcon": {
+          "default": "Question",
+          "description": "Icon name to use for hint/help tooltips on input labels. Available icons: 'Question' (default), 'Info', 'QuestionMark', etc.",
+          "type": "string"
+        },
+        "icon": {
+          "$ref": "#/definitions/SoyioIconConfig",
+          "description": "Global icon appearance configuration. Controls default weight and size for all icons."
+        },
+        "iconRules": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SoyioIconConfig"
+          },
+          "description": "Per-component icon overrides. Allows customizing icon styles for specific components.",
+          "type": "object"
+        },
+        "mainPageColumns": {
+          "default": 2,
+          "description": "Number of columns in the main page feature cards grid.",
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "SoyioAppearanceVariables": {
+      "additionalProperties": false,
+      "properties": {
+        "borderRadius": {
+          "type": "string"
+        },
+        "borderStyle": {
+          "type": "string"
+        },
+        "borderWidth": {
+          "type": "string"
+        },
+        "colorBackground": {
+          "type": "string"
+        },
+        "colorBorder": {
+          "type": "string"
+        },
+        "colorBorderMuted": {
+          "type": "string"
+        },
+        "colorDanger": {
+          "type": "string"
+        },
+        "colorDangerBg": {
+          "type": "string"
+        },
+        "colorInfo": {
+          "type": "string"
+        },
+        "colorInfoBg": {
+          "type": "string"
+        },
+        "colorInputErrorFocus": {
+          "type": "string"
+        },
+        "colorInputFocus": {
+          "type": "string"
+        },
+        "colorLink": {
+          "type": "string"
+        },
+        "colorOverlay": {
+          "type": "string"
+        },
+        "colorPrimary": {
+          "type": "string"
+        },
+        "colorPrimarySurface": {
+          "type": "string"
+        },
+        "colorSecondary": {
+          "type": "string"
+        },
+        "colorSelectArrow": {
+          "type": "string"
+        },
+        "colorSuccess": {
+          "type": "string"
+        },
+        "colorSuccessBg": {
+          "type": "string"
+        },
+        "colorSurface": {
+          "type": "string"
+        },
+        "colorSurfaceMuted": {
+          "type": "string"
+        },
+        "colorSurfaceStrong": {
+          "type": "string"
+        },
+        "colorSwitchBorder": {
+          "type": "string"
+        },
+        "colorText": {
+          "type": "string"
+        },
+        "colorTextInverted": {
+          "type": "string"
+        },
+        "colorTextSecondary": {
+          "type": "string"
+        },
+        "colorTextSubtle": {
+          "type": "string"
+        },
+        "colorTextTitle": {
+          "type": "string"
+        },
+        "colorWarning": {
+          "type": "string"
+        },
+        "colorWarningBg": {
+          "type": "string"
+        },
+        "dataUseIconColor": {
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "fontFamilyBody": {
+          "type": "string"
+        },
+        "fontFamilyTitle": {
+          "type": "string"
+        },
+        "fontSizeBase": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SoyioIconConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dataUseVariant": {
+          "description": "Override variant for data use icons in consent management. If not set, uses the company's configured iconVariant.",
+          "enum": [
+            "duotone",
+            "outline",
+            "solid"
+          ],
+          "type": "string"
+        },
+        "size": {
+          "default": 24,
+          "description": "Default icon size in pixels.",
+          "type": "number"
+        },
+        "weight": {
+          "$ref": "#/definitions/IconWeight",
+          "default": "regular",
+          "description": "Icon weight/style variant.\n- thin: Thinnest stroke\n- light: Light stroke\n- regular: Default stroke (default)\n- bold: Bold stroke\n- fill: Filled/solid icons\n- duotone: Two-tone icons with opacity"
+        }
+      },
+      "type": "object"
+    },
+    "SoyioRule": {
+      "additionalProperties": {
+        "$ref": "#/definitions/CSSProperties"
+      },
+      "properties": {
+        ".Alert": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert--error": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert--info": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert--success": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert--warning": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Alert:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertContent:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".AlertIcon:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Button:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Card:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CardTitle:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Checkbox:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxInput:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxLabel:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip--amber": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip--green": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip--info": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip--red": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Chip:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Combobox:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Description:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Dialog:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogContent:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogDescription:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogOverlay:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".DialogTitle:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".ErrorMessage:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".HintIcon:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input--error": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Input:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Label:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Link:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Loader:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".MainContainer:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".NinInput:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Radio:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioButton:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCard:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardButton:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardIndicator:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioCardTitle:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioIndicator:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".RadioLabel:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Select:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator--active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator--completed": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator--pending": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicator:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorContainer:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorDot:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorIcon:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine--bottom": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine--top": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorLine:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepIndicatorNumber:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".StepTitle:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Switch:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchIcon:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchRoot:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".SwitchThumb:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TextArea:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".Title:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TooltipContent:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInput:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputCell:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".TrackingCodeInputSeparator:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        }
+      },
+      "type": "object"
+    },
+    "SoyioTheme": {
+      "enum": [
+        "soyio",
+        "night",
+        "flat"
+      ],
+      "type": "string"
+    },
+    "SoyioWidgetConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PrivacyCenterConfig"
+        },
+        {
+          "$ref": "#/definitions/ConsentConfig"
+        }
+      ],
+      "description": "Combined configuration type for generating the JSON schema. This includes all possible configuration options for both PrivacyCenterBox and ConsentBox."
+    }
+  }
+}

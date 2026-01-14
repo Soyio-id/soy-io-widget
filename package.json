@@ -1,6 +1,6 @@
 {
   "name": "@soyio/soyio-widget",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
@@ -13,10 +13,13 @@
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.umd.cjs"
-    }
+    },
+    "./schemas/appearance": "./src/schemas/appearance.schema.json",
+    "./schemas/config": "./src/schemas/config.schema.json"
   },
   "files": [
     "dist",
+    "src/schemas",
     "README.md"
   ],
   "scripts": {
@@ -27,8 +30,10 @@
     "lint": "eslint . --ext .ts",
     "test": "vitest",
     "version:get": "node -p \"require('./package.json').version\"",
-    "generate-schema": "ts-json-schema-generator --path smoke-test/schema-types.ts --type SmokeTestConfig --no-type-check --out smoke-test/appearance-schema.json",
-    "smoke": "([ -f smoke-test/appearance-schema.json ] || yarn generate-schema) && vite serve smoke-test --config vite.smoke.config.ts"
+    "generate-schema:appearance": "ts-json-schema-generator --path src/embeds/appearance/types.ts --type SoyioAppearance --no-type-check --out src/schemas/appearance.schema.json",
+    "generate-schema:config": "ts-json-schema-generator --path src/schema-types.ts --type SoyioWidgetConfig --no-type-check --out src/schemas/config.schema.json",
+    "generate-schema": "yarn generate-schema:appearance && yarn generate-schema:config",
+    "smoke": "yarn generate-schema && vite serve smoke-test --config vite.smoke.config.ts"
   },
   "devDependencies": {
     "@monaco-editor/react": "^4.7.0",

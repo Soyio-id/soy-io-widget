@@ -1,0 +1,62 @@
+name: Schema Validation
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/schema-validation.yaml"
+      - "src/embeds/appearance/types.ts"
+      - "src/embeds/consent/types.ts"
+      - "src/embeds/privacy-center/types.ts"
+      - "src/schema-types.ts"
+      - "src/schemas/*.json"
+      - "package.json"
+      - "yarn.lock"
+
+jobs:
+  validate-schemas:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate schemas
+        run: yarn generate-schema
+
+      - name: Check for schema changes
+        run: |
+          # Check if schemas were modified
+          if ! git diff --quiet src/schemas/; then
+            echo "❌ ERROR: Generated schemas don't match committed files!"
+            echo ""
+            echo "The following schemas have uncommitted changes:"
+            git diff --name-only src/schemas/
+            echo ""
+            echo "Please run 'yarn generate-schema' and commit the changes."
+            echo ""
+            echo "Diff:"
+            git diff src/schemas/
+            exit 1
+          else
+            echo "✅ All schemas are up to date!"
+          fi
+
+      - name: Verify schema files exist
+        run: |
+          if [ ! -f "src/schemas/appearance.schema.json" ]; then
+            echo "❌ ERROR: appearance.schema.json is missing!"
+            exit 1
+          fi
+          if [ ! -f "src/schemas/config.schema.json" ]; then
+            echo "❌ ERROR: config.schema.json is missing!"
+            exit 1
+          fi
+          echo "✅ All required schema files exist"

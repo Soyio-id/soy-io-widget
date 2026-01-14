@@ -1,5 +1,5 @@
 {
-  "$ref": "#/definitions/SmokeTestConfig",
+  "$ref": "#/definitions/SoyioAppearance",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "CSSProperties": {
@@ -379,26 +379,6 @@
       },
       "type": "object"
     },
-    "DataSubject": {
-      "enum": [
-        "anonymous_user",
-        "citizen_voter",
-        "commuter",
-        "consultant",
-        "customer",
-        "employee",
-        "job_applicant",
-        "next_of_kin",
-        "passenger",
-        "patient",
-        "prospect",
-        "shareholder",
-        "supplier_vendor",
-        "trainee",
-        "visitor"
-      ],
-      "type": "string"
-    },
     "IconWeight": {
       "enum": [
         "thin",
@@ -409,114 +389,6 @@
         "duotone"
       ],
       "type": "string"
-    },
-    "PrivacyManagerFeature": {
-      "enum": [
-        "DataSubjectRequest",
-        "ConsentManagement",
-        "RequestTracking"
-      ],
-      "type": "string"
-    },
-    "SmokeTestConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "actionToken": {
-          "type": "string"
-        },
-        "appearance": {
-          "$ref": "#/definitions/SoyioAppearance"
-        },
-        "companyId": {
-          "type": "string"
-        },
-        "consentTemplateId": {
-          "type": "string"
-        },
-        "context": {
-          "type": "string"
-        },
-        "dataSubjects": {
-          "items": {
-            "$ref": "#/definitions/DataSubject"
-          },
-          "type": "array"
-        },
-        "developmentUrl": {
-          "type": "string"
-        },
-        "enabledFeatures": {
-          "items": {
-            "$ref": "#/definitions/PrivacyManagerFeature"
-          },
-          "type": "array"
-        },
-        "entityId": {
-          "type": "string"
-        },
-        "fileRequisites": {
-          "additionalProperties": false,
-          "properties": {
-            "allowedExtensions": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "maxFileSize": {
-              "type": "number"
-            }
-          },
-          "type": "object"
-        },
-        "isSandbox": {
-          "type": "boolean"
-        },
-        "mandatoryReconsentBehavior": {
-          "enum": [
-            "notice",
-            "askAgain"
-          ],
-          "type": "string"
-        },
-        "onEvent": {
-          "$comment": "(event: Record<string, unknown>) => void",
-          "properties": {
-            "namedArgs": {
-              "additionalProperties": false,
-              "properties": {
-                "event": {
-                  "additionalProperties": {},
-                  "type": "object"
-                }
-              },
-              "required": [
-                "event"
-              ],
-              "type": "object"
-            }
-          },
-          "type": "object"
-        },
-        "onReady": {
-          "$comment": "() => void"
-        },
-        "optionalReconsentBehavior": {
-          "enum": [
-            "notice",
-            "askAgain",
-            "hide"
-          ],
-          "type": "string"
-        },
-        "requestReference": {
-          "type": "string"
-        },
-        "sessionToken": {
-          "type": "string"
-        }
-      },
-      "type": "object"
     },
     "SoyioAppearance": {
       "additionalProperties": false,
@@ -672,6 +544,9 @@
         "colorWarningBg": {
           "type": "string"
         },
+        "dataUseIconColor": {
+          "type": "string"
+        },
         "fontFamily": {
           "type": "string"
         },
@@ -690,6 +565,15 @@
     "SoyioIconConfig": {
       "additionalProperties": false,
       "properties": {
+        "dataUseVariant": {
+          "description": "Override variant for data use icons in consent management. If not set, uses the company's configured iconVariant.",
+          "enum": [
+            "duotone",
+            "outline",
+            "solid"
+          ],
+          "type": "string"
+        },
         "size": {
           "default": 24,
           "description": "Default icon size in pixels.",

@@ -24,6 +24,7 @@
 - [Auth Request](#auth-request)
 - [Appearance](#appearance)
 - [TypeScript](#typescript)
+- [JSON Schema Validation](#json-schema-validation)
 - [Server Side Rendering (SSR)](#server-side-rendering-ssr)
 
 
@@ -902,6 +903,79 @@ To use the `SoyioTypes` in your project, import it directly from the `@soyio/soy
 
 ```javascript
 import type { SoyioTypes } from "@soyio/soyio-widget";
+```
+
+## JSON Schema Validation
+
+The package includes JSON Schemas for validating configuration objects. This is useful for:
+- **IDE Autocomplete**: Get IntelliSense in your editor when writing configurations
+- **Runtime Validation**: Validate user-provided configurations before passing to the widget
+- **Documentation**: Use schemas to generate API documentation
+
+### Available Schemas
+
+#### Appearance Schema
+Validates appearance customization objects (theme, variables, rules, config):
+
+```javascript
+// Import the schema
+import appearanceSchema from "@soyio/soyio-widget/schemas/appearance";
+
+// Use with a validator like Ajv
+import Ajv from "ajv";
+const ajv = new Ajv();
+const validate = ajv.compile(appearanceSchema);
+
+const appearance = {
+  theme: "night",
+  variables: {
+    colorPrimary: "#007bff",
+    borderRadius: "8px"
+  }
+};
+
+if (validate(appearance)) {
+  console.log("✅ Valid appearance config");
+} else {
+  console.error("❌ Invalid:", validate.errors);
+}
+```
+
+#### Config Schema
+Validates complete widget configuration including Privacy Center and Consent Box options:
+
+```javascript
+import configSchema from "@soyio/soyio-widget/schemas/config";
+
+const validate = ajv.compile(configSchema);
+const config = {
+  companyId: "com_example",
+  appearance: { /* ... */ },
+  onEvent: (event) => console.log(event)
+};
+
+if (validate(config)) {
+  const privacyCenter = new PrivacyCenterBox(config);
+  privacyCenter.mount("#container");
+}
+```
+
+### Using Schemas with Monaco Editor
+
+Perfect for building configuration editors:
+
+```javascript
+import * as monaco from "monaco-editor";
+import configSchema from "@soyio/soyio-widget/schemas/config";
+
+monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+  validate: true,
+  schemas: [{
+    uri: "https://soyio.id/widget-config.json",
+    fileMatch: ["*"],
+    schema: configSchema
+  }]
+});
 ```
 
 ## Server Side Rendering (SSR)
