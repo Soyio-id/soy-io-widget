@@ -1,5 +1,5 @@
 {
-  "$ref": "#/definitions/SmokeTestConfig",
+  "$ref": "#/definitions/SoyioWidgetConfig",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "CSSProperties": {
@@ -379,46 +379,7 @@
       },
       "type": "object"
     },
-    "DataSubject": {
-      "enum": [
-        "anonymous_user",
-        "citizen_voter",
-        "commuter",
-        "consultant",
-        "customer",
-        "employee",
-        "job_applicant",
-        "next_of_kin",
-        "passenger",
-        "patient",
-        "prospect",
-        "shareholder",
-        "supplier_vendor",
-        "trainee",
-        "visitor"
-      ],
-      "type": "string"
-    },
-    "IconWeight": {
-      "enum": [
-        "thin",
-        "light",
-        "regular",
-        "bold",
-        "fill",
-        "duotone"
-      ],
-      "type": "string"
-    },
-    "PrivacyManagerFeature": {
-      "enum": [
-        "DataSubjectRequest",
-        "ConsentManagement",
-        "RequestTracking"
-      ],
-      "type": "string"
-    },
-    "SmokeTestConfig": {
+    "ConsentConfig": {
       "additionalProperties": false,
       "properties": {
         "actionToken": {
@@ -427,47 +388,17 @@
         "appearance": {
           "$ref": "#/definitions/SoyioAppearance"
         },
-        "companyId": {
-          "type": "string"
-        },
         "consentTemplateId": {
           "type": "string"
         },
         "context": {
           "type": "string"
         },
-        "dataSubjects": {
-          "items": {
-            "$ref": "#/definitions/DataSubject"
-          },
-          "type": "array"
-        },
         "developmentUrl": {
           "type": "string"
         },
-        "enabledFeatures": {
-          "items": {
-            "$ref": "#/definitions/PrivacyManagerFeature"
-          },
-          "type": "array"
-        },
         "entityId": {
           "type": "string"
-        },
-        "fileRequisites": {
-          "additionalProperties": false,
-          "properties": {
-            "allowedExtensions": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "maxFileSize": {
-              "type": "number"
-            }
-          },
-          "type": "object"
         },
         "isSandbox": {
           "type": "boolean"
@@ -508,15 +439,229 @@
             "hide"
           ],
           "type": "string"
-        },
-        "requestReference": {
-          "type": "string"
-        },
-        "sessionToken": {
-          "type": "string"
         }
       },
+      "required": [
+        "consentTemplateId",
+        "onEvent"
+      ],
       "type": "object"
+    },
+    "DataSubject": {
+      "enum": [
+        "anonymous_user",
+        "citizen_voter",
+        "commuter",
+        "consultant",
+        "customer",
+        "employee",
+        "job_applicant",
+        "next_of_kin",
+        "passenger",
+        "patient",
+        "prospect",
+        "shareholder",
+        "supplier_vendor",
+        "trainee",
+        "visitor"
+      ],
+      "type": "string"
+    },
+    "IconWeight": {
+      "enum": [
+        "thin",
+        "light",
+        "regular",
+        "bold",
+        "fill",
+        "duotone"
+      ],
+      "type": "string"
+    },
+    "PrivacyCenterConfig": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "appearance": {
+              "$ref": "#/definitions/SoyioAppearance"
+            },
+            "companyId": {
+              "type": "string"
+            },
+            "dataSubjects": {
+              "items": {
+                "$ref": "#/definitions/DataSubject"
+              },
+              "type": "array"
+            },
+            "demo": {
+              "type": "boolean"
+            },
+            "developmentUrl": {
+              "type": "string"
+            },
+            "enabledFeatures": {
+              "items": {
+                "$ref": "#/definitions/PrivacyManagerFeature"
+              },
+              "type": "array"
+            },
+            "enabledRights": {
+              "items": {
+                "$ref": "#/definitions/PrivacyCenterRight"
+              },
+              "type": "array"
+            },
+            "fileRequisites": {
+              "additionalProperties": false,
+              "properties": {
+                "allowedExtensions": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "maxFileSize": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "isSandbox": {
+              "type": "boolean"
+            },
+            "onEvent": {
+              "$comment": "(event: Record<string, unknown>) => void",
+              "properties": {
+                "namedArgs": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "event": {
+                      "additionalProperties": {},
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "event"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "onReady": {
+              "$comment": "() => void"
+            },
+            "requestReference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "companyId",
+            "onEvent"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "appearance": {
+              "$ref": "#/definitions/SoyioAppearance"
+            },
+            "dataSubjects": {
+              "items": {
+                "$ref": "#/definitions/DataSubject"
+              },
+              "type": "array"
+            },
+            "demo": {
+              "type": "boolean"
+            },
+            "developmentUrl": {
+              "type": "string"
+            },
+            "enabledFeatures": {
+              "items": {
+                "$ref": "#/definitions/PrivacyManagerFeature"
+              },
+              "type": "array"
+            },
+            "enabledRights": {
+              "items": {
+                "$ref": "#/definitions/PrivacyCenterRight"
+              },
+              "type": "array"
+            },
+            "fileRequisites": {
+              "additionalProperties": false,
+              "properties": {
+                "allowedExtensions": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "maxFileSize": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "isSandbox": {
+              "type": "boolean"
+            },
+            "onEvent": {
+              "$comment": "(event: Record<string, unknown>) => void",
+              "properties": {
+                "namedArgs": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "event": {
+                      "additionalProperties": {},
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "event"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "onReady": {
+              "$comment": "() => void"
+            },
+            "requestReference": {
+              "type": "string"
+            },
+            "sessionToken": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "onEvent",
+            "sessionToken"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PrivacyCenterRight": {
+      "enum": [
+        "arsop",
+        "redec"
+      ],
+      "type": "string"
+    },
+    "PrivacyManagerFeature": {
+      "enum": [
+        "DataSubjectRequest",
+        "ConsentManagement",
+        "RequestTracking"
+      ],
+      "type": "string"
     },
     "SoyioAppearance": {
       "additionalProperties": false,
@@ -539,6 +684,16 @@
     "SoyioAppearanceConfig": {
       "additionalProperties": false,
       "properties": {
+        "brandTheme": {
+          "default": "default",
+          "description": "Theme variant for branded elements like the footer.\n- 'default': Standard Soyio brand colors (purple/indigo)\n- 'dark': Dark mode with gray tones\n- 'light': Mono color light version",
+          "enum": [
+            "default",
+            "dark",
+            "light"
+          ],
+          "type": "string"
+        },
         "helperTextPosition": {
           "enum": [
             "top",
@@ -672,6 +827,9 @@
         "colorWarningBg": {
           "type": "string"
         },
+        "dataUseIconColor": {
+          "type": "string"
+        },
         "fontFamily": {
           "type": "string"
         },
@@ -690,6 +848,15 @@
     "SoyioIconConfig": {
       "additionalProperties": false,
       "properties": {
+        "dataUseVariant": {
+          "description": "Override variant for data use icons in consent management. If not set, uses the company's configured iconVariant.",
+          "enum": [
+            "duotone",
+            "outline",
+            "solid"
+          ],
+          "type": "string"
+        },
         "size": {
           "default": 24,
           "description": "Default icon size in pixels.",
@@ -2290,6 +2457,17 @@
         "flat"
       ],
       "type": "string"
+    },
+    "SoyioWidgetConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PrivacyCenterConfig"
+        },
+        {
+          "$ref": "#/definitions/ConsentConfig"
+        }
+      ],
+      "description": "Combined configuration type for generating the JSON schema. This includes all possible configuration options for both PrivacyCenterBox and ConsentBox."
     }
   }
 }

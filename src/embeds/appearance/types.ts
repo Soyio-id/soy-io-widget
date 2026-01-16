@@ -218,6 +218,7 @@ export interface SoyioAppearanceVariables {
   colorDanger?: string;
   colorDangerBg?: string;
   colorOverlay?: string;
+  dataUseIconColor?: string;
 }
 
 export type IconWeight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
@@ -240,6 +241,12 @@ export interface SoyioIconConfig {
    * @default 24
    */
   size?: number;
+
+  /**
+   * Override variant for data use icons in consent management.
+   * If not set, uses the company's configured iconVariant.
+   */
+  dataUseVariant?: 'duotone' | 'outline' | 'solid';
 }
 
 export interface SoyioAppearanceConfig {
@@ -274,6 +281,14 @@ export interface SoyioAppearanceConfig {
    * @default 2
    */
   mainPageColumns?: 1 | 2 | 3 | 4;
+  /**
+   * Theme variant for branded elements like the footer.
+   * - 'default': Standard Soyio brand colors (purple/indigo)
+   * - 'dark': Dark mode with gray tones
+   * - 'light': Mono color light version
+   * @default 'default'
+   */
+  brandTheme?: 'default' | 'dark' | 'light';
 }
 
 export interface SoyioAppearance {

@@ -19,7 +19,7 @@ body, html, #root {
   border-right: 1px solid #ddd;
   background: white;
   min-width: 400px;
-  max-width: 50%;
+  max-width: 40%;
 }
 
 .preview-pane {
@@ -378,4 +378,59 @@ button {
 .btn-export:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Editor mode toggle */
+.editor-mode-toggle {
+  display: flex;
+  padding: 12px 20px;
+  gap: 8px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.editor-mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editor-mode-btn:hover {
+  background: #f8f8f8;
+  border-color: #ccc;
+  color: #333;
+}
+
+.editor-mode-btn.active {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: white;
+}
+
+.live-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #22c55e;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.editor-mode-btn.active .live-badge {
+  background: #4ade80;
+  color: #166534;
 }

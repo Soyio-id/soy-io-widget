@@ -1,4 +1,4 @@
-import type { SoyioAppearance } from '../appearance/types';
+import type { SoyioAppearance, SoyioTheme } from '../appearance/types';
 
 export const IFRAME_READY = 'IFRAME_READY';
 export const CONSENT_STATE_CHANGE = 'CONSENT_STATE_CHANGE';
@@ -55,4 +55,4 @@ export type BaseConfig = {
   developmentUrl?: string,
 }
 
-export type SkeletonConstructor = new (id: string) => ISkeletonView;
+export type SkeletonConstructor = new (id: string, theme?: SoyioTheme) => ISkeletonView;

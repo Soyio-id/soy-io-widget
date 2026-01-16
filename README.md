@@ -24,6 +24,7 @@
 - [Auth Request](#auth-request)
 - [Appearance](#appearance)
 - [TypeScript](#typescript)
+- [JSON Schema Validation](#json-schema-validation)
 - [Server Side Rendering (SSR)](#server-side-rendering-ssr)
 
 
@@ -523,6 +524,7 @@ interface Config {
   };
   iconRules?: Record<string, { weight?: IconWeight; size?: number }>;
   mainPageColumns?: 1 | 2 | 3 | 4;
+  brandTheme?: 'default' | 'dark' | 'light';
 }
 ```
 
@@ -534,6 +536,7 @@ interface Config {
 | `icon.size` | Global default icon size in pixels | `24` |
 | `iconRules` | Per-component icon style overrides | `{}` |
 | `mainPageColumns` | Number of columns in the main page feature cards grid (1-4) | `2` |
+| `brandTheme` | Theme variant for branded elements like the footer (`default`, `dark`, `light`) | `"default"` |
 
 #### Icons
 
@@ -828,6 +831,15 @@ The step indicator shows progress through multi-step forms.
 - `.Chip--red` - Red chip variant.
 - `.Chip--amber` - Amber chip variant.
 
+##### Consent Components
+
+The following rules are specific to the **Consent Box** widget and allow customization of consent-related UI elements:
+
+- `.CategoryTag` - Data use category identifier (e.g., "Compartir datos con terceros"). Appears above category descriptions in expanded consent views.
+- `.Badge` - Optional/required label badge appearing on consent items.
+
+> **Note:** These consent-specific rules are only available in the `ConsentBox` widget and will have no effect in other widgets like `PrivacyCenterBox`.
+
 ### Example Configuration
 
 ```javascript
@@ -907,6 +919,79 @@ To use the `SoyioTypes` in your project, import it directly from the `@soyio/soy
 
 ```javascript
 import type { SoyioTypes } from "@soyio/soyio-widget";
+```
+
+## JSON Schema Validation
+
+The package includes JSON Schemas for validating configuration objects. This is useful for:
+- **IDE Autocomplete**: Get IntelliSense in your editor when writing configurations
+- **Runtime Validation**: Validate user-provided configurations before passing to the widget
+- **Documentation**: Use schemas to generate API documentation
+
+### Available Schemas
+
+#### Appearance Schema
+Validates appearance customization objects (theme, variables, rules, config):
+
+```javascript
+// Import the schema
+import appearanceSchema from "@soyio/soyio-widget/schemas/appearance";
+
+// Use with a validator like Ajv
+import Ajv from "ajv";
+const ajv = new Ajv();
+const validate = ajv.compile(appearanceSchema);
+
+const appearance = {
+  theme: "night",
+  variables: {
+    colorPrimary: "#007bff",
+    borderRadius: "8px"
+  }
+};
+
+if (validate(appearance)) {
+  console.log("✅ Valid appearance config");
+} else {
+  console.error("❌ Invalid:", validate.errors);
+}
+```
+
+#### Config Schema
+Validates complete widget configuration including Privacy Center and Consent Box options:
+
+```javascript
+import configSchema from "@soyio/soyio-widget/schemas/config";
+
+const validate = ajv.compile(configSchema);
+const config = {
+  companyId: "com_example",
+  appearance: { /* ... */ },
+  onEvent: (event) => console.log(event)
+};
+
+if (validate(config)) {
+  const privacyCenter = new PrivacyCenterBox(config);
+  privacyCenter.mount("#container");
+}
+```
+
+### Using Schemas with Monaco Editor
+
+Perfect for building configuration editors:
+
+```javascript
+import * as monaco from "monaco-editor";
+import configSchema from "@soyio/soyio-widget/schemas/config";
+
+monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+  validate: true,
+  schemas: [{
+    uri: "https://soyio.id/widget-config.json",
+    fileMatch: ["*"],
+    schema: configSchema
+  }]
+});
 ```
 
 ## Server Side Rendering (SSR)

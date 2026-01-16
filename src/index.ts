@@ -12,3 +12,6 @@ export {
   SoyioTypes,
   TooltipManager as _TooltipManager,
 };
+
+export { default as appearanceSchema } from './schemas/appearance.schema.json';
+export { default as configSchema } from './schemas/config.schema.json';

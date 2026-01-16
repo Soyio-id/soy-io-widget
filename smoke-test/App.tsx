@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
-import { WidgetPreview } from './WidgetPreview';
-import appearanceSchema from './appearance-schema.json';
+import { WidgetPreview, WidgetPreviewHandle } from './WidgetPreview';
+import configSchema from '../src/schemas/config.schema.json';
 import { saveConfig, loadConfig, listConfigs, deleteConfig, exportConfigs, importConfigs, WidgetType } from './storage';
+import type { SoyioAppearance } from '../src/embeds/appearance/types';
 
 const COMPANY_ID = import.meta.env.VITE_COMPANY_ID || 'com_test';
 const PRIVACY_CENTER_URL = import.meta.env.VITE_PRIVACY_CENTER_URL || 'http://localhost:5173';
@@ -12,6 +13,7 @@ const CONSENT_TEMPLATE_ID = import.meta.env.VITE_CONSENT_TEMPLATE_ID || 'constpl
 const DEFAULT_PRIVACY_CENTER_CONFIG = {
   companyId: COMPANY_ID,
   isSandbox: true,
+  demo: true,
   developmentUrl: PRIVACY_CENTER_URL, // Default to local privacy-center
   appearance: {
     variables: {
@@ -45,26 +47,42 @@ const DEFAULT_CONSENT_BOX_CONFIG = {
 };
 
 type ViewportMode = 'desktop' | 'mobile';
+type EditorMode = 'config' | 'appearance';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<WidgetType>('privacy-center');
   const [viewport, setViewport] = useState<ViewportMode>('desktop');
+  const [editorMode, setEditorMode] = useState<EditorMode>('appearance');
 
   // State for both configurations
   const [privacyJson, setPrivacyJson] = useState(JSON.stringify(DEFAULT_PRIVACY_CENTER_CONFIG, null, 2));
   const [consentJson, setConsentJson] = useState(JSON.stringify(DEFAULT_CONSENT_BOX_CONFIG, null, 2));
 
+  // Separate appearance state for live editing
+  const [privacyAppearanceJson, setPrivacyAppearanceJson] = useState(
+    JSON.stringify(DEFAULT_PRIVACY_CENTER_CONFIG.appearance, null, 2)
+  );
+  const [consentAppearanceJson, setConsentAppearanceJson] = useState(
+    JSON.stringify(DEFAULT_CONSENT_BOX_CONFIG.appearance, null, 2)
+  );
+
   const [error, setError] = useState<string | null>(null);
+
+  // Ref to the widget for direct appearance updates
+  const widgetRef = useRef<WidgetPreviewHandle>(null);
 
   // Storage state
   const [savedConfigs, setSavedConfigs] = useState<string[]>(listConfigs());
   const [configName, setConfigName] = useState('');
   const [currentPreset, setCurrentPreset] = useState<string | null>(null);
 
-  // Determine current active config and setter
+  // Determine current active config and setter based on widget tab
   const currentJson = activeTab === 'privacy-center' ? privacyJson : consentJson;
   const setCurrentJson = activeTab === 'privacy-center' ? setPrivacyJson : setConsentJson;
+  const currentAppearanceJson = activeTab === 'privacy-center' ? privacyAppearanceJson : consentAppearanceJson;
+  const setCurrentAppearanceJson = activeTab === 'privacy-center' ? setPrivacyAppearanceJson : setConsentAppearanceJson;
 
+  // The config used for mounting the widget (only changes when in config mode)
   const config = useMemo(() => {
     try {
       const parsed = JSON.parse(currentJson);
@@ -80,11 +98,45 @@ const App: React.FC = () => {
     }
   }, [currentJson]);
 
-  const handleEditorChange = (value: string | undefined) => {
+  // Handle config editor changes (causes remount)
+  const handleConfigEditorChange = (value: string | undefined) => {
     if (value) {
       setCurrentJson(value);
+      // Sync appearance state when config changes
+      try {
+        const parsed = JSON.parse(value);
+        if (parsed.appearance) {
+          setCurrentAppearanceJson(JSON.stringify(parsed.appearance, null, 2));
+        }
+      } catch {
+        // Ignore parse errors during editing
+      }
     }
   };
+
+  // Handle appearance editor changes (live update, no remount)
+  const handleAppearanceEditorChange = useCallback((value: string | undefined) => {
+    if (!value) return;
+
+    setCurrentAppearanceJson(value);
+
+    try {
+      const appearance = JSON.parse(value) as SoyioAppearance;
+      setError(null);
+
+      // Call updateAppearance directly on the widget
+      if (widgetRef.current) {
+        widgetRef.current.updateAppearance(appearance);
+      }
+      // Note: We intentionally do NOT update currentJson here to avoid remounting
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError('Unknown error parsing JSON');
+      }
+    }
+  }, [setCurrentAppearanceJson]);
 
   // Storage handlers
   const handleSaveConfig = () => {
@@ -107,10 +159,44 @@ const App: React.FC = () => {
   const handleLoadConfig = (name: string) => {
     const saved = loadConfig(name);
     if (saved) {
-      setPrivacyJson(saved.privacyConfig);
-      setConsentJson(saved.consentConfig);
-      setActiveTab(saved.activeTab);
       setCurrentPreset(name);
+
+      // If in appearance mode, only update appearance (no widget reset)
+      if (editorMode === 'appearance') {
+        try {
+          const parsed = JSON.parse(
+            saved.activeTab === 'privacy-center' ? saved.privacyConfig : saved.consentConfig
+          );
+          if (parsed.appearance) {
+            setCurrentAppearanceJson(JSON.stringify(parsed.appearance, null, 2));
+            // Apply appearance live
+            if (widgetRef.current) {
+              widgetRef.current.updateAppearance(parsed.appearance);
+            }
+          }
+          // DO NOT update full config state here - it will trigger remount
+        } catch {
+          // Ignore parse errors
+        }
+      } else {
+        // In config mode, load everything (causes remount)
+        setPrivacyJson(saved.privacyConfig);
+        setConsentJson(saved.consentConfig);
+        setActiveTab(saved.activeTab);
+        // Sync appearance state
+        try {
+          const privacyParsed = JSON.parse(saved.privacyConfig);
+          if (privacyParsed.appearance) {
+            setPrivacyAppearanceJson(JSON.stringify(privacyParsed.appearance, null, 2));
+          }
+          const consentParsed = JSON.parse(saved.consentConfig);
+          if (consentParsed.appearance) {
+            setConsentAppearanceJson(JSON.stringify(consentParsed.appearance, null, 2));
+          }
+        } catch {
+          // Ignore parse errors
+        }
+      }
     }
   };
 
@@ -144,25 +230,33 @@ const App: React.FC = () => {
     e.target.value = '';
   };
 
+  // Create appearance-only schema by extracting SoyioAppearance definition
+  const appearanceOnlySchema = useMemo(() => ({
+    $schema: 'http://json-schema.org/draft-07/schema#',
+    $ref: '#/definitions/SoyioAppearance',
+    definitions: configSchema.definitions,
+  }), []);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const beforeMount = (monaco: any) => {
+  const beforeMount = useCallback((monaco: any) => {
+    const schema = editorMode === 'appearance' ? appearanceOnlySchema : configSchema;
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
       schemas: [
         {
-          uri: 'soyio-appearance-schema.json',
+          uri: editorMode === 'appearance' ? 'soyio-appearance-only.json' : 'soyio-config.json',
           fileMatch: ['*'],
-          schema: appearanceSchema,
+          schema,
         },
       ],
     });
-  };
+  }, [editorMode, appearanceOnlySchema]);
 
   return (
     <div className="container">
       <div className="editor-pane">
         <div className="header">
-          <h1>Soyio Widget customization smoke test</h1>
+          <h1>Soyio Widget appearance API test</h1>
           <p className="subtitle">Configure and preview widget appearance and behavior.</p>
 
         </div>
@@ -182,15 +276,31 @@ const App: React.FC = () => {
           </button>
         </div>
 
+        <div className="editor-mode-toggle">
+          <button
+            className={`editor-mode-btn ${editorMode === 'appearance' ? 'active' : ''}`}
+            onClick={() => setEditorMode('appearance')}
+          >
+            Appearance Only
+            <span className="live-badge">Live</span>
+          </button>
+          <button
+            className={`editor-mode-btn ${editorMode === 'config' ? 'active' : ''}`}
+            onClick={() => setEditorMode('config')}
+          >
+            Full Config
+          </button>
+        </div>
+
         {error && <div className="error-banner">JSON Error: {error}</div>}
         <div className="editor-container">
           <Editor
-            key={activeTab} // Force re-mount on tab switch
+            key={`${activeTab}-${editorMode}`} // Force re-mount on tab or mode switch
             height="100%"
             defaultLanguage="json"
             theme="light"
-            value={currentJson}
-            onChange={handleEditorChange}
+            value={editorMode === 'config' ? currentJson : currentAppearanceJson}
+            onChange={editorMode === 'config' ? handleConfigEditorChange : handleAppearanceEditorChange}
             beforeMount={beforeMount}
             options={{
               minimap: { enabled: false },
@@ -278,7 +388,7 @@ const App: React.FC = () => {
         </div>
         <div className={`preview-container ${viewport}`}>
           {config ? (
-            <WidgetPreview config={config} widgetType={activeTab} />
+            <WidgetPreview ref={widgetRef} config={config} widgetType={activeTab} />
           ) : (
             <div style={{ color: '#999' }}>Fix JSON to see preview</div>
           )}

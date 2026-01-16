@@ -37,6 +37,10 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     }
   }
 
+  if (privacyCenterConfig.demo) {
+    urlParams.set('demo', 'true');
+  }
+
   const queryString = urlParams.toString();
   return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
 }
