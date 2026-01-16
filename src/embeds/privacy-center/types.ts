@@ -1,6 +1,7 @@
 import { BaseConfig } from '../base/types';
 
 export type PrivacyManagerFeature = 'DataSubjectRequest' | 'ConsentManagement' | 'RequestTracking';
+export type PrivacyCenterRight = 'arsop' | 'redec';
 
 export type DataSubject =
 | 'anonymous_user'
@@ -21,6 +22,7 @@ export type DataSubject =
 
 export type PrivacyCenterConfig = BaseConfig & {
   enabledFeatures?: PrivacyManagerFeature[];
+  enabledRights?: PrivacyCenterRight[];
   dataSubjects?: DataSubject[];
   requestReference?: string;
   demo?: boolean;

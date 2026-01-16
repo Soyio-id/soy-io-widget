@@ -507,6 +507,12 @@
               },
               "type": "array"
             },
+            "enabledRights": {
+              "items": {
+                "$ref": "#/definitions/PrivacyCenterRight"
+              },
+              "type": "array"
+            },
             "fileRequisites": {
               "additionalProperties": false,
               "properties": {
@@ -581,6 +587,12 @@
               },
               "type": "array"
             },
+            "enabledRights": {
+              "items": {
+                "$ref": "#/definitions/PrivacyCenterRight"
+              },
+              "type": "array"
+            },
             "fileRequisites": {
               "additionalProperties": false,
               "properties": {
@@ -635,6 +647,13 @@
           "type": "object"
         }
       ]
+    },
+    "PrivacyCenterRight": {
+      "enum": [
+        "arsop",
+        "redec"
+      ],
+      "type": "string"
     },
     "PrivacyManagerFeature": {
       "enum": [
