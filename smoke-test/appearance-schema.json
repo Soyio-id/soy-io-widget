@@ -410,6 +410,13 @@
       ],
       "type": "string"
     },
+    "PrivacyCenterRight": {
+      "enum": [
+        "arsop",
+        "redec"
+      ],
+      "type": "string"
+    },
     "PrivacyManagerFeature": {
       "enum": [
         "DataSubjectRequest",
@@ -417,6 +424,22 @@
         "RequestTracking"
       ],
       "type": "string"
+    },
+    "RedecOperationId": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "type": "object"
     },
     "SmokeTestConfig": {
       "additionalProperties": false,
@@ -448,6 +471,12 @@
         "enabledFeatures": {
           "items": {
             "$ref": "#/definitions/PrivacyManagerFeature"
+          },
+          "type": "array"
+        },
+        "enabledRights": {
+          "items": {
+            "$ref": "#/definitions/PrivacyCenterRight"
           },
           "type": "array"
         },
@@ -508,6 +537,12 @@
             "hide"
           ],
           "type": "string"
+        },
+        "redecOperationIds": {
+          "items": {
+            "$ref": "#/definitions/RedecOperationId"
+          },
+          "type": "array"
         },
         "requestReference": {
           "type": "string"
