@@ -3,6 +3,11 @@ import { BaseConfig } from '../base/types';
 export type PrivacyManagerFeature = 'DataSubjectRequest' | 'ConsentManagement' | 'RequestTracking';
 export type PrivacyCenterRight = 'arsop' | 'redec';
 
+export type RedecOperationId = {
+  id: string;
+  label: string;
+};
+
 export type DataSubject =
 | 'anonymous_user'
 | 'citizen_voter'
@@ -30,6 +35,7 @@ export type PrivacyCenterConfig = BaseConfig & {
     allowedExtensions?: string[];
     maxFileSize?: number;
   };
+  redecOperationIds?: RedecOperationId[];
 } & (
   | {
       companyId: `com_${string}`;
