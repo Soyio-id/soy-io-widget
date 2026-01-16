@@ -281,6 +281,14 @@ export interface SoyioAppearanceConfig {
    * @default 2
    */
   mainPageColumns?: 1 | 2 | 3 | 4;
+  /**
+   * Theme variant for branded elements like the footer.
+   * - 'default': Standard Soyio brand colors (purple/indigo)
+   * - 'dark': Dark mode with gray tones
+   * - 'light': Mono color light version
+   * @default 'default'
+   */
+  brandTheme?: 'default' | 'dark' | 'light';
 }
 
 export interface SoyioAppearance {

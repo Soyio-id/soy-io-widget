@@ -411,6 +411,16 @@
     "SoyioAppearanceConfig": {
       "additionalProperties": false,
       "properties": {
+        "brandTheme": {
+          "default": "default",
+          "description": "Theme variant for branded elements like the footer.\n- 'default': Standard Soyio brand colors (purple/indigo)\n- 'dark': Dark mode with gray tones\n- 'light': Mono color light version",
+          "enum": [
+            "default",
+            "dark",
+            "light"
+          ],
+          "type": "string"
+        },
         "helperTextPosition": {
           "enum": [
             "top",
