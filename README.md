@@ -519,6 +519,7 @@ interface Config {
   };
   iconRules?: Record<string, { weight?: IconWeight; size?: number }>;
   mainPageColumns?: 1 | 2 | 3 | 4;
+  brandTheme?: 'default' | 'dark' | 'light';
 }
 ```
 
@@ -530,6 +531,7 @@ interface Config {
 | `icon.size` | Global default icon size in pixels | `24` |
 | `iconRules` | Per-component icon style overrides | `{}` |
 | `mainPageColumns` | Number of columns in the main page feature cards grid (1-4) | `2` |
+| `brandTheme` | Theme variant for branded elements like the footer (`default`, `dark`, `light`) | `"default"` |
 
 #### Icons
 
@@ -823,6 +825,15 @@ The step indicator shows progress through multi-step forms.
 - `.Chip--green` - Green chip variant.
 - `.Chip--red` - Red chip variant.
 - `.Chip--amber` - Amber chip variant.
+
+##### Consent Components
+
+The following rules are specific to the **Consent Box** widget and allow customization of consent-related UI elements:
+
+- `.CategoryTag` - Data use category identifier (e.g., "Compartir datos con terceros"). Appears above category descriptions in expanded consent views.
+- `.Badge` - Optional/required label badge appearing on consent items.
+
+> **Note:** These consent-specific rules are only available in the `ConsentBox` widget and will have no effect in other widgets like `PrivacyCenterBox`.
 
 ### Example Configuration
 
