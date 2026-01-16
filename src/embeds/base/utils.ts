@@ -29,6 +29,7 @@ export function createWidgetWrapper(identifier: string): HTMLDivElement {
   wrapper.id = `soyio-widget-wrapper-${identifier}`;
 
   wrapper.style.cssText = `
+    position: relative !important;
     padding: 0 !important;
     margin: 0 !important;
     display: flex !important;

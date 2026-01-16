@@ -129,7 +129,8 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
     this.iframe = createIframe(url, this.iframeIdentifier, this.defaultIframeCSSConfig);
 
     if (this.Skeleton) {
-      this.skeleton = new this.Skeleton(this.uniqueIdentifier);
+      const theme = this.appearance?.theme;
+      this.skeleton = new this.Skeleton(this.uniqueIdentifier, theme);
       this.skeleton.mount(this.wrapper);
     }
 

@@ -1,40 +1,47 @@
+import type { SoyioTheme } from '../appearance/types';
 import type { ISkeletonView } from '../base/types';
 
 export class ConsentSkeleton implements ISkeletonView {
   private element: HTMLDivElement;
   private readonly identifier: string;
 
-  constructor(identifier: string) {
+  constructor(identifier: string, theme?: SoyioTheme) {
     this.identifier = `skeleton-${identifier}`;
     this.element = document.createElement('div');
     this.element.id = this.identifier;
 
+    const isDarkMode = theme === 'night';
+    const backgroundColor = isDarkMode ? '#1E293B' : '#FFFFFF';
+    const borderColor = isDarkMode ? '#334155' : '#E5E7EB';
+    const shimmerStart = isDarkMode ? '#334155' : '#f0f0f0';
+    const shimmerMid = isDarkMode ? '#475569' : '#e0e0e0';
+    const shimmerEnd = isDarkMode ? '#334155' : '#f0f0f0';
+
     this.element.style.cssText = `
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      top: 0;
+      left: 0;
       width: 100%;
-      min-width: 375px;
-      height: 120px;
-      background: #FFFFFF;
-      border: 1px solid #E5E7EB;
+      background: ${backgroundColor};
+      border: 1px solid ${borderColor};
       border-radius: 0.25rem;
       opacity: 1;
       transition: opacity 0.3s ease-out;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      box-sizing: border-box;
+      z-index: 1;
     `;
 
     const mainContainer = document.createElement('div');
     mainContainer.style.cssText = `
       padding: 1rem;
-      height: 100%;
-      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 0.75rem;
     `;
 
     const topRow = document.createElement('div');
@@ -48,7 +55,7 @@ export class ConsentSkeleton implements ISkeletonView {
     dataUseCircleSkeleton.style.cssText = `
       width: 2rem;
       height: 2rem;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background: linear-gradient(90deg, ${shimmerStart} 25%, ${shimmerMid} 50%, ${shimmerEnd} 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 50%;
@@ -59,7 +66,7 @@ export class ConsentSkeleton implements ISkeletonView {
     personalizedTitleSkeleton.style.cssText = `
       height: 1rem;
       width: 30%;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background: linear-gradient(90deg, ${shimmerStart} 25%, ${shimmerMid} 50%, ${shimmerEnd} 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 0.125rem;
@@ -67,33 +74,43 @@ export class ConsentSkeleton implements ISkeletonView {
 
     const expandButtonCircleSkeleton = document.createElement('div');
     expandButtonCircleSkeleton.style.cssText = `
-      width: 1.5rem;
-      height: 1.5rem;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      width: 3rem;
+      height: 1.25rem;
+      background: linear-gradient(90deg, ${shimmerStart} 25%, ${shimmerMid} 50%, ${shimmerEnd} 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
-      border-radius: 50%;
+      border-radius: .25rem;
       margin-left: auto;
-      margin-right: 3px;
+      flex-shrink: 0;
     `;
 
     const bottomRow = document.createElement('div');
     bottomRow.style.cssText = `
       display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    `;
+
+    // Container to center the checkbox under the icon (matching icon width)
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.style.cssText = `
+      width: 2rem;
+      height: 1rem;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 1rem;
+      flex-shrink: 0;
     `;
 
     const checkboxSkeleton = document.createElement('div');
     checkboxSkeleton.style.cssText = `
       width: 1rem;
       height: 1rem;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background: linear-gradient(90deg, ${shimmerStart} 25%, ${shimmerMid} 50%, ${shimmerEnd} 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 0.25rem;
       flex-shrink: 0;
-      margin-left: 10px;
     `;
 
     const textContentSkeleton = document.createElement('div');
@@ -108,7 +125,7 @@ export class ConsentSkeleton implements ISkeletonView {
     textLine1.style.cssText = `
       height: 0.875rem;
       width: 80%;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background: linear-gradient(90deg, ${shimmerStart} 25%, ${shimmerMid} 50%, ${shimmerEnd} 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 0.125rem;
@@ -118,9 +135,9 @@ export class ConsentSkeleton implements ISkeletonView {
     textLine2.style.cssText = `
       height: 0.875rem;
       width: 60%;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background: linear-gradient(90deg, ${shimmerStart} 25%, ${shimmerMid} 50%, ${shimmerEnd} 75%);
       background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
+      animation: shimmer 2s infinite;
       border-radius: 0.125rem;
     `;
 
@@ -132,6 +149,10 @@ export class ConsentSkeleton implements ISkeletonView {
           0% { background-position: 200% 0; }
           100% { background-position: -200% 0; }
         }
+        @keyframes skeletonFadeOut {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
+        }
       `;
       document.head.appendChild(styleSheet);
     }
@@ -142,7 +163,8 @@ export class ConsentSkeleton implements ISkeletonView {
 
     textContentSkeleton.appendChild(textLine1);
     textContentSkeleton.appendChild(textLine2);
-    bottomRow.appendChild(checkboxSkeleton);
+    checkboxContainer.appendChild(checkboxSkeleton);
+    bottomRow.appendChild(checkboxContainer);
     bottomRow.appendChild(textContentSkeleton);
 
     mainContainer.appendChild(topRow);
@@ -164,7 +186,7 @@ export class ConsentSkeleton implements ISkeletonView {
   }
 
   hide(): void {
-    this.element.style.opacity = '0';
-    setTimeout(() => this.element.remove(), 300);
+    this.element.style.animation = 'skeletonFadeOut 0.2s ease-out forwards';
+    setTimeout(() => this.element.remove(), 200);
   }
 }
