@@ -421,6 +421,26 @@
           ],
           "type": "string"
         },
+        "consentControl": {
+          "default": "switch",
+          "description": "Control type for consent items.\n- 'switch': Toggle switch (default)\n- 'checkbox': Checkbox",
+          "enum": [
+            "switch",
+            "checkbox"
+          ],
+          "type": "string"
+        },
+        "consentManagementColumns": {
+          "default": 2,
+          "description": "Number of columns in the consent management grid.",
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "number"
+        },
         "helperTextPosition": {
           "enum": [
             "top",
@@ -614,6 +634,9 @@
         ".Alert--info": {
           "$ref": "#/definitions/CSSProperties"
         },
+        ".Alert--note": {
+          "$ref": "#/definitions/CSSProperties"
+        },
         ".Alert--success": {
           "$ref": "#/definitions/CSSProperties"
         },
@@ -794,6 +817,36 @@
         ".CardTitle:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
+        ".CategoryTag": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CategoryTag:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
         ".Checkbox": {
           "$ref": "#/definitions/CSSProperties"
         },
@@ -822,6 +875,36 @@
           "$ref": "#/definitions/CSSProperties"
         },
         ".Checkbox:hover": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck--checked": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck::placeholder": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck::selection": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck:active": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck:autofill": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck:disabled": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck:focus": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck:focus-visible": {
+          "$ref": "#/definitions/CSSProperties"
+        },
+        ".CheckboxCheck:hover": {
           "$ref": "#/definitions/CSSProperties"
         },
         ".CheckboxInput": {

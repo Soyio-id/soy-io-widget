@@ -30,6 +30,9 @@ export type PrivacyCenterConfig = BaseConfig & {
     allowedExtensions?: string[];
     maxFileSize?: number;
   };
+  consentMode?: 'immediate' | 'batch';
+  consentRetentionPeriod?: string;
+  showBatchConsentConfirmation?: boolean;
 } & (
   | {
       companyId: `com_${string}`;
