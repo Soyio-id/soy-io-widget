@@ -209,6 +209,10 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
   - `allowedExtensions`: Array of allowed file extensions (e.g. `['pdf', 'jpg']`). Default: `['pdf', 'png', 'jpeg', 'jpg']`.
   - `maxFileSize`: Maximum file size in bytes. Default: `5 * 1024 * 1024` (5MB).
 - `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
+- `consentControl`: Optional, controls the visual interaction for consent toggles. Values: `'switch'` (default) or `'checkbox'`.
+- `consentMode`: Optional, controls how consent changes are committed. Values: `'immediate'` (default) or `'batch'` (save multiple changes at once).
+- `consentRetentionPeriod`: Optional, specifies a duration during which a consent cannot be revoked after being granted. Format: `"<value> <unit>"`. Supported units: `day`, `week`, `month`, `year` (and their plural forms). Example: `'30 days'`, `'1 week'`.
+- `showBatchConsentConfirmation`: Optional boolean, whether to show a confirmation dialog before saving consent changes in batch mode.
 - `appearance`: Customize the iframe appearance. See Appearance section below.
 - `onEvent`: Callback that receives events from the iframe.
 - `onReady`: Optional callback fired when the iframe becomes ready.
@@ -536,6 +540,7 @@ interface Config {
 | `icon.size` | Global default icon size in pixels | `24` |
 | `iconRules` | Per-component icon style overrides | `{}` |
 | `mainPageColumns` | Number of columns in the main page feature cards grid (1-4) | `2` |
+| `consentManagementColumns` | Number of columns in the consent management grid (1-4) | `2` |
 | `brandTheme` | Theme variant for branded elements like the footer (`default`, `dark`, `light`) | `"default"` |
 
 #### Icons
