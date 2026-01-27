@@ -9,13 +9,20 @@ const COMPANY_ID = import.meta.env.VITE_COMPANY_ID || 'com_test';
 const PRIVACY_CENTER_URL = import.meta.env.VITE_PRIVACY_CENTER_URL || 'http://localhost:5173';
 const CONSENT_URL = import.meta.env.VITE_CONSENT_URL || 'http://localhost:5173';
 const CONSENT_TEMPLATE_ID = import.meta.env.VITE_CONSENT_TEMPLATE_ID || 'constpl_test';
+const API_TOKEN = import.meta.env.VITE_API_TOKEN || '';
 
 const DEFAULT_PRIVACY_CENTER_CONFIG = {
   companyId: COMPANY_ID,
   isSandbox: true,
-  demo: true,
+  demo: false,
+  consentMode: 'batch',
+  showBatchConsentConfirmation: true,
+  consentRetentionPeriod: '1 days',
   developmentUrl: PRIVACY_CENTER_URL, // Default to local privacy-center
   appearance: {
+    config: {
+      consentControl: 'checkbox'
+    },
     variables: {
       borderRadius: '0.25rem',
       colorBackground: '#ffffff',
@@ -67,6 +74,9 @@ const App: React.FC = () => {
   );
 
   const [error, setError] = useState<string | null>(null);
+
+  // State for last action token to persist manually
+  const [lastActionToken, setLastActionToken] = useState<string | null>(null);
 
   // Ref to the widget for direct appearance updates
   const widgetRef = useRef<WidgetPreviewHandle>(null);
@@ -237,7 +247,6 @@ const App: React.FC = () => {
     definitions: configSchema.definitions,
   }), []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const beforeMount = useCallback((monaco: any) => {
     const schema = editorMode === 'appearance' ? appearanceOnlySchema : configSchema;
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
@@ -386,11 +395,55 @@ const App: React.FC = () => {
             {viewport === 'mobile' ? '390px' : 'Full width'}
           </span>
         </div>
-        <div className={`preview-container ${viewport}`}>
+        <div className={`preview-container ${viewport}`} style={{ position: 'relative' }}>
           {config ? (
-            <WidgetPreview ref={widgetRef} config={config} widgetType={activeTab} />
+            <WidgetPreview
+              ref={widgetRef}
+              config={config}
+              widgetType={activeTab}
+              onEvent={(event: any) => {
+                if (event.eventName === 'CONSENT_CHECKBOX_CHANGE' && event.actionToken) {
+                   setLastActionToken(event.actionToken);
+                }
+              }}
+            />
           ) : (
             <div style={{ color: '#999' }}>Fix JSON to see preview</div>
+          )}
+          {lastActionToken && (
+            <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 100 }}>
+              <button
+                onClick={async () => {
+                  try {
+                    // Use the monolith URL (CONSENT_URL) for persisting consent
+                    const res = await fetch(`${CONSENT_URL}/api/v1/consent_commits`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `${API_TOKEN}`,
+                      },
+                      body: JSON.stringify({
+                        consent_actions: [{ action_token: lastActionToken }],
+                        user_reference: 'test_user2',
+                      }),
+                    });
+                    if (res.ok) {
+                      alert('Consent persisted successfully!');
+                      setLastActionToken(null);
+                    } else {
+                      const errorBody = await res.text();
+                      alert('Failed to persist: ' + res.statusText + '\n' + errorBody);
+                    }
+                  } catch (e) {
+                    alert('Error persisting: ' + e);
+                  }
+                }}
+                className="btn-save"
+                style={{ backgroundColor: '#2563eb', color: 'white', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Persist Consent
+              </button>
+            </div>
           )}
         </div>
       </div>

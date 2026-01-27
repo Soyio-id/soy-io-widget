@@ -41,6 +41,23 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('demo', 'true');
   }
 
+  if (privacyCenterConfig.consentMode) {
+    urlParams.set('consentMode', privacyCenterConfig.consentMode);
+  }
+
+  const consentControl = privacyCenterConfig.appearance?.config?.consentControl;
+  if (consentControl) {
+    urlParams.set('consentControl', consentControl);
+  }
+
+  if (privacyCenterConfig.consentRetentionPeriod) {
+    urlParams.set('consentRetentionPeriod', privacyCenterConfig.consentRetentionPeriod);
+  }
+
+  if (privacyCenterConfig.showBatchConsentConfirmation) {
+    urlParams.set('showBatchConsentConfirmation', 'true');
+  }
+
   const queryString = urlParams.toString();
   return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
 }

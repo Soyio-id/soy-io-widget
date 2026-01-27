@@ -35,6 +35,9 @@ export type PrivacyCenterConfig = BaseConfig & {
     allowedExtensions?: string[];
     maxFileSize?: number;
   };
+  consentMode?: 'immediate' | 'batch';
+  consentRetentionPeriod?: string;
+  showBatchConsentConfirmation?: boolean;
   redecOperationIds?: RedecOperationId[];
 } & (
   | {

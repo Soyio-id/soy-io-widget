@@ -7,6 +7,7 @@ import type { SoyioAppearance } from '../src/embeds/appearance/types';
 interface WidgetPreviewProps {
   config: Partial<PrivacyCenterConfig> & Partial<ConsentConfig>;
   widgetType: 'privacy-center' | 'consent-box';
+  onEvent?: (event: unknown) => void;
 }
 
 export interface WidgetPreviewHandle {
@@ -14,7 +15,7 @@ export interface WidgetPreviewHandle {
 }
 
 export const WidgetPreview = forwardRef<WidgetPreviewHandle, WidgetPreviewProps>(
-  ({ config, widgetType }, ref) => {
+  ({ config, widgetType, onEvent }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const widgetRef = useRef<PrivacyCenterBox | ConsentBox | null>(null);
 
@@ -39,7 +40,10 @@ export const WidgetPreview = forwardRef<WidgetPreviewHandle, WidgetPreviewProps>
       try {
         const widgetConfig = {
           ...config,
-          onEvent: (event: unknown) => console.log('[SmokeTest] onEvent:', event),
+          onEvent: (event: unknown) => {
+             console.log('[SmokeTest] onEvent:', event);
+             if (onEvent) onEvent(event);
+          },
         };
 
         let widget;
