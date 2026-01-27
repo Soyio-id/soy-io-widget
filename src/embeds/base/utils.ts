@@ -2,7 +2,7 @@ export function cleanupExistingIframe(identifier: string): void {
   const existingIframe = document.getElementById(identifier);
   if (existingIframe) {
 
-    console.warn('ConsentBox iframe already exists. Removing existing before mounting new one.');
+    console.warn(`Soyio widget iframe with id '${identifier}' already exists. Removing existing before mounting new one.`);
     existingIframe.remove();
   }
 }

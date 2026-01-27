@@ -563,6 +563,12 @@
             "onReady": {
               "$comment": "() => void"
             },
+            "redecOperationIds": {
+              "items": {
+                "$ref": "#/definitions/RedecOperationId"
+              },
+              "type": "array"
+            },
             "requestReference": {
               "type": "string"
             },
@@ -656,6 +662,12 @@
             "onReady": {
               "$comment": "() => void"
             },
+            "redecOperationIds": {
+              "items": {
+                "$ref": "#/definitions/RedecOperationId"
+              },
+              "type": "array"
+            },
             "requestReference": {
               "type": "string"
             },
@@ -688,6 +700,22 @@
         "RequestTracking"
       ],
       "type": "string"
+    },
+    "RedecOperationId": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "type": "object"
     },
     "SoyioAppearance": {
       "additionalProperties": false,

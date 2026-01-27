@@ -182,6 +182,12 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
       maxFileSize: 5 * 1024 * 1024, // 5MB
     },
 
+    // Redec operation options (optional unless "redec" is in enabledRights)
+    redecOperationIds: [
+      { id: "op_update", label: "Update" },
+      { id: "op_rectification", label: "Rectification" },
+    ],
+
     // Common options
     onEvent: (event) => console.log(event),
     onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
@@ -208,6 +214,7 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `fileRequisites`: Optional object to configure file upload constraints.
   - `allowedExtensions`: Array of allowed file extensions (e.g. `['pdf', 'jpg']`). Default: `['pdf', 'png', 'jpeg', 'jpg']`.
   - `maxFileSize`: Maximum file size in bytes. Default: `5 * 1024 * 1024` (5MB).
+- `redecOperationIds`: Optional array of `{ id, label }` values for the Redec operation select. Required if `redec` right is included in `enabledRights` param.
 - `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
 - `consentControl`: Optional, controls the visual interaction for consent toggles. Values: `'switch'` (default) or `'checkbox'`.
 - `consentMode`: Optional, controls how consent changes are committed. Values: `'immediate'` (default) or `'batch'` (save multiple changes at once).
@@ -1129,6 +1136,20 @@ VITE_PRIVACY_CENTER_URL=http://localhost:5173
 VITE_CONSENT_URL=http://localhost:5173
 VITE_CONSENT_TEMPLATE_ID=constpl_test
 ```
+
+To test DSR rights in the Privacy Center tab, add these parameters to the JSON config in the editor:
+
+```json
+{
+  "enabledRights": ["arsop", "redec"],
+  "redecOperationIds": [
+    { "id": "op_update", "label": "Update" },
+    { "id": "op_rectification", "label": "Rectification" }
+  ]
+}
+```
+
+`redecOperationIds` is required when `redec` is included in `enabledRights`.
 
 ### Presets Management
 
