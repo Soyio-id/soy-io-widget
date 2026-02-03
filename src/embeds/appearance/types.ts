@@ -108,10 +108,12 @@ export type SoyioBaseRule =
   | '.Checkbox'
   | '.CheckboxInput'
   | '.CheckboxLabel'
+  | '.CheckboxCheck'
   | '.Input'
   | '.Label'
   | '.HintIcon'
   | '.Title'
+  | '.CategoryTag'
   | '.StepTitle'
   | '.Link'
   | '.Card'
@@ -161,6 +163,7 @@ export type SoyioStateRule =
   | '.Alert--error'
   | '.Alert--warning'
   | '.Alert--info'
+  | '.Alert--note'
   | '.Alert--success'
   | '.Chip--info'
   | '.Chip--green'
@@ -252,6 +255,13 @@ export interface SoyioIconConfig {
 export interface SoyioAppearanceConfig {
   helperTextPosition?: 'top' | 'bottom';
   /**
+   * Control type for consent items.
+   * - 'switch': Toggle switch (default)
+   * - 'checkbox': Checkbox
+   * @default 'switch'
+   */
+  consentControl?: 'switch' | 'checkbox';
+  /**
    * Icon name to use for hint/help tooltips on input labels.
    * Available icons: 'Question' (default), 'Info', 'QuestionMark', etc.
    * @default 'Question'
@@ -281,6 +291,12 @@ export interface SoyioAppearanceConfig {
    * @default 2
    */
   mainPageColumns?: 1 | 2 | 3 | 4;
+  /**
+   * Number of columns in the consent management grid.
+   * @default 2
+   */
+  // eslint-disable-next-line no-magic-numbers
+  consentManagementColumns?: 1 | 2 | 3 | 4;
   /**
    * Theme variant for branded elements like the footer.
    * - 'default': Standard Soyio brand colors (purple/indigo)
