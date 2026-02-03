@@ -420,7 +420,7 @@ const App: React.FC = () => {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `${API_TOKEN}`,
+                        'Authorization': `Bearer ${API_TOKEN}`,
                       },
                       body: JSON.stringify({
                         consent_actions: [{ action_token: lastActionToken }],
