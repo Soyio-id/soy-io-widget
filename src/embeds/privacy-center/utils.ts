@@ -54,6 +54,10 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('consentRetentionPeriod', privacyCenterConfig.consentRetentionPeriod);
   }
 
+  if (privacyCenterConfig.allowGranularScopeSelection !== undefined) {
+    urlParams.set('allowGranularScopeSelection', String(privacyCenterConfig.allowGranularScopeSelection));
+  }
+
   if (privacyCenterConfig.showBatchConsentConfirmation) {
     urlParams.set('showBatchConsentConfirmation', 'true');
   }
