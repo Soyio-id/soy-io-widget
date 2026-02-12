@@ -20,6 +20,7 @@
 - [Consent Request Box](#consent-request-box)
 - [Privacy Center](#privacy-center)
 - [Disclosure Request](#disclosure-request)
+- [Embedded Disclosure Request](#embedded-disclosure-request)
 - [Signature Attempt](#signature-attempt)
 - [Auth Request](#auth-request)
 - [Appearance](#appearance)
@@ -365,6 +366,44 @@ The `onEvent` callback is designed to handle various events that occur during wi
 - **`isSandbox`**: Indicates if the widget should operate in sandbox mode, defaulting to `false`.
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`customColor`**: A hex code string that specifies the base color of the interface.
+
+## Embedded Disclosure Request
+
+Use `EmbeddedSoyioWidget` when you want to keep the disclosure flow inside your page, without popup windows.
+
+This embedded API currently supports disclosure flows created in advance (existing disclosure requests only).
+
+```html
+<div id="embedded-disclosure"></div>
+
+<script>
+  import { EmbeddedSoyioWidget } from "@soyio/soyio-widget";
+
+  const widget = new EmbeddedSoyioWidget({
+    request: "disclosure",
+    configProps: {
+      disclosureRequestId: "<disclosure request id>",
+      customColor: "#0F172A", // Optional
+    },
+    onEvent: (event) => {
+      console.log("Embedded event:", event);
+    },
+    onReady: () => {
+      console.log("Embedded widget is ready");
+    },
+    minHeight: "640px", // Optional
+    height: "720px", // Optional
+    isSandbox: true, // Optional
+  });
+
+  widget.mount("#embedded-disclosure");
+
+  // Optional cleanup
+  // widget.unmount();
+</script>
+```
+
+Passkey registration and passkey authentication are handled through a temporary popup tunnel and then return control to the embedded iframe flow.
 
 ## Signature Attempt
 

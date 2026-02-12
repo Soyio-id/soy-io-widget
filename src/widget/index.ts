@@ -1,3 +1,4 @@
+import EmbeddedSoyioWidget from './embedded';
 import * as Listeners from './listeners';
 import { showPopUp } from './popup';
 import * as SoyioTypes from './types';
@@ -25,4 +26,4 @@ class SoyioWidget {
 }
 
 export default SoyioWidget;
-export { SoyioWidget, SoyioTypes };
+export { EmbeddedSoyioWidget, SoyioWidget, SoyioTypes };

@@ -47,6 +47,38 @@ export type EventData = {
   userReference?: string
 }
 
+export type EmbeddedPasskeyRequiredEvent = {
+  eventName: 'PASSKEY_REQUIRED';
+  type: 'PASSKEY_REQUIRED';
+  sessionToken: string;
+  companyId: `com_${string}`;
+}
+
+export type EmbeddedPasskeyAuthenticationRequiredEvent = {
+  eventName: 'PASSKEY_AUTHENTICATION_REQUIRED';
+  type: 'PASSKEY_AUTHENTICATION_REQUIRED';
+  requestableToken: string;
+}
+
+export type EmbeddedPasskeyRegisteredEvent = {
+  eventName: 'PASSKEY_REGISTERED';
+  type: 'PASSKEY_REGISTERED';
+  identifier: string;
+}
+
+export type EmbeddedPasskeyAuthenticatedEvent = {
+  eventName: 'PASSKEY_AUTHENTICATED';
+  type: 'PASSKEY_AUTHENTICATED';
+  identifier: string;
+}
+
+export type EmbeddedInfoEvent =
+  EventData |
+  EmbeddedPasskeyRequiredEvent |
+  EmbeddedPasskeyAuthenticationRequiredEvent |
+  EmbeddedPasskeyRegisteredEvent |
+  EmbeddedPasskeyAuthenticatedEvent;
+
 export type DisclosureRequestConfig = {
   request: 'disclosure',
   configProps: DisclosureRequestProps,
@@ -72,3 +104,19 @@ export type AuthRequestConfig = {
 }
 
 export type RequestConfig = DisclosureRequestConfig | SignatureRequestConfig | AuthRequestConfig;
+
+export type EmbeddedDisclosureRequestProps = ExistingDisclosureRequestProps;
+
+export type EmbeddedWidgetSizing = {
+  height?: string;
+  minHeight?: string;
+}
+
+export type EmbeddedDisclosureRequestConfig = {
+  request: 'disclosure',
+  configProps: EmbeddedDisclosureRequestProps,
+  onEvent: (data: EmbeddedInfoEvent) => void,
+  onReady?: () => void,
+  isSandbox?: boolean,
+  developmentUrl?: string,
+} & EmbeddedWidgetSizing;

@@ -19,4 +19,12 @@ export type {
   SignatureRequestConfig,
   AuthRequestConfig,
   RequestConfig,
+  EmbeddedPasskeyAuthenticatedEvent,
+  EmbeddedPasskeyAuthenticationRequiredEvent,
+  EmbeddedInfoEvent,
+  EmbeddedDisclosureRequestProps,
+  EmbeddedPasskeyRegisteredEvent,
+  EmbeddedPasskeyRequiredEvent,
+  EmbeddedWidgetSizing,
+  EmbeddedDisclosureRequestConfig,
 } from './widget/types';
