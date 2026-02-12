@@ -20,7 +20,12 @@ function getIframeUrl(consentConfig: ConsentConfig): string {
   urlParams.set('sdkVersion', version);
 
   URL_PARAMS.forEach((param) => {
-    if (consentConfig[param] !== undefined) urlParams.set(param, String(consentConfig[param]));
+    const value = consentConfig[param];
+
+    if (value === undefined) return;
+    if (typeof value === 'string' && value.length === 0) return;
+
+    urlParams.set(param, String(value));
   });
 
   const queryString = urlParams.toString();

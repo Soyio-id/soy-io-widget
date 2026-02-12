@@ -37,8 +37,8 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     }
   }
 
-  if (privacyCenterConfig.demo) {
-    urlParams.set('demo', 'true');
+  if (privacyCenterConfig.demo !== undefined) {
+    urlParams.set('demo', String(privacyCenterConfig.demo));
   }
 
   if (privacyCenterConfig.consentMode) {
@@ -58,8 +58,8 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('allowGranularScopeSelection', String(privacyCenterConfig.allowGranularScopeSelection));
   }
 
-  if (privacyCenterConfig.showBatchConsentConfirmation) {
-    urlParams.set('showBatchConsentConfirmation', 'true');
+  if (privacyCenterConfig.showBatchConsentConfirmation !== undefined) {
+    urlParams.set('showBatchConsentConfirmation', String(privacyCenterConfig.showBatchConsentConfirmation));
   }
 
   const queryString = urlParams.toString();
