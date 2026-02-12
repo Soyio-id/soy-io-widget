@@ -161,7 +161,8 @@ class EmbeddedSoyioWidget {
   private notifyEmbeddedPasskeyEvent(type: 'PASSKEY_REGISTERED' | 'PASSKEY_AUTHENTICATED') {
     if (!this.iframe?.contentWindow) return;
 
-    this.iframe.contentWindow.postMessage(JSON.stringify({ type }), '*');
+    const targetOrigin = new URL(this.iframe.src).origin;
+    this.iframe.contentWindow.postMessage(JSON.stringify({ type }), targetOrigin);
   }
 
   private notifyEmbeddedPasskeyRegistered() {
