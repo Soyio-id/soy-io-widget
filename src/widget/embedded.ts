@@ -30,7 +30,7 @@ function isPasskeyAuthenticationRequiredEvent(
   return event.eventName === 'PASSKEY_AUTHENTICATION_REQUIRED' && event.type === 'PASSKEY_AUTHENTICATION_REQUIRED';
 }
 
-class DisclosureRequestBox extends BaseIframeBox<DisclosureRequestBoxConfig> {
+class DisclosureRequestBox extends BaseIframeBox<DisclosureRequestBoxEvent, DisclosureRequestBoxConfig> {
   readonly defaultIframePrefix = 'disclosure-request-box';
 
   private passkeyPopupWindow: Window | null = null;

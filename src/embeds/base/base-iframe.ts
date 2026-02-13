@@ -22,7 +22,7 @@ import {
 import { DEFAULT_IFRAME_CSS_CONFIG } from '@/constants';
 import { isBrowser } from '@/utils';
 
-export abstract class BaseIframeBox<T extends BaseConfig> {
+export abstract class BaseIframeBox<TEvent, T extends BaseConfig<TEvent>> {
   protected iframe: HTMLIFrameElement | null = null;
   protected wrapper: HTMLDivElement | null = null;
   protected skeleton: ISkeletonView | null = null;
@@ -105,7 +105,7 @@ export abstract class BaseIframeBox<T extends BaseConfig> {
       onHeightChange: this.handleHeightChange.bind(this),
       onIframeReady: this.handleIframeReady.bind(this),
       onTooltipChange: this.handleTooltipChange.bind(this),
-      onInfo: this.options.onEvent.bind(this),
+      onInfo: (info: Record<string, unknown>) => this.options.onEvent(info as TEvent),
     };
 
     mountInstanceListeners(this.uniqueIdentifier, listeners);
