@@ -1,4 +1,4 @@
-import EmbeddedSoyioWidget from './embedded';
+import DisclosureRequestBox from './embedded';
 import * as Listeners from './listeners';
 import { showPopUp } from './popup';
 import * as SoyioTypes from './types';
@@ -26,4 +26,4 @@ class SoyioWidget {
 }
 
 export default SoyioWidget;
-export { EmbeddedSoyioWidget, SoyioWidget, SoyioTypes };
+export { DisclosureRequestBox, SoyioWidget, SoyioTypes };

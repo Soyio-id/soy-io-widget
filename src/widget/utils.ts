@@ -2,7 +2,7 @@ import { version } from '../../package.json';
 import { PRODUCTION_URL, SANDBOX_URL } from '../constants';
 import type { RequestConfig } from '../types';
 
-import type { EmbeddedDisclosureRequestConfig } from './types';
+import type { DisclosureRequestBoxConfig } from './types';
 
 type RegisterPasskeyUrlParams = {
   sessionToken: string;
@@ -42,29 +42,29 @@ export function getFullUrl(options: RequestConfig): string {
   return `${baseUrl}/${path}?sdk=web&sdkVersion=${version}&${urlParams}`;
 }
 
-export function getEmbeddedPath(options: EmbeddedDisclosureRequestConfig): string {
-  return `embed/widget/disclosures/${options.configProps.disclosureRequestId}`;
+export function getDisclosureRequestBoxPath(options: DisclosureRequestBoxConfig): string {
+  return `embed/widget/disclosures/${options.disclosureRequestId}`;
 }
 
-export function getEmbeddedFullUrl(options: EmbeddedDisclosureRequestConfig, identifier: string): string {
+export function getDisclosureRequestBoxUrl(options: DisclosureRequestBoxConfig, identifier: string): string {
   const isSandbox = options.isSandbox ?? false;
   const baseUrl = getBaseUrl(options.developmentUrl, isSandbox);
-  const path = getEmbeddedPath(options);
+  const path = getDisclosureRequestBoxPath(options);
   const queryParams = new URLSearchParams({
     sdk: 'web',
     sdkVersion: version,
     identifier,
   });
 
-  if (options.configProps.customColor) {
-    queryParams.set('customColor', options.configProps.customColor);
+  if (options.customColor) {
+    queryParams.set('customColor', options.customColor);
   }
 
   return `${baseUrl}/${path}?${queryParams.toString()}`;
 }
 
 export function getRegisterPasskeyPopupUrl(
-  options: EmbeddedDisclosureRequestConfig,
+  options: DisclosureRequestBoxConfig,
   params: RegisterPasskeyUrlParams,
 ): string {
   const baseUrl = getBaseUrl(options.developmentUrl, options.isSandbox ?? false);
@@ -78,7 +78,7 @@ export function getRegisterPasskeyPopupUrl(
 }
 
 export function getPasskeyAuthenticationPopupUrl(
-  options: EmbeddedDisclosureRequestConfig,
+  options: DisclosureRequestBoxConfig,
   params: PasskeyAuthenticationUrlParams,
 ): string {
   const baseUrl = getBaseUrl(options.developmentUrl, options.isSandbox ?? false);

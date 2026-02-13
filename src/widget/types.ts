@@ -47,37 +47,37 @@ export type EventData = {
   userReference?: string
 }
 
-export type EmbeddedPasskeyRequiredEvent = {
+export type DisclosureRequestBoxPasskeyRequiredEvent = {
   eventName: 'PASSKEY_REQUIRED';
   type: 'PASSKEY_REQUIRED';
   sessionToken: string;
   companyId: `com_${string}`;
 }
 
-export type EmbeddedPasskeyAuthenticationRequiredEvent = {
+export type DisclosureRequestBoxPasskeyAuthenticationRequiredEvent = {
   eventName: 'PASSKEY_AUTHENTICATION_REQUIRED';
   type: 'PASSKEY_AUTHENTICATION_REQUIRED';
   requestableToken: string;
 }
 
-export type EmbeddedPasskeyRegisteredEvent = {
+export type DisclosureRequestBoxPasskeyRegisteredEvent = {
   eventName: 'PASSKEY_REGISTERED';
   type: 'PASSKEY_REGISTERED';
   identifier: string;
 }
 
-export type EmbeddedPasskeyAuthenticatedEvent = {
+export type DisclosureRequestBoxPasskeyAuthenticatedEvent = {
   eventName: 'PASSKEY_AUTHENTICATED';
   type: 'PASSKEY_AUTHENTICATED';
   identifier: string;
 }
 
-export type EmbeddedInfoEvent =
+export type DisclosureRequestBoxEvent =
   EventData |
-  EmbeddedPasskeyRequiredEvent |
-  EmbeddedPasskeyAuthenticationRequiredEvent |
-  EmbeddedPasskeyRegisteredEvent |
-  EmbeddedPasskeyAuthenticatedEvent;
+  DisclosureRequestBoxPasskeyRequiredEvent |
+  DisclosureRequestBoxPasskeyAuthenticationRequiredEvent |
+  DisclosureRequestBoxPasskeyRegisteredEvent |
+  DisclosureRequestBoxPasskeyAuthenticatedEvent;
 
 export type DisclosureRequestConfig = {
   request: 'disclosure',
@@ -105,18 +105,19 @@ export type AuthRequestConfig = {
 
 export type RequestConfig = DisclosureRequestConfig | SignatureRequestConfig | AuthRequestConfig;
 
-export type EmbeddedDisclosureRequestProps = ExistingDisclosureRequestProps;
+export type DisclosureRequestBoxProps = {
+  disclosureRequestId: `dreq_${string}`;
+  customColor?: string;
+}
 
-export type EmbeddedWidgetSizing = {
+export type DisclosureRequestBoxSizing = {
   height?: string;
   minHeight?: string;
 }
 
-export type EmbeddedDisclosureRequestConfig = {
-  request: 'disclosure',
-  configProps: EmbeddedDisclosureRequestProps,
-  onEvent: (data: EmbeddedInfoEvent) => void,
+export type DisclosureRequestBoxConfig = DisclosureRequestBoxProps & {
+  onEvent: (data: DisclosureRequestBoxEvent) => void,
   onReady?: () => void,
   isSandbox?: boolean,
   developmentUrl?: string,
-} & EmbeddedWidgetSizing;
+} & DisclosureRequestBoxSizing;

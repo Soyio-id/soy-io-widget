@@ -12,6 +12,10 @@ export interface ISkeletonView {
   hide(): void;
 }
 
+type EventHandler<TEvent> = {
+  bivarianceHack(event: TEvent): void;
+}['bivarianceHack'];
+
 export interface IBaseEventData {
   identifier: string;
   eventName: string;
@@ -47,8 +51,8 @@ export type ConsentEvent =
   | IAppearanceConfigEvent
   | ITooltipStateChangeEvent;
 
-export type BaseConfig = {
-  onEvent: (event: Record<string, unknown>) => void,
+export type BaseConfig<TEvent = Record<string, unknown>> = {
+  onEvent: EventHandler<TEvent>,
   onReady?: () => void,
   isSandbox?: boolean,
   appearance?: SoyioAppearance,

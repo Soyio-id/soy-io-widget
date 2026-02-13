@@ -20,7 +20,7 @@
 - [Consent Request Box](#consent-request-box)
 - [Privacy Center](#privacy-center)
 - [Disclosure Request](#disclosure-request)
-- [Embedded Disclosure Request](#embedded-disclosure-request)
+- [Disclosure Request Box](#disclosure-request-box)
 - [Signature Attempt](#signature-attempt)
 - [Auth Request](#auth-request)
 - [Appearance](#appearance)
@@ -367,9 +367,9 @@ The `onEvent` callback is designed to handle various events that occur during wi
 - **`onEvent`**: A callback function triggered upon event occurrences, used for capturing and logging event-related data.
 - **`customColor`**: A hex code string that specifies the base color of the interface.
 
-## Embedded Disclosure Request
+## Disclosure Request Box
 
-Use `EmbeddedSoyioWidget` when you want to keep the disclosure flow inside your page, without popup windows.
+Use `DisclosureRequestBox` when you want to keep the disclosure flow inside your page, without popup windows.
 
 This embedded API currently supports disclosure flows created in advance (existing disclosure requests only).
 
@@ -377,19 +377,16 @@ This embedded API currently supports disclosure flows created in advance (existi
 <div id="embedded-disclosure"></div>
 
 <script>
-  import { EmbeddedSoyioWidget } from "@soyio/soyio-widget";
+  import { DisclosureRequestBox } from "@soyio/soyio-widget";
 
-  const widget = new EmbeddedSoyioWidget({
-    request: "disclosure",
-    configProps: {
-      disclosureRequestId: "<disclosure request id>",
-      customColor: "#0F172A", // Optional
-    },
+  const widget = new DisclosureRequestBox({
+    disclosureRequestId: "<disclosure request id>",
+    customColor: "#0F172A", // Optional
     onEvent: (event) => {
-      console.log("Embedded event:", event);
+      console.log("DisclosureRequestBox event:", event);
     },
     onReady: () => {
-      console.log("Embedded widget is ready");
+      console.log("DisclosureRequestBox is ready");
     },
     minHeight: "640px", // Optional
     height: "720px", // Optional

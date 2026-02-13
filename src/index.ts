@@ -2,12 +2,12 @@ import { TooltipManager } from './embeds/base/tooltip-manager';
 import { ConsentBox } from './embeds/consent';
 import { PrivacyCenterBox } from './embeds/privacy-center';
 import * as SoyioTypes from './types';
-import { EmbeddedSoyioWidget, SoyioWidget } from './widget';
+import { DisclosureRequestBox, SoyioWidget } from './widget';
 
 export default SoyioWidget;
 export {
   ConsentBox,
-  EmbeddedSoyioWidget,
+  DisclosureRequestBox,
   PrivacyCenterBox,
   SoyioWidget,
   SoyioTypes,

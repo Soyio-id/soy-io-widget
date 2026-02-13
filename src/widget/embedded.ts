@@ -1,106 +1,92 @@
-import { generateUniqueIframeId } from '../embeds/base/utils';
+import { BaseIframeBox } from '../embeds/base/base-iframe';
 import {
   mountInstanceListeners,
-  removeInstanceListeners,
-  setupPostrobotListeners,
 } from '../embeds/listeners';
 
 import { WIDGET_EVENT } from './constants';
 import type {
-  EmbeddedPasskeyAuthenticatedEvent,
-  EmbeddedPasskeyAuthenticationRequiredEvent,
-  EmbeddedDisclosureRequestConfig,
-  EmbeddedInfoEvent,
-  EmbeddedPasskeyRequiredEvent,
-  EmbeddedPasskeyRegisteredEvent,
+  DisclosureRequestBoxConfig,
+  DisclosureRequestBoxEvent,
+  DisclosureRequestBoxPasskeyAuthenticatedEvent,
+  DisclosureRequestBoxPasskeyAuthenticationRequiredEvent,
+  DisclosureRequestBoxPasskeyRegisteredEvent,
+  DisclosureRequestBoxPasskeyRequiredEvent,
 } from './types';
 import {
-  getEmbeddedFullUrl,
+  getDisclosureRequestBoxUrl,
   getPasskeyAuthenticationPopupUrl,
   getRegisterPasskeyPopupUrl,
 } from './utils';
 
-import { isBrowser } from '@/utils';
-
 type PostRobotListener = ReturnType<typeof import('post-robot')['on']>;
 
-function isPasskeyRequiredEvent(event: EmbeddedInfoEvent): event is EmbeddedPasskeyRequiredEvent {
+function isPasskeyRequiredEvent(event: DisclosureRequestBoxEvent): event is DisclosureRequestBoxPasskeyRequiredEvent {
   return event.eventName === 'PASSKEY_REQUIRED' && event.type === 'PASSKEY_REQUIRED';
 }
 
 function isPasskeyAuthenticationRequiredEvent(
-  event: EmbeddedInfoEvent,
-): event is EmbeddedPasskeyAuthenticationRequiredEvent {
+  event: DisclosureRequestBoxEvent,
+): event is DisclosureRequestBoxPasskeyAuthenticationRequiredEvent {
   return event.eventName === 'PASSKEY_AUTHENTICATION_REQUIRED' && event.type === 'PASSKEY_AUTHENTICATION_REQUIRED';
 }
 
-class EmbeddedSoyioWidget {
-  private readonly options: EmbeddedDisclosureRequestConfig;
-  private readonly identifier: string;
-  private iframe: HTMLIFrameElement | null = null;
+class DisclosureRequestBox extends BaseIframeBox<DisclosureRequestBoxConfig> {
+  readonly defaultIframePrefix = 'disclosure-request-box';
+
   private passkeyPopupWindow: Window | null = null;
   private popupListener: PostRobotListener | null = null;
+  private isReadyCallbackFired = false;
 
-  constructor(options: EmbeddedDisclosureRequestConfig) {
-    this.options = options;
-    this.identifier = generateUniqueIframeId();
+  iframeUrl(): string {
+    return getDisclosureRequestBoxUrl(this.options, this.uniqueIdentifier);
   }
 
-  get uniqueIdentifier(): string {
-    return this.identifier;
-  }
+  override async mount(selector: string): Promise<this> {
+    this.isReadyCallbackFired = false;
 
-  async mount(selector: string): Promise<this> {
-    if (!isBrowser) return this;
+    await super.mount(selector);
+    if (!this.iframe) return this;
 
-    const container = document.querySelector(selector);
-    if (!container) {
-      throw new Error(`Iframe container with selector '${selector}' not found`);
-    }
-
-    await setupPostrobotListeners();
-    await this.mountPopupListener();
-    mountInstanceListeners(this.uniqueIdentifier, {
-      onInfo: (info) => this.handleInfoEvent(info as EmbeddedInfoEvent),
-    });
-
-    if (this.iframe) this.iframe.remove();
-
-    this.iframe = document.createElement('iframe');
-    this.iframe.id = `soyio-embedded-widget-${this.uniqueIdentifier}`;
-    this.iframe.src = getEmbeddedFullUrl(this.options, this.uniqueIdentifier);
-    this.iframe.style.width = '100%';
-    this.iframe.style.border = 'none';
-    this.iframe.style.minWidth = '375px';
     this.iframe.style.height = this.options.height || '720px';
     this.iframe.style.minHeight = this.options.minHeight || this.iframe.style.height;
 
-    if (this.options.onReady) {
-      this.iframe.onload = () => {
-        this.options.onReady?.();
-      };
-    }
-
-    container.appendChild(this.iframe);
+    this.iframe.onload = () => {
+      this.notifyReady();
+    };
 
     return this;
   }
 
-  unmount(): void {
-    if (!isBrowser) return;
-
-    removeInstanceListeners(this.uniqueIdentifier);
+  override unmount(): void {
     this.removePopupListener();
     this.passkeyPopupWindow?.close();
     this.passkeyPopupWindow = null;
+    this.isReadyCallbackFired = false;
 
-    if (this.iframe) {
-      this.iframe.remove();
-      this.iframe = null;
-    }
+    super.unmount();
   }
 
-  private triggerEvent(data: EmbeddedInfoEvent) {
+  protected override async setupListeners(): Promise<void> {
+    await super.setupListeners();
+    await this.mountPopupListener();
+
+    mountInstanceListeners(this.uniqueIdentifier, {
+      onInfo: (info) => this.handleInfoEvent(info as DisclosureRequestBoxEvent),
+    });
+  }
+
+  protected override async handleIframeReady(): Promise<void> {
+    this.notifyReady();
+  }
+
+  private notifyReady() {
+    if (this.isReadyCallbackFired) return;
+
+    this.isReadyCallbackFired = true;
+    this.options.onReady?.();
+  }
+
+  private triggerEvent(data: DisclosureRequestBoxEvent) {
     this.options.onEvent(data);
   }
 
@@ -116,21 +102,21 @@ class EmbeddedSoyioWidget {
       if (data.identifier !== this.uniqueIdentifier) return Promise.resolve();
 
       if (data.eventName === 'PASSKEY_REGISTERED') {
-        this.notifyEmbeddedPasskeyRegistered();
+        this.notifyPasskeyRegistered();
         this.triggerEvent({
           eventName: 'PASSKEY_REGISTERED',
           type: 'PASSKEY_REGISTERED',
           identifier: this.uniqueIdentifier,
-        } satisfies EmbeddedPasskeyRegisteredEvent);
+        } satisfies DisclosureRequestBoxPasskeyRegisteredEvent);
       }
 
       if (data.eventName === 'PASSKEY_AUTHENTICATED') {
-        this.notifyEmbeddedPasskeyAuthenticated();
+        this.notifyPasskeyAuthenticated();
         this.triggerEvent({
           eventName: 'PASSKEY_AUTHENTICATED',
           type: 'PASSKEY_AUTHENTICATED',
           identifier: this.uniqueIdentifier,
-        } satisfies EmbeddedPasskeyAuthenticatedEvent);
+        } satisfies DisclosureRequestBoxPasskeyAuthenticatedEvent);
       }
 
       return Promise.resolve();
@@ -144,7 +130,7 @@ class EmbeddedSoyioWidget {
     this.popupListener = null;
   }
 
-  private handleInfoEvent(event: EmbeddedInfoEvent) {
+  private handleInfoEvent(event: DisclosureRequestBoxEvent) {
     this.triggerEvent(event);
 
     if (isPasskeyRequiredEvent(event)) {
@@ -158,22 +144,22 @@ class EmbeddedSoyioWidget {
     }
   }
 
-  private notifyEmbeddedPasskeyEvent(type: 'PASSKEY_REGISTERED' | 'PASSKEY_AUTHENTICATED') {
+  private notifyPasskeyEvent(type: 'PASSKEY_REGISTERED' | 'PASSKEY_AUTHENTICATED') {
     if (!this.iframe?.contentWindow) return;
 
     const targetOrigin = new URL(this.iframe.src).origin;
     this.iframe.contentWindow.postMessage(JSON.stringify({ type }), targetOrigin);
   }
 
-  private notifyEmbeddedPasskeyRegistered() {
-    this.notifyEmbeddedPasskeyEvent('PASSKEY_REGISTERED');
+  private notifyPasskeyRegistered() {
+    this.notifyPasskeyEvent('PASSKEY_REGISTERED');
   }
 
-  private notifyEmbeddedPasskeyAuthenticated() {
-    this.notifyEmbeddedPasskeyEvent('PASSKEY_AUTHENTICATED');
+  private notifyPasskeyAuthenticated() {
+    this.notifyPasskeyEvent('PASSKEY_AUTHENTICATED');
   }
 
-  private openPasskeyRegistrationPopup(event: EmbeddedPasskeyRequiredEvent) {
+  private openPasskeyRegistrationPopup(event: DisclosureRequestBoxPasskeyRequiredEvent) {
     if (!event.sessionToken || !event.companyId) return;
 
     const url = getRegisterPasskeyPopupUrl(this.options, {
@@ -185,7 +171,7 @@ class EmbeddedSoyioWidget {
     this.passkeyPopupWindow = window.open(url, 'SoyioPasskeyRegistration', 'width=420,height=720,scrollbars=yes');
   }
 
-  private openPasskeyAuthenticationPopup(event: EmbeddedPasskeyAuthenticationRequiredEvent) {
+  private openPasskeyAuthenticationPopup(event: DisclosureRequestBoxPasskeyAuthenticationRequiredEvent) {
     if (!event.requestableToken) return;
 
     const url = getPasskeyAuthenticationPopupUrl(this.options, {
@@ -197,5 +183,5 @@ class EmbeddedSoyioWidget {
   }
 }
 
-export default EmbeddedSoyioWidget;
-export { EmbeddedSoyioWidget };
+export default DisclosureRequestBox;
+export { DisclosureRequestBox };
