@@ -12,7 +12,7 @@ import { getIframeUrl } from './utils';
 
 import { CONSENT_DEFAULT_IFRAME_CSS_CONFIG } from '@/constants';
 
-export class ConsentBox extends BaseIframeBox<ConsentConfig> {
+export class ConsentBox extends BaseIframeBox<Record<string, unknown>, ConsentConfig> {
   readonly defaultIframePrefix = 'consent-box';
   readonly defaultIframeCSSConfig: IframeCSSConfig = CONSENT_DEFAULT_IFRAME_CSS_CONFIG;
 

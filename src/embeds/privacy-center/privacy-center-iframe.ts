@@ -6,7 +6,7 @@ import { sendPrivacyCenterConfig } from './send';
 import type { PrivacyCenterConfig } from './types';
 import { getIframeUrl } from './utils';
 
-export class PrivacyCenterBox extends BaseIframeBox<PrivacyCenterConfig> {
+export class PrivacyCenterBox extends BaseIframeBox<Record<string, unknown>, PrivacyCenterConfig> {
   readonly defaultIframePrefix = 'privacy-center';
   protected readonly _uniqueIdentifier = 'privacy-center';
   readonly defaultIframeCSSConfig: IframeCSSConfig = PRIVACY_CENTER_DEFAULT_IFRAME_CSS_CONFIG;

@@ -411,7 +411,7 @@
           "type": "string"
         },
         "onEvent": {
-          "$comment": "(event: Record<string, unknown>) => void",
+          "$comment": "(event: TEvent) => void",
           "properties": {
             "namedArgs": {
               "additionalProperties": false,
@@ -542,7 +542,7 @@
               "type": "boolean"
             },
             "onEvent": {
-              "$comment": "(event: Record<string, unknown>) => void",
+              "$comment": "(event: TEvent) => void",
               "properties": {
                 "namedArgs": {
                   "additionalProperties": false,
@@ -641,7 +641,7 @@
               "type": "boolean"
             },
             "onEvent": {
-              "$comment": "(event: Record<string, unknown>) => void",
+              "$comment": "(event: TEvent) => void",
               "properties": {
                 "namedArgs": {
                   "additionalProperties": false,

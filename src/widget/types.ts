@@ -47,6 +47,38 @@ export type EventData = {
   userReference?: string
 }
 
+export type DisclosureRequestBoxPasskeyRequiredEvent = {
+  eventName: 'PASSKEY_REQUIRED';
+  type: 'PASSKEY_REQUIRED';
+  sessionToken: string;
+  companyId: `com_${string}`;
+}
+
+export type DisclosureRequestBoxPasskeyAuthenticationRequiredEvent = {
+  eventName: 'PASSKEY_AUTHENTICATION_REQUIRED';
+  type: 'PASSKEY_AUTHENTICATION_REQUIRED';
+  requestableToken: string;
+}
+
+export type DisclosureRequestBoxPasskeyRegisteredEvent = {
+  eventName: 'PASSKEY_REGISTERED';
+  type: 'PASSKEY_REGISTERED';
+  identifier: string;
+}
+
+export type DisclosureRequestBoxPasskeyAuthenticatedEvent = {
+  eventName: 'PASSKEY_AUTHENTICATED';
+  type: 'PASSKEY_AUTHENTICATED';
+  identifier: string;
+}
+
+export type DisclosureRequestBoxEvent =
+  EventData |
+  DisclosureRequestBoxPasskeyRequiredEvent |
+  DisclosureRequestBoxPasskeyAuthenticationRequiredEvent |
+  DisclosureRequestBoxPasskeyRegisteredEvent |
+  DisclosureRequestBoxPasskeyAuthenticatedEvent;
+
 export type DisclosureRequestConfig = {
   request: 'disclosure',
   configProps: DisclosureRequestProps,
@@ -72,3 +104,20 @@ export type AuthRequestConfig = {
 }
 
 export type RequestConfig = DisclosureRequestConfig | SignatureRequestConfig | AuthRequestConfig;
+
+export type DisclosureRequestBoxProps = {
+  disclosureRequestId: `dreq_${string}`;
+  customColor?: string;
+}
+
+export type DisclosureRequestBoxSizing = {
+  height?: string;
+  minHeight?: string;
+}
+
+export type DisclosureRequestBoxConfig = DisclosureRequestBoxProps & {
+  onEvent: (data: DisclosureRequestBoxEvent) => void,
+  onReady?: () => void,
+  isSandbox?: boolean,
+  developmentUrl?: string,
+} & DisclosureRequestBoxSizing;

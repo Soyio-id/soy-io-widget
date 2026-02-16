@@ -19,4 +19,12 @@ export type {
   SignatureRequestConfig,
   AuthRequestConfig,
   RequestConfig,
+  DisclosureRequestBoxPasskeyAuthenticatedEvent,
+  DisclosureRequestBoxPasskeyAuthenticationRequiredEvent,
+  DisclosureRequestBoxEvent,
+  DisclosureRequestBoxProps,
+  DisclosureRequestBoxPasskeyRegisteredEvent,
+  DisclosureRequestBoxPasskeyRequiredEvent,
+  DisclosureRequestBoxSizing,
+  DisclosureRequestBoxConfig,
 } from './widget/types';
