@@ -261,6 +261,7 @@ export interface SoyioAppearanceConfig {
    * @default 'switch'
    */
   consentControl?: 'switch' | 'checkbox';
+  showHeader?: boolean;
   /**
    * Icon name to use for hint/help tooltips on input labels.
    * Available icons: 'Question' (default), 'Info', 'QuestionMark', etc.
@@ -295,7 +296,6 @@ export interface SoyioAppearanceConfig {
    * Number of columns in the consent management grid.
    * @default 2
    */
-  // eslint-disable-next-line no-magic-numbers
   consentManagementColumns?: 1 | 2 | 3 | 4;
   /**
    * Theme variant for branded elements like the footer.

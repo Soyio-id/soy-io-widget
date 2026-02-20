@@ -505,6 +505,9 @@
             "consentRetentionPeriod": {
               "type": "string"
             },
+            "content": {
+              "$ref": "#/definitions/PrivacyCenterContentConfig"
+            },
             "dataSubjects": {
               "items": {
                 "$ref": "#/definitions/DataSubject"
@@ -547,6 +550,9 @@
             "groupConsentsByScope": {
               "type": "boolean"
             },
+            "header": {
+              "$ref": "#/definitions/PrivacyCenterHeaderCopyConfig"
+            },
             "isSandbox": {
               "type": "boolean"
             },
@@ -580,6 +586,39 @@
             },
             "requestReference": {
               "type": "string"
+            },
+            "rightExamples": {
+              "additionalProperties": false,
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "opposition": {
+                  "type": "string"
+                },
+                "portability": {
+                  "type": "string"
+                },
+                "rectification": {
+                  "type": "string"
+                },
+                "redec_cancellation": {
+                  "type": "string"
+                },
+                "redec_complementation": {
+                  "type": "string"
+                },
+                "redec_rectification": {
+                  "type": "string"
+                },
+                "redec_update": {
+                  "type": "string"
+                },
+                "suppression": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "showBatchConsentConfirmation": {
               "type": "boolean"
@@ -610,6 +649,9 @@
             "consentRetentionPeriod": {
               "type": "string"
             },
+            "content": {
+              "$ref": "#/definitions/PrivacyCenterContentConfig"
+            },
             "dataSubjects": {
               "items": {
                 "$ref": "#/definitions/DataSubject"
@@ -652,6 +694,9 @@
             "groupConsentsByScope": {
               "type": "boolean"
             },
+            "header": {
+              "$ref": "#/definitions/PrivacyCenterHeaderCopyConfig"
+            },
             "isSandbox": {
               "type": "boolean"
             },
@@ -686,6 +731,39 @@
             "requestReference": {
               "type": "string"
             },
+            "rightExamples": {
+              "additionalProperties": false,
+              "properties": {
+                "access": {
+                  "type": "string"
+                },
+                "opposition": {
+                  "type": "string"
+                },
+                "portability": {
+                  "type": "string"
+                },
+                "rectification": {
+                  "type": "string"
+                },
+                "redec_cancellation": {
+                  "type": "string"
+                },
+                "redec_complementation": {
+                  "type": "string"
+                },
+                "redec_rectification": {
+                  "type": "string"
+                },
+                "redec_update": {
+                  "type": "string"
+                },
+                "suppression": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
             "sessionToken": {
               "type": "string"
             },
@@ -700,6 +778,60 @@
           "type": "object"
         }
       ]
+    },
+    "PrivacyCenterContentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/PrivacyCenterHeaderCopyConfig"
+        },
+        "rightExamples": {
+          "additionalProperties": false,
+          "properties": {
+            "access": {
+              "type": "string"
+            },
+            "opposition": {
+              "type": "string"
+            },
+            "portability": {
+              "type": "string"
+            },
+            "rectification": {
+              "type": "string"
+            },
+            "redec_cancellation": {
+              "type": "string"
+            },
+            "redec_complementation": {
+              "type": "string"
+            },
+            "redec_rectification": {
+              "type": "string"
+            },
+            "redec_update": {
+              "type": "string"
+            },
+            "suppression": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "PrivacyCenterHeaderCopyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "type": "object"
     },
     "PrivacyCenterRight": {
       "enum": [
@@ -816,6 +948,9 @@
             4
           ],
           "type": "number"
+        },
+        "showHeader": {
+          "type": "boolean"
         }
       },
       "type": "object"
