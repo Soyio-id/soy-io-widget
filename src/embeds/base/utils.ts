@@ -52,6 +52,8 @@ export function createIframe(url: string, identifier: string, cssConfig: IframeC
   const iframe = document.createElement('iframe');
   iframe.id = identifier;
   iframe.src = url;
+  iframe.allow = 'fullscreen;camera;';
+  iframe.setAttribute('allowfullscreen', '');
 
   iframe.style.cssText += `
     width: 100% !important;
