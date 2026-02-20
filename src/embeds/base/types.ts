@@ -47,8 +47,8 @@ export type ConsentEvent =
   | IAppearanceConfigEvent
   | ITooltipStateChangeEvent;
 
-export type BaseConfig = {
-  onEvent: (event: Record<string, unknown>) => void,
+export type BaseConfig<TEvent = Record<string, unknown>> = {
+  onEvent: (event: TEvent) => void,
   onReady?: () => void,
   isSandbox?: boolean,
   appearance?: SoyioAppearance,
