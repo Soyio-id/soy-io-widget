@@ -544,6 +544,9 @@
               },
               "type": "object"
             },
+            "groupConsentsByScope": {
+              "type": "boolean"
+            },
             "isSandbox": {
               "type": "boolean"
             },
@@ -645,6 +648,9 @@
                 }
               },
               "type": "object"
+            },
+            "groupConsentsByScope": {
+              "type": "boolean"
             },
             "isSandbox": {
               "type": "boolean"

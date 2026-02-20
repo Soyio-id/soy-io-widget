@@ -58,6 +58,10 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     urlParams.set('allowGranularScopeSelection', String(privacyCenterConfig.allowGranularScopeSelection));
   }
 
+  if (privacyCenterConfig.groupConsentsByScope !== undefined) {
+    urlParams.set('groupConsentsByScope', String(privacyCenterConfig.groupConsentsByScope));
+  }
+
   if (privacyCenterConfig.showBatchConsentConfirmation !== undefined) {
     urlParams.set('showBatchConsentConfirmation', String(privacyCenterConfig.showBatchConsentConfirmation));
   }

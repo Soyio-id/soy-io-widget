@@ -38,6 +38,7 @@ export type PrivacyCenterConfig = BaseConfig & {
   consentMode?: 'immediate' | 'batch';
   consentRetentionPeriod?: string;
   allowGranularScopeSelection?: boolean;
+  groupConsentsByScope?: boolean;
   showBatchConsentConfirmation?: boolean;
   redecOperationIds?: RedecOperationId[];
 } & (
