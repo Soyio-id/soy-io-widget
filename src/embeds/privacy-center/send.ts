@@ -9,26 +9,24 @@ export async function sendPrivacyCenterConfig(
     throw new Error('Invalid iframe: contentWindow is null');
   }
 
-  const showHeader = config.appearance?.config?.showHeader;
-  const shouldSendConfig =
-    typeof config.redecOperationIds !== 'undefined' ||
-    typeof showHeader === 'boolean' ||
-    typeof config.content !== 'undefined' ||
-    typeof config.header !== 'undefined' ||
-    typeof config.rightExamples !== 'undefined';
+  const { redecOperationIds, content, header, rightExamples, appearance } = config;
+  const showHeader = appearance?.config?.showHeader;
 
-  if (!shouldSendConfig) return;
+  const payload: Record<string, unknown> = {};
+  if (typeof redecOperationIds !== 'undefined') payload.redecOperationIds = redecOperationIds;
+  if (typeof content !== 'undefined') payload.content = content;
+  if (typeof header !== 'undefined') payload.header = header;
+  if (typeof rightExamples !== 'undefined') payload.rightExamples = rightExamples;
+  if (typeof showHeader === 'boolean') payload.appearance = { config: { showHeader } };
+
+  if (Object.keys(payload).length === 0) return;
 
   const postRobot = await import('post-robot');
 
   try {
     await postRobot.send(iframe.contentWindow, 'SET_PRIVACY_CENTER_CONFIG', {
       identifier,
-      ...(typeof config.redecOperationIds !== 'undefined' ? { redecOperationIds: config.redecOperationIds } : {}),
-      ...(typeof showHeader === 'boolean' ? { appearance: { config: { showHeader } } } : {}),
-      ...(typeof config.content !== 'undefined' ? { content: config.content } : {}),
-      ...(typeof config.header !== 'undefined' ? { header: config.header } : {}),
-      ...(typeof config.rightExamples !== 'undefined' ? { rightExamples: config.rightExamples } : {}),
+      ...payload,
     });
   } catch (error) {
     console.error('Failed to send privacy center config:', error);
