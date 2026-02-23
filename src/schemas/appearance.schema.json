@@ -474,6 +474,9 @@
             4
           ],
           "type": "number"
+        },
+        "showHeader": {
+          "type": "boolean"
         }
       },
       "type": "object"

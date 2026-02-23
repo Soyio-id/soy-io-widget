@@ -8,6 +8,27 @@ export type RedecOperationId = {
   label: string;
 };
 
+export type DataSubjectRequestKind =
+| 'access'
+| 'opposition'
+| 'rectification'
+| 'suppression'
+| 'portability'
+| 'redec_update'
+| 'redec_rectification'
+| 'redec_complementation'
+| 'redec_cancellation';
+
+export type PrivacyCenterHeaderCopyConfig = {
+  title?: string;
+  description?: string;
+};
+
+export type PrivacyCenterContentConfig = {
+  header?: PrivacyCenterHeaderCopyConfig;
+  rightExamples?: Partial<Record<DataSubjectRequestKind, string>>;
+};
+
 export type DataSubject =
 | 'anonymous_user'
 | 'citizen_voter'
@@ -41,6 +62,9 @@ export type PrivacyCenterConfig = BaseConfig & {
   groupConsentsByScope?: boolean;
   showBatchConsentConfirmation?: boolean;
   redecOperationIds?: RedecOperationId[];
+  content?: PrivacyCenterContentConfig;
+  header?: PrivacyCenterHeaderCopyConfig;
+  rightExamples?: PrivacyCenterContentConfig['rightExamples'];
 } & (
   | {
       companyId: `com_${string}`;

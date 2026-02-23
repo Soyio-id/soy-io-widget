@@ -191,6 +191,17 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
       { id: "op_rectification", label: "Rectification" },
     ],
 
+    // Header and copy customization (optional)
+    content: {
+      header: {
+        title: "Privacy preferences",
+        description: "Manage your requests and consent settings.",
+      },
+      rightExamples: {
+        access: 'Example: "I want to know what data you store about me."',
+      },
+    },
+
     // Common options
     consentControl: "checkbox", // Optional: 'switch' (default) | 'checkbox'
     consentMode: "batch", // Optional: 'immediate' (default) | 'batch'
@@ -201,7 +212,11 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
     onEvent: (event) => console.log(event),
     onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
     isSandbox: true, // Optional
-    appearance: {}, // Optional
+    appearance: {
+      config: {
+        showHeader: true,
+      },
+    }, // Optional
   };
 
   // Wait for DOM to be fully loaded
@@ -224,6 +239,11 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
   - `allowedExtensions`: Array of allowed file extensions (e.g. `['pdf', 'jpg']`). Default: `['pdf', 'png', 'jpeg', 'jpg']`.
   - `maxFileSize`: Maximum file size in bytes. Default: `5 * 1024 * 1024` (5MB).
 - `redecOperationIds`: Optional array of `{ id, label }` values for the Redec operation select. Required if `redec` right is included in `enabledRights` param.
+- `appearance.config.showHeader`: Optional boolean to show/hide the privacy center header (title and description).
+- `content.header`: Optional object with `title` and `description` overrides for the privacy center header copy.
+- `content.rightExamples`: Optional object to override DSR right examples. Supported keys: `access`, `opposition`, `rectification`, `suppression`, `portability`, `redec_update`, `redec_rectification`, `redec_complementation`, `redec_cancellation`.
+- `header`: Optional legacy alias for `content.header`.
+- `rightExamples`: Optional legacy alias for `content.rightExamples`.
 - `isSandbox`: Whether to use the sandbox environment. Defaults to `false`.
 - `consentControl`: Optional, controls the visual interaction for consent toggles. Values: `'switch'` (default) or `'checkbox'`.
 - `consentMode`: Optional, controls how consent changes are committed. Values: `'immediate'` (default) or `'batch'` (save multiple changes at once).
