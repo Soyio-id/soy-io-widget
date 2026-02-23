@@ -10,6 +10,7 @@ function getIframeUrl(consentConfig: ConsentConfig): string {
     'context',
     'optionalReconsentBehavior',
     'mandatoryReconsentBehavior',
+    'allowGranularScopeSelection',
   ] as const;
 
   const isSandbox = consentConfig.isSandbox ?? false;
@@ -19,7 +20,12 @@ function getIframeUrl(consentConfig: ConsentConfig): string {
   urlParams.set('sdkVersion', version);
 
   URL_PARAMS.forEach((param) => {
-    if (consentConfig[param]) urlParams.set(param, consentConfig[param]!);
+    const value = consentConfig[param];
+
+    if (value === undefined) return;
+    if (typeof value === 'string' && value.length === 0) return;
+
+    urlParams.set(param, String(value));
   });
 
   const queryString = urlParams.toString();

@@ -23,4 +23,5 @@ export type ConsentConfig = BaseConfig & {
   context?: string,
   optionalReconsentBehavior?: 'notice' | 'askAgain' | 'hide',
   mandatoryReconsentBehavior?: 'notice' | 'askAgain',
+  allowGranularScopeSelection?: boolean,
 }

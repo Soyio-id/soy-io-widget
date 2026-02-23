@@ -385,6 +385,9 @@
         "actionToken": {
           "type": "string"
         },
+        "allowGranularScopeSelection": {
+          "type": "boolean"
+        },
         "appearance": {
           "$ref": "#/definitions/SoyioAppearance"
         },
@@ -483,6 +486,9 @@
         {
           "additionalProperties": false,
           "properties": {
+            "allowGranularScopeSelection": {
+              "type": "boolean"
+            },
             "appearance": {
               "$ref": "#/definitions/SoyioAppearance"
             },
@@ -538,6 +544,9 @@
               },
               "type": "object"
             },
+            "groupConsentsByScope": {
+              "type": "boolean"
+            },
             "isSandbox": {
               "type": "boolean"
             },
@@ -585,6 +594,9 @@
         {
           "additionalProperties": false,
           "properties": {
+            "allowGranularScopeSelection": {
+              "type": "boolean"
+            },
             "appearance": {
               "$ref": "#/definitions/SoyioAppearance"
             },
@@ -636,6 +648,9 @@
                 }
               },
               "type": "object"
+            },
+            "groupConsentsByScope": {
+              "type": "boolean"
             },
             "isSandbox": {
               "type": "boolean"

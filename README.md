@@ -85,6 +85,7 @@ The **`ConsentBox`** is a component that allows you to embed a consent request d
     onReady: () => console.log("ConsentBox is ready"), // Optional
     optionalReconsentBehavior: "notice", // Optional
     mandatoryReconsentBehavior: "notice", // Optional
+    allowGranularScopeSelection: true, // Optional
   };
 
   // Wait for DOM to be fully loaded
@@ -140,6 +141,7 @@ The `onEvent` follows the following format:
   - `askAgain` will show the consent as if it wasn't given in the first place,
 
   We don't support hiding the mandatory consent, and we strongly recommend using `notice` so the user doesn't have to give the consent again and knows what they have already given consent to.
+- **`allowGranularScopeSelection`**: Enables selecting consent at a more granular scope when the template supports granular scopes.
 
 ## Privacy Center
 
@@ -190,6 +192,12 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
     ],
 
     // Common options
+    consentControl: "checkbox", // Optional: 'switch' (default) | 'checkbox'
+    consentMode: "batch", // Optional: 'immediate' (default) | 'batch'
+    showBatchConsentConfirmation: true, // Optional: only used in batch mode
+    consentRetentionPeriod: "30 days", // Optional: prevents immediate revoke for this period
+    allowGranularScopeSelection: true, // Optional: only applies when templates have multiple scopes
+    groupConsentsByScope: true, // Optional: groups consent templates by scope in consent management
     onEvent: (event) => console.log(event),
     onReady: () => console.log("PrivacyCenterBox is ready"), // Optional
     isSandbox: true, // Optional
@@ -220,6 +228,8 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `consentControl`: Optional, controls the visual interaction for consent toggles. Values: `'switch'` (default) or `'checkbox'`.
 - `consentMode`: Optional, controls how consent changes are committed. Values: `'immediate'` (default) or `'batch'` (save multiple changes at once).
 - `consentRetentionPeriod`: Optional, specifies a duration during which a consent cannot be revoked after being granted. Format: `"<value> <unit>"`. Supported units: `day`, `week`, `month`, `year` (and their plural forms). Example: `'30 days'`, `'1 week'`.
+- `allowGranularScopeSelection`: Optional boolean, enables selecting/deselecting individual consent scopes in consent management when templates define multiple scopes. When enabled and a consent has more than one scope, the main consent checkbox supports partial state.
+- `groupConsentsByScope`: Optional boolean, groups consent templates by scope in consent management.
 - `showBatchConsentConfirmation`: Optional boolean, whether to show a confirmation dialog before saving consent changes in batch mode.
 - `appearance`: Customize the iframe appearance. See Appearance section below.
 - `onEvent`: Callback that receives events from the iframe.
