@@ -1,0 +1,21 @@
+name: Documentation Suggestions
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  suggest:
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: soyio-id/soyio-docs-bot-action@v1
+        with:
+          pinecone_api_key: ${{ secrets.PINECONE_API_KEY }}
+          pinecone_index: 'soyio-docs'
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          top_k: '10'
