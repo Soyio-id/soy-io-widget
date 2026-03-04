@@ -37,6 +37,13 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
     }
   }
 
+  if (privacyCenterConfig.consentManagement) {
+    const consentManagementJSON = JSON.stringify(privacyCenterConfig.consentManagement);
+    if (consentManagementJSON !== '{}') {
+      urlParams.set('consentManagement', consentManagementJSON);
+    }
+  }
+
   if (privacyCenterConfig.demo !== undefined) {
     urlParams.set('demo', String(privacyCenterConfig.demo));
   }

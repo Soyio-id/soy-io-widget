@@ -495,6 +495,9 @@
             "companyId": {
               "type": "string"
             },
+            "consentManagement": {
+              "$ref": "#/definitions/PrivacyCenterConsentManagementConfig"
+            },
             "consentMode": {
               "enum": [
                 "immediate",
@@ -639,6 +642,9 @@
             "appearance": {
               "$ref": "#/definitions/SoyioAppearance"
             },
+            "consentManagement": {
+              "$ref": "#/definitions/PrivacyCenterConsentManagementConfig"
+            },
             "consentMode": {
               "enum": [
                 "immediate",
@@ -779,9 +785,52 @@
         }
       ]
     },
+    "PrivacyCenterConsentManagementConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "scopeGroups": {
+          "items": {
+            "$ref": "#/definitions/PrivacyCenterConsentManagementScopeGroupConfig"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PrivacyCenterConsentManagementContentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/PrivacyCenterHeaderCopyConfig"
+        }
+      },
+      "type": "object"
+    },
+    "PrivacyCenterConsentManagementScopeGroupConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "scopes": {
+          "items": {
+            "$ref": "#/definitions/PrivacyCenterScopeReference"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "scopes"
+      ],
+      "type": "object"
+    },
     "PrivacyCenterContentConfig": {
       "additionalProperties": false,
       "properties": {
+        "consentManagement": {
+          "$ref": "#/definitions/PrivacyCenterConsentManagementContentConfig"
+        },
         "header": {
           "$ref": "#/definitions/PrivacyCenterHeaderCopyConfig"
         },
@@ -839,6 +888,26 @@
         "redec"
       ],
       "type": "string"
+    },
+    "PrivacyCenterScopeReference": {
+      "additionalProperties": false,
+      "properties": {
+        "scopeId": {
+          "type": "string"
+        },
+        "scopeType": {
+          "enum": [
+            "product",
+            "branch"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "scopeType",
+        "scopeId"
+      ],
+      "type": "object"
     },
     "PrivacyManagerFeature": {
       "enum": [
@@ -948,6 +1017,9 @@
             4
           ],
           "type": "number"
+        },
+        "showConsentManagementHeader": {
+          "type": "boolean"
         },
         "showHeader": {
           "type": "boolean"

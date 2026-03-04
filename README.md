@@ -197,9 +197,35 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
         title: "Privacy preferences",
         description: "Manage your requests and consent settings.",
       },
+      consentManagement: {
+        header: {
+          title: "Manage your consent settings",
+          description: "Select which permissions should remain active.",
+        },
+      },
       rightExamples: {
         access: 'Example: "I want to know what data you store about me."',
       },
+    },
+
+    // Consent management grouping customization (optional)
+    consentManagement: {
+      scopeGroups: [
+        {
+          title: "Financial products",
+          scopes: [
+            { scopeType: "product", scopeId: "prod_checking_account" },
+            { scopeType: "product", scopeId: "prod_credit_card" },
+          ],
+        },
+        {
+          title: "Main branches",
+          scopes: [
+            { scopeType: "branch", scopeId: "branch_centro" },
+            { scopeType: "branch", scopeId: "branch_providencia" },
+          ],
+        },
+      ],
     },
 
     // Common options
@@ -215,6 +241,7 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
     appearance: {
       config: {
         showHeader: true,
+        showConsentManagementHeader: true,
       },
     }, // Optional
   };
@@ -241,6 +268,8 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `redecOperationIds`: Optional array of `{ id, label }` values for the Redec operation select. Required if `redec` right is included in `enabledRights` param.
 - `appearance.config.showHeader`: Optional boolean to show/hide the privacy center header (title and description).
 - `content.header`: Optional object with `title` and `description` overrides for the privacy center header copy.
+- `appearance.config.showConsentManagementHeader`: Optional boolean to show/hide the title and description in the consent management page.
+- `content.consentManagement.header`: Optional object with `title` and `description` overrides for the consent management header copy.
 - `content.rightExamples`: Optional object to override DSR right examples. Supported keys: `access`, `opposition`, `rectification`, `suppression`, `portability`, `redec_update`, `redec_rectification`, `redec_complementation`, `redec_cancellation`.
 - `header`: Optional legacy alias for `content.header`.
 - `rightExamples`: Optional legacy alias for `content.rightExamples`.
@@ -250,6 +279,7 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `consentRetentionPeriod`: Optional, specifies a duration during which a consent cannot be revoked after being granted. Format: `"<value> <unit>"`. Supported units: `day`, `week`, `month`, `year` (and their plural forms). Example: `'30 days'`, `'1 week'`.
 - `allowGranularScopeSelection`: Optional boolean, enables selecting/deselecting individual consent scopes in consent management when templates define multiple scopes. When enabled and a consent has more than one scope, the main consent checkbox supports partial state.
 - `groupConsentsByScope`: Optional boolean, groups consent templates by scope in consent management.
+- `consentManagement.scopeGroups`: Optional array to customize accordion groups in consent management. Each group requires a `title` and a `scopes` array with `{ scopeType: 'product' | 'branch', scopeId: string }` entries.
 - `showBatchConsentConfirmation`: Optional boolean, whether to show a confirmation dialog before saving consent changes in batch mode.
 - `appearance`: Customize the iframe appearance. See Appearance section below.
 - `onEvent`: Callback that receives events from the iframe.

@@ -475,6 +475,9 @@
           ],
           "type": "number"
         },
+        "showConsentManagementHeader": {
+          "type": "boolean"
+        },
         "showHeader": {
           "type": "boolean"
         }

@@ -9,15 +9,24 @@ export async function sendPrivacyCenterConfig(
     throw new Error('Invalid iframe: contentWindow is null');
   }
 
-  const { redecOperationIds, content, header, rightExamples, appearance } = config;
+  const { redecOperationIds, content, header, rightExamples, consentManagement, appearance } = config;
   const showHeader = appearance?.config?.showHeader;
+  const showConsentManagementHeader = appearance?.config?.showConsentManagementHeader;
 
   const payload: Record<string, unknown> = {};
   if (typeof redecOperationIds !== 'undefined') payload.redecOperationIds = redecOperationIds;
   if (typeof content !== 'undefined') payload.content = content;
   if (typeof header !== 'undefined') payload.header = header;
   if (typeof rightExamples !== 'undefined') payload.rightExamples = rightExamples;
-  if (typeof showHeader === 'boolean') payload.appearance = { config: { showHeader } };
+  if (typeof consentManagement !== 'undefined') payload.consentManagement = consentManagement;
+  if (typeof showHeader === 'boolean' || typeof showConsentManagementHeader === 'boolean') {
+    payload.appearance = {
+      config: {
+        ...(typeof showHeader === 'boolean' ? { showHeader } : {}),
+        ...(typeof showConsentManagementHeader === 'boolean' ? { showConsentManagementHeader } : {}),
+      },
+    };
+  }
 
   if (Object.keys(payload).length === 0) return;
 
