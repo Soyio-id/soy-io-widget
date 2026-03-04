@@ -31,7 +31,7 @@ export type PrivacyCenterScopeReference = {
 
 export type PrivacyCenterConsentManagementScopeGroupConfig = {
   title: string;
-  scopes: PrivacyCenterScopeReference[];
+  scopes: [PrivacyCenterScopeReference, ...PrivacyCenterScopeReference[]];
 };
 
 export type PrivacyCenterConsentManagementConfig = {
