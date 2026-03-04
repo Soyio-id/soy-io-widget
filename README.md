@@ -287,6 +287,8 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 
 Note:
 - When `sessionToken` is provided, do not pass `companyId`.
+- `consentManagement.scopeGroups` is applied during initial iframe URL render and also synchronized through `SET_PRIVACY_CENTER_CONFIG` updates.
+- `content.header` and `content.consentManagement.header` are applied through `SET_PRIVACY_CENTER_CONFIG`; default header copy may appear briefly before the update is received.
 
 ### Privacy Center Events
 

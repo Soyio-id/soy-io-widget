@@ -38,13 +38,13 @@ export type PrivacyCenterConsentManagementConfig = {
   scopeGroups?: PrivacyCenterConsentManagementScopeGroupConfig[];
 };
 
-export type PrivacyCenterConsentManagementContentConfig = {
+export type PrivacyCenterConsentManagementCopyConfig = {
   header?: PrivacyCenterHeaderCopyConfig;
 };
 
 export type PrivacyCenterContentConfig = {
   header?: PrivacyCenterHeaderCopyConfig;
-  consentManagement?: PrivacyCenterConsentManagementContentConfig;
+  consentManagement?: PrivacyCenterConsentManagementCopyConfig;
   rightExamples?: Partial<Record<DataSubjectRequestKind, string>>;
 };
 
