@@ -42,9 +42,8 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
   }
 
   if (privacyCenterConfig.consentManagement) {
-    const hasConsentManagementConfig = Object.values(privacyCenterConfig.consentManagement).some(
-      (value) => value !== undefined && value !== null,
-    );
+    const { scopeGroups } = privacyCenterConfig.consentManagement;
+    const hasConsentManagementConfig = Array.isArray(scopeGroups) && scopeGroups.length > 0;
 
     if (hasConsentManagementConfig) {
       const consentManagementJSON = JSON.stringify(privacyCenterConfig.consentManagement);
