@@ -17,6 +17,16 @@ export async function sendPrivacyCenterConfig(
     Object.values(consentManagement).some((value) => (Array.isArray(value) ? value.length > 0 : value !== undefined && value !== null));
   const normalizedConsentManagement = hasValidConsentManagement ? consentManagement : undefined;
 
+  if (
+    Array.isArray(normalizedConsentManagement?.scopeGroups) &&
+    normalizedConsentManagement.scopeGroups.length > 0 &&
+    config.groupConsentsByScope !== true
+  ) {
+    console.warn(
+      'Soyio widget: privacyCenterConfig.groupConsentsByScope must be true for consentManagement.scopeGroups to apply.',
+    );
+  }
+
   const payload: Record<string, unknown> = {};
   if (typeof redecOperationIds !== 'undefined') payload.redecOperationIds = redecOperationIds;
   if (typeof content !== 'undefined') payload.content = content;
