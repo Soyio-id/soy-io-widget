@@ -14,8 +14,7 @@ export async function sendPrivacyCenterConfig(
   const showConsentManagementHeader = appearance?.config?.showConsentManagementHeader;
   const hasValidConsentManagement =
     consentManagement !== undefined &&
-    Array.isArray(consentManagement.scopeGroups) &&
-    consentManagement.scopeGroups.length > 0;
+    Object.values(consentManagement).some((value) => (Array.isArray(value) ? value.length > 0 : value !== undefined && value !== null));
   const normalizedConsentManagement = hasValidConsentManagement ? consentManagement : undefined;
 
   const payload: Record<string, unknown> = {};

@@ -278,8 +278,8 @@ The `PrivacyCenterBox` lets you embed the Privacy Center inside your page. You c
 - `consentMode`: Optional, controls how consent changes are committed. Values: `'immediate'` (default) or `'batch'` (save multiple changes at once).
 - `consentRetentionPeriod`: Optional, specifies a duration during which a consent cannot be revoked after being granted. Format: `"<value> <unit>"`. Supported units: `day`, `week`, `month`, `year` (and their plural forms). Example: `'30 days'`, `'1 week'`.
 - `allowGranularScopeSelection`: Optional boolean, enables selecting/deselecting individual consent scopes in consent management when templates define multiple scopes. When enabled and a consent has more than one scope, the main consent checkbox supports partial state.
-- `groupConsentsByScope`: Optional boolean, groups consent templates by scope in consent management.
-- `consentManagement.scopeGroups`: Optional array to customize accordion groups in consent management. Each group requires a `title` and a `scopes` array with `{ scopeType: 'product' | 'branch', scopeId: string }` entries.
+- `groupConsentsByScope`: Optional boolean, groups consent templates by scope in consent management. This must be enabled for `consentManagement.scopeGroups` to apply.
+- `consentManagement.scopeGroups`: Optional array to customize accordion groups in consent management. Each group requires a `title` and a `scopes` array with `{ scopeType: 'product' | 'branch', scopeId: string }` entries. Scopes not included in custom groups keep the default scope grouping.
 - `showBatchConsentConfirmation`: Optional boolean, whether to show a confirmation dialog before saving consent changes in batch mode.
 - `appearance`: Customize the iframe appearance. See Appearance section below.
 - `onEvent`: Callback that receives events from the iframe.
