@@ -12,13 +12,17 @@ export async function sendPrivacyCenterConfig(
   const { redecOperationIds, content, header, rightExamples, consentManagement, appearance } = config;
   const showHeader = appearance?.config?.showHeader;
   const showConsentManagementHeader = appearance?.config?.showConsentManagementHeader;
+  const normalizedConsentManagement =
+    consentManagement && Array.isArray(consentManagement.scopeGroups) && consentManagement.scopeGroups.length === 0
+      ? undefined
+      : consentManagement;
 
   const payload: Record<string, unknown> = {};
   if (typeof redecOperationIds !== 'undefined') payload.redecOperationIds = redecOperationIds;
   if (typeof content !== 'undefined') payload.content = content;
   if (typeof header !== 'undefined') payload.header = header;
   if (typeof rightExamples !== 'undefined') payload.rightExamples = rightExamples;
-  if (typeof consentManagement !== 'undefined') payload.consentManagement = consentManagement;
+  if (typeof normalizedConsentManagement !== 'undefined') payload.consentManagement = normalizedConsentManagement;
   if (typeof showHeader === 'boolean' || typeof showConsentManagementHeader === 'boolean') {
     payload.appearance = {
       config: {
