@@ -792,6 +792,7 @@
           "items": {
             "$ref": "#/definitions/PrivacyCenterConsentManagementScopeGroupConfig"
           },
+          "minItems": 1,
           "type": "array"
         }
       },

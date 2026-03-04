@@ -35,7 +35,10 @@ export type PrivacyCenterConsentManagementScopeGroupConfig = {
 };
 
 export type PrivacyCenterConsentManagementConfig = {
-  scopeGroups?: PrivacyCenterConsentManagementScopeGroupConfig[];
+  scopeGroups?: [
+    PrivacyCenterConsentManagementScopeGroupConfig,
+    ...PrivacyCenterConsentManagementScopeGroupConfig[],
+  ];
 };
 
 export type PrivacyCenterConsentManagementCopyConfig = {
