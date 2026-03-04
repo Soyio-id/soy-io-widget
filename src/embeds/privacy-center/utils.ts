@@ -42,9 +42,14 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
   }
 
   if (privacyCenterConfig.consentManagement) {
-    const hasConsentManagementConfig = Object.values(privacyCenterConfig.consentManagement).some((value) =>
-      Array.isArray(value) ? value.length > 0 : value !== undefined && value !== null,
-    );
+    const { scopeGroups } = privacyCenterConfig.consentManagement;
+    const hasConsentManagementConfig = Array.isArray(scopeGroups) && scopeGroups.length > 0;
+
+    if (hasConsentManagementConfig && privacyCenterConfig.groupConsentsByScope !== true) {
+      console.warn(
+        "Soyio widget: privacyCenterConfig.groupConsentsByScope must be true for consentManagement.scopeGroups to apply.",
+      );
+    }
 
     if (hasConsentManagementConfig) {
       const consentManagementJSON = JSON.stringify(privacyCenterConfig.consentManagement);
