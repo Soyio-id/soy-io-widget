@@ -262,6 +262,7 @@ export interface SoyioAppearanceConfig {
    */
   consentControl?: 'switch' | 'checkbox';
   showHeader?: boolean;
+  showConsentManagementHeader?: boolean;
   /**
    * Icon name to use for hint/help tooltips on input labels.
    * Available icons: 'Question' (default), 'Info', 'QuestionMark', etc.

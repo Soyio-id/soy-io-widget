@@ -9,15 +9,38 @@ export async function sendPrivacyCenterConfig(
     throw new Error('Invalid iframe: contentWindow is null');
   }
 
-  const { redecOperationIds, content, header, rightExamples, appearance } = config;
+  const { redecOperationIds, content, header, rightExamples, consentManagement, appearance } = config;
   const showHeader = appearance?.config?.showHeader;
+  const showConsentManagementHeader = appearance?.config?.showConsentManagementHeader;
+  const hasValidConsentManagement =
+    consentManagement !== undefined &&
+    Object.values(consentManagement).some((value) => (Array.isArray(value) ? value.length > 0 : value !== undefined && value !== null));
+  const normalizedConsentManagement = hasValidConsentManagement ? consentManagement : undefined;
+
+  if (
+    Array.isArray(normalizedConsentManagement?.scopeGroups) &&
+    normalizedConsentManagement.scopeGroups.length > 0 &&
+    config.groupConsentsByScope !== true
+  ) {
+    console.warn(
+      'Soyio widget: privacyCenterConfig.groupConsentsByScope must be true for consentManagement.scopeGroups to apply.',
+    );
+  }
 
   const payload: Record<string, unknown> = {};
   if (typeof redecOperationIds !== 'undefined') payload.redecOperationIds = redecOperationIds;
   if (typeof content !== 'undefined') payload.content = content;
   if (typeof header !== 'undefined') payload.header = header;
   if (typeof rightExamples !== 'undefined') payload.rightExamples = rightExamples;
-  if (typeof showHeader === 'boolean') payload.appearance = { config: { showHeader } };
+  if (typeof normalizedConsentManagement !== 'undefined') payload.consentManagement = normalizedConsentManagement;
+  if (typeof showHeader === 'boolean' || typeof showConsentManagementHeader === 'boolean') {
+    payload.appearance = {
+      config: {
+        ...(typeof showHeader === 'boolean' ? { showHeader } : {}),
+        ...(typeof showConsentManagementHeader === 'boolean' ? { showConsentManagementHeader } : {}),
+      },
+    };
+  }
 
   if (Object.keys(payload).length === 0) return;
 

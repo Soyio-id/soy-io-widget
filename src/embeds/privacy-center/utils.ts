@@ -31,9 +31,29 @@ function getIframeUrl(privacyCenterConfig: PrivacyCenterConfig): string {
   if (privacyCenterConfig.requestReference) urlParams.set('requestReference', privacyCenterConfig.requestReference);
 
   if (privacyCenterConfig.fileRequisites) {
-    const fileRequisitesJSON = JSON.stringify(privacyCenterConfig.fileRequisites);
-    if (fileRequisitesJSON !== '{}') {
+    const hasFileRequisites = Object.values(privacyCenterConfig.fileRequisites).some(
+      (value) => value !== undefined && value !== null,
+    );
+
+    if (hasFileRequisites) {
+      const fileRequisitesJSON = JSON.stringify(privacyCenterConfig.fileRequisites);
       urlParams.set('fileRequisites', fileRequisitesJSON);
+    }
+  }
+
+  if (privacyCenterConfig.consentManagement) {
+    const { scopeGroups } = privacyCenterConfig.consentManagement;
+    const hasConsentManagementConfig = Array.isArray(scopeGroups) && scopeGroups.length > 0;
+
+    if (hasConsentManagementConfig && privacyCenterConfig.groupConsentsByScope !== true) {
+      console.warn(
+        "Soyio widget: privacyCenterConfig.groupConsentsByScope must be true for consentManagement.scopeGroups to apply.",
+      );
+    }
+
+    if (hasConsentManagementConfig) {
+      const consentManagementJSON = JSON.stringify(privacyCenterConfig.consentManagement);
+      urlParams.set('consentManagement', consentManagementJSON);
     }
   }
 

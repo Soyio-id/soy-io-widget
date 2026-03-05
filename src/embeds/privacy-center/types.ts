@@ -24,8 +24,30 @@ export type PrivacyCenterHeaderCopyConfig = {
   description?: string;
 };
 
+export type PrivacyCenterScopeReference = {
+  scopeType: 'product' | 'branch';
+  scopeId: string;
+};
+
+export type PrivacyCenterConsentManagementScopeGroupConfig = {
+  title: string;
+  scopes: [PrivacyCenterScopeReference, ...PrivacyCenterScopeReference[]];
+};
+
+export type PrivacyCenterConsentManagementConfig = {
+  scopeGroups?: [
+    PrivacyCenterConsentManagementScopeGroupConfig,
+    ...PrivacyCenterConsentManagementScopeGroupConfig[],
+  ];
+};
+
+export type PrivacyCenterConsentManagementCopyConfig = {
+  header?: PrivacyCenterHeaderCopyConfig;
+};
+
 export type PrivacyCenterContentConfig = {
   header?: PrivacyCenterHeaderCopyConfig;
+  consentManagement?: PrivacyCenterConsentManagementCopyConfig;
   rightExamples?: Partial<Record<DataSubjectRequestKind, string>>;
 };
 
@@ -61,6 +83,7 @@ export type PrivacyCenterConfig = BaseConfig & {
   allowGranularScopeSelection?: boolean;
   groupConsentsByScope?: boolean;
   showBatchConsentConfirmation?: boolean;
+  consentManagement?: PrivacyCenterConsentManagementConfig;
   redecOperationIds?: RedecOperationId[];
   content?: PrivacyCenterContentConfig;
   header?: PrivacyCenterHeaderCopyConfig;
